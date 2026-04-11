@@ -1,0 +1,1669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APEX — Institutional Forex Signal Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:    #0D1117;
+  --navy2:   #161B22;
+  --navy3:   #1A2133;
+  --gold:    #C9A84C;
+  --gold2:   #E8C76A;
+  --gold3:   #F5E0A0;
+  --dim:     #8899AA;
+  --white:   #F0F4FF;
+  --green:   #22C55E;
+  --red:     #EF4444;
+  --border:  rgba(201,168,76,0.15);
+  --border2: rgba(201,168,76,0.3);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--navy);
+  color: var(--white);
+  overflow-x: hidden;
+  cursor: default;
+}
+
+/* ── NOISE OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+/* ── HERO GRID BACKGROUND ── */
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 1.25rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(13,17,23,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: 'Cinzel', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.12em;
+}
+
+.nav-logo span {
+  font-size: 0.6rem;
+  color: var(--dim);
+  letter-spacing: 0.2em;
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  margin-top: -2px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--dim);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--gold); }
+
+.nav-cta {
+  background: transparent;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  padding: 0.5rem 1.25rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+  text-decoration: none;
+}
+
+.nav-cta:hover {
+  background: var(--gold);
+  color: var(--navy);
+}
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8rem 2rem 4rem;
+  overflow: hidden;
+}
+
+.hero-glow {
+  position: absolute;
+  top: -20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid var(--border2);
+  padding: 0.35rem 1rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.2s forwards;
+}
+
+.hero-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+.hero h1 {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(3rem, 8vw, 6.5rem);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: 0.05em;
+  color: var(--white);
+  margin-bottom: 0.5rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.4s forwards;
+}
+
+.hero h1 .gold { color: var(--gold); }
+
+.hero-sub {
+  font-size: clamp(0.9rem, 2vw, 1.15rem);
+  color: var(--dim);
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  max-width: 560px;
+  line-height: 1.7;
+  margin: 1.5rem auto 3rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.6s forwards;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 3rem;
+  justify-content: center;
+  margin-bottom: 3rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.8s forwards;
+}
+
+.hero-stat { text-align: center; }
+
+.hero-stat-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.hero-stat-val.green { color: var(--green); }
+
+.hero-stat-label {
+  font-size: 0.7rem;
+  color: var(--dim);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-top: 0.4rem;
+}
+
+.hero-ctas {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 0.8s 1s forwards;
+}
+
+.btn-primary {
+  background: var(--gold);
+  color: var(--navy);
+  border: none;
+  padding: 0.9rem 2.5rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-primary:hover {
+  background: var(--gold2);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--white);
+  border: 1px solid rgba(240,244,255,0.2);
+  padding: 0.9rem 2.5rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-secondary:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── SECTION WRAPPER ── */
+section {
+  position: relative;
+  z-index: 1;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.section-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.75rem;
+}
+
+.section-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.section-desc {
+  color: var(--dim);
+  font-size: 1rem;
+  line-height: 1.75;
+  max-width: 520px;
+}
+
+/* ── TICKER ── */
+.ticker-wrap {
+  background: var(--navy2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 0;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+.ticker {
+  display: flex;
+  gap: 0;
+  animation: ticker 30s linear infinite;
+  white-space: nowrap;
+}
+
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 2.5rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--dim);
+  border-right: 1px solid var(--border);
+}
+
+.ticker-item .pair { color: var(--white); font-weight: 500; }
+.ticker-item .up   { color: var(--green); }
+.ticker-item .down { color: var(--red); }
+
+@keyframes ticker {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ── LIVE SIGNALS ── */
+.signals-section {
+  padding: 6rem 0;
+  background: var(--navy);
+}
+
+.signals-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 3rem;
+}
+
+.signal-card {
+  background: var(--navy2);
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s;
+}
+
+.signal-card:hover { border-color: var(--border2); }
+
+.signal-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+}
+
+.signal-card.win::before  { background: var(--green); }
+.signal-card.loss::before { background: var(--red); }
+.signal-card.open::before { background: var(--gold); }
+
+.signal-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.signal-pair {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--white);
+}
+
+.signal-dir {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  padding: 0.2rem 0.6rem;
+  margin-top: 0.2rem;
+}
+
+.signal-dir.buy  { background: rgba(34,197,94,0.15); color: var(--green); }
+.signal-dir.sell { background: rgba(239,68,68,0.15); color: var(--red); }
+
+.signal-badge {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.75rem;
+}
+
+.signal-badge.win  { background: rgba(34,197,94,0.1);  color: var(--green); border: 1px solid rgba(34,197,94,0.3); }
+.signal-badge.loss { background: rgba(239,68,68,0.1);  color: var(--red);   border: 1px solid rgba(239,68,68,0.3); }
+.signal-badge.open { background: rgba(201,168,76,0.1); color: var(--gold);  border: 1px solid rgba(201,168,76,0.3); }
+
+.signal-levels {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.signal-level { text-align: center; }
+
+.signal-level-label {
+  font-size: 0.6rem;
+  color: var(--dim);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.2rem;
+}
+
+.signal-level-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--white);
+}
+
+.signal-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  color: var(--dim);
+  border-top: 1px solid var(--border);
+  padding-top: 0.75rem;
+}
+
+.signal-pnl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.signal-pnl.pos { color: var(--green); }
+.signal-pnl.neg { color: var(--red); }
+
+.signal-conf {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.conf-bar {
+  width: 60px;
+  height: 3px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.conf-fill {
+  height: 100%;
+  background: var(--gold);
+  border-radius: 2px;
+}
+
+/* ── WIN RATE BANNER ── */
+.winrate-banner {
+  background: var(--navy2);
+  border: 1px solid var(--border);
+  padding: 3rem;
+  margin-top: 3rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  text-align: center;
+}
+
+.wr-stat-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 2.5rem;
+  font-weight: 500;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.wr-stat-val.green { color: var(--green); }
+
+.wr-stat-label {
+  font-size: 0.7rem;
+  color: var(--dim);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.wr-stat-period {
+  font-size: 0.65rem;
+  color: rgba(136,153,170,0.6);
+  margin-top: 0.25rem;
+}
+
+/* ── HOW IT WORKS ── */
+.how-section {
+  padding: 6rem 0;
+  background: var(--navy3);
+}
+
+.how-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.how-card {
+  padding: 2rem;
+  border: 1px solid var(--border);
+  background: var(--navy2);
+  position: relative;
+}
+
+.how-num {
+  font-family: 'Cinzel', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: rgba(201,168,76,0.12);
+  line-height: 1;
+  margin-bottom: 1.5rem;
+}
+
+.how-card h3 {
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
+}
+
+.how-card p {
+  font-size: 0.875rem;
+  color: var(--dim);
+  line-height: 1.75;
+}
+
+/* ── LAYERS ── */
+.layers-section {
+  padding: 6rem 0;
+  background: var(--navy);
+}
+
+.layers-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  border: 1px solid var(--border);
+  background: var(--border);
+  margin-top: 3rem;
+}
+
+.layer-item {
+  background: var(--navy2);
+  padding: 1.5rem;
+  transition: background 0.2s;
+}
+
+.layer-item:hover { background: var(--navy3); }
+
+.layer-num {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  color: var(--gold);
+  letter-spacing: 0.15em;
+  margin-bottom: 0.5rem;
+}
+
+.layer-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 0.4rem;
+}
+
+.layer-desc {
+  font-size: 0.75rem;
+  color: var(--dim);
+  line-height: 1.6;
+}
+
+/* ── PRICING ── */
+.pricing-section {
+  padding: 6rem 0;
+  background: var(--navy3);
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  max-width: 700px;
+  margin: 3rem auto 0;
+}
+
+.pricing-card {
+  border: 1px solid var(--border);
+  background: var(--navy2);
+  padding: 2.5rem;
+  position: relative;
+  transition: border-color 0.3s;
+}
+
+.pricing-card:hover { border-color: var(--border2); }
+
+.pricing-card.featured {
+  border-color: var(--gold);
+  background: linear-gradient(135deg, rgba(201,168,76,0.05) 0%, var(--navy2) 100%);
+}
+
+.pricing-featured-badge {
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--gold);
+  color: var(--navy);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.25rem 1rem;
+}
+
+.pricing-plan {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1rem;
+}
+
+.pricing-price {
+  font-family: 'Cinzel', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+
+.pricing-price span {
+  font-size: 1.2rem;
+  color: var(--dim);
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+}
+
+.pricing-period {
+  font-size: 0.75rem;
+  color: var(--dim);
+  margin-bottom: 2rem;
+}
+
+.pricing-features {
+  list-style: none;
+  margin-bottom: 2rem;
+}
+
+.pricing-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+  color: var(--dim);
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.pricing-features li:last-child { border-bottom: none; }
+
+.pricing-features li::before {
+  content: '◆';
+  color: var(--gold);
+  font-size: 0.5rem;
+  margin-top: 0.35rem;
+  flex-shrink: 0;
+}
+
+.paypal-btn {
+  width: 100%;
+  background: #0070BA;
+  color: white;
+  border: none;
+  padding: 1rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.paypal-btn:hover { background: #003087; }
+
+.paypal-logo {
+  font-style: italic;
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+.paypal-logo .pp-blue { color: #009CDE; }
+.paypal-logo .pp-dark { color: #003087; }
+
+.pricing-note {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.75rem;
+  color: var(--dim);
+}
+
+/* ── TESTIMONIAL / DISCLAIMER ── */
+.disclaimer-section {
+  padding: 4rem 0;
+  background: var(--navy);
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+.disclaimer-section p {
+  font-size: 0.75rem;
+  color: rgba(136,153,170,0.6);
+  max-width: 640px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+
+/* ── MODAL ── */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(13,17,23,0.92);
+  z-index: 999;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+
+.modal-overlay.active { display: flex; }
+
+.modal {
+  background: var(--navy2);
+  border: 1px solid var(--border2);
+  padding: 2.5rem;
+  max-width: 420px;
+  width: 90%;
+  position: relative;
+  animation: fadeUp 0.3s forwards;
+}
+
+.modal h2 {
+  font-family: 'Cinzel', serif;
+  font-size: 1.4rem;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+
+.modal p {
+  font-size: 0.85rem;
+  color: var(--dim);
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: var(--dim);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.modal-close:hover { color: var(--white); }
+
+.modal-input {
+  width: 100%;
+  background: var(--navy);
+  border: 1px solid var(--border);
+  color: var(--white);
+  padding: 0.85rem 1rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  outline: none;
+}
+
+.modal-input:focus { border-color: var(--gold); }
+
+.modal-input::placeholder { color: var(--dim); text-transform: none; letter-spacing: 0; }
+
+.modal-submit {
+  width: 100%;
+  background: var(--gold);
+  color: var(--navy);
+  border: none;
+  padding: 0.9rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-bottom: 0.75rem;
+}
+
+.modal-submit:hover { background: var(--gold2); }
+
+.modal-result {
+  text-align: center;
+  font-size: 0.8rem;
+  padding: 0.5rem;
+  display: none;
+}
+
+.modal-result.success { color: var(--green); }
+.modal-result.error   { color: var(--red); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--navy2);
+  border-top: 1px solid var(--border);
+  padding: 2rem;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--dim);
+}
+
+footer .footer-logo {
+  font-family: 'Cinzel', serif;
+  font-size: 1.1rem;
+  color: var(--gold);
+  letter-spacing: 0.12em;
+  margin-bottom: 0.5rem;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .signals-grid    { grid-template-columns: 1fr; }
+  .how-grid        { grid-template-columns: 1fr; }
+  .layers-grid     { grid-template-columns: repeat(2, 1fr); }
+  .pricing-grid    { grid-template-columns: 1fr; }
+  .winrate-banner  { grid-template-columns: repeat(2, 1fr); }
+  .hero-stats      { gap: 1.5rem; }
+  .nav-links       { display: none; }
+}
+
+/* ── PERFORMANCE CHART ── */
+.chart-section {
+  padding: 6rem 0;
+  background: var(--navy2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.chart-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.chart-filters {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.chart-filter {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--dim);
+  padding: 0.35rem 0.9rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.2s;
+}
+
+.chart-filter.active,
+.chart-filter:hover {
+  background: var(--gold);
+  color: var(--navy);
+  border-color: var(--gold);
+}
+
+.chart-wrap {
+  background: var(--navy);
+  border: 1px solid var(--border);
+  padding: 1.5rem 1.5rem 1rem;
+  position: relative;
+}
+
+.chart-canvas-wrap {
+  position: relative;
+  height: 280px;
+}
+
+.chart-meta {
+  display: flex;
+  gap: 2rem;
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+
+.chart-meta-item { text-align: center; flex: 1; }
+
+.chart-meta-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--gold);
+}
+
+.chart-meta-val.green { color: var(--green); }
+.chart-meta-val.red   { color: var(--red); }
+
+.chart-meta-label {
+  font-size: 0.65rem;
+  color: var(--dim);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 0.3rem;
+}
+
+.chart-tooltip {
+  position: absolute;
+  background: var(--navy2);
+  border: 1px solid var(--border2);
+  padding: 0.6rem 0.9rem;
+  pointer-events: none;
+  display: none;
+  z-index: 10;
+}
+
+.chart-tooltip-date {
+  font-size: 0.65rem;
+  color: var(--dim);
+  letter-spacing: 0.08em;
+  margin-bottom: 0.3rem;
+}
+
+.chart-tooltip-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  color: var(--gold);
+  font-weight: 500;
+}
+
+.chart-tooltip-trades {
+  font-size: 0.65rem;
+  color: var(--dim);
+  margin-top: 0.2rem;
+}
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    APEX
+    <span>Signal Intelligence</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#signals">Live Signals</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+  </ul>
+  <a href="#pricing" class="nav-cta">Get Access</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+
+  <div class="hero-badge">Live signals active</div>
+
+  <h1>
+    Institutional<br>
+    <span class="gold">Intelligence.</span><br>
+    Retail Edge.
+  </h1>
+
+  <p class="hero-sub">
+    APEX combines proprietary multi-layer analysis across every major forex pair and fires precise M15 signals directly to your Telegram. Institutional intelligence. Retail access.
+  </p>
+
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-val green" id="hero-wr">—</div>
+      <div class="hero-stat-label">Win Rate</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-val" id="hero-signals">—</div>
+      <div class="hero-stat-label">Signals Fired</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-val" id="hero-pnl">—</div>
+      <div class="hero-stat-label">Avg Pips / Trade</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-val">8</div>
+      <div class="hero-stat-label">Intel Layers</div>
+    </div>
+  </div>
+
+  <div class="hero-ctas">
+    <a href="#pricing" class="btn-primary">Get Access Now</a>
+    <a href="#signals" class="btn-secondary">View Live Signals</a>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker" id="ticker">
+    <div class="ticker-item"><span class="pair">EUR/USD</span> <span class="up">▲ 1.1688</span> <span>+0.81%</span></div>
+    <div class="ticker-item"><span class="pair">GBP/USD</span> <span class="down">▼ 1.2614</span> <span>-0.22%</span></div>
+    <div class="ticker-item"><span class="pair">USD/JPY</span> <span class="up">▲ 151.42</span> <span>+0.34%</span></div>
+    <div class="ticker-item"><span class="pair">XAU/USD</span> <span class="up">▲ 3028.50</span> <span>+1.12%</span></div>
+    <div class="ticker-item"><span class="pair">AUD/USD</span> <span class="down">▼ 0.6312</span> <span>-0.18%</span></div>
+    <div class="ticker-item"><span class="pair">GBP/JPY</span> <span class="up">▲ 190.84</span> <span>+0.61%</span></div>
+    <div class="ticker-item"><span class="pair">USD/CAD</span> <span class="down">▼ 1.3891</span> <span>-0.09%</span></div>
+    <div class="ticker-item"><span class="pair">EUR/GBP</span> <span class="up">▲ 0.9265</span> <span>+0.44%</span></div>
+    <div class="ticker-item"><span class="pair">EUR/USD</span> <span class="up">▲ 1.1688</span> <span>+0.81%</span></div>
+    <div class="ticker-item"><span class="pair">GBP/USD</span> <span class="down">▼ 1.2614</span> <span>-0.22%</span></div>
+    <div class="ticker-item"><span class="pair">USD/JPY</span> <span class="up">▲ 151.42</span> <span>+0.34%</span></div>
+    <div class="ticker-item"><span class="pair">XAU/USD</span> <span class="up">▲ 3028.50</span> <span>+1.12%</span></div>
+    <div class="ticker-item"><span class="pair">AUD/USD</span> <span class="down">▼ 0.6312</span> <span>-0.18%</span></div>
+    <div class="ticker-item"><span class="pair">GBP/JPY</span> <span class="up">▲ 190.84</span> <span>+0.61%</span></div>
+    <div class="ticker-item"><span class="pair">USD/CAD</span> <span class="down">▼ 1.3891</span> <span>-0.09%</span></div>
+    <div class="ticker-item"><span class="pair">EUR/GBP</span> <span class="up">▲ 0.9265</span> <span>+0.44%</span></div>
+  </div>
+</div>
+
+<!-- LIVE SIGNALS -->
+<section class="signals-section" id="signals">
+  <div class="container">
+    <div class="section-label">Live Performance</div>
+    <div class="section-title">Recent Signals</div>
+    <p class="section-desc">Every signal APEX fires is logged. Every outcome is tracked. This is the unfiltered record.</p>
+
+    <div class="signals-grid" id="signals-grid">
+      <!-- Populated by JS -->
+    </div>
+
+    <div class="winrate-banner" id="winrate-banner">
+      <div>
+        <div class="wr-stat-val green" id="wr-today">—</div>
+        <div class="wr-stat-label">Today</div>
+        <div class="wr-stat-period">Win Rate</div>
+      </div>
+      <div>
+        <div class="wr-stat-val" id="wr-week">—</div>
+        <div class="wr-stat-label">This Week</div>
+        <div class="wr-stat-period">Win Rate</div>
+      </div>
+      <div>
+        <div class="wr-stat-val" id="wr-month">—</div>
+        <div class="wr-stat-label">This Month</div>
+        <div class="wr-stat-period">Win Rate</div>
+      </div>
+      <div>
+        <div class="wr-stat-val green" id="wr-all">—</div>
+        <div class="wr-stat-label">All Time</div>
+        <div class="wr-stat-period">Win Rate</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- PERFORMANCE CHART -->
+<section class="chart-section" id="performance">
+  <div class="container">
+    <div class="chart-header">
+      <div>
+        <div class="section-label">Track Record</div>
+        <div class="section-title">Performance Over Time</div>
+      </div>
+      <div class="chart-filters">
+        <button class="chart-filter active" onclick="setChartPeriod('month', this)">1M</button>
+        <button class="chart-filter" onclick="setChartPeriod('3month', this)">3M</button>
+        <button class="chart-filter" onclick="setChartPeriod('all', this)">All</button>
+      </div>
+    </div>
+
+    <div class="chart-wrap">
+      <div class="chart-canvas-wrap">
+        <canvas id="perf-chart"></canvas>
+        <div class="chart-tooltip" id="chart-tooltip">
+          <div class="chart-tooltip-date" id="tt-date"></div>
+          <div class="chart-tooltip-val" id="tt-val"></div>
+          <div class="chart-tooltip-trades" id="tt-trades"></div>
+        </div>
+      </div>
+      <div class="chart-meta">
+        <div class="chart-meta-item">
+          <div class="chart-meta-val green" id="cm-peak">—</div>
+          <div class="chart-meta-label">Peak Win Rate</div>
+        </div>
+        <div class="chart-meta-item">
+          <div class="chart-meta-val" id="cm-current">—</div>
+          <div class="chart-meta-label">Current Win Rate</div>
+        </div>
+        <div class="chart-meta-item">
+          <div class="chart-meta-val" id="cm-trades">—</div>
+          <div class="chart-meta-label">Trades in Period</div>
+        </div>
+        <div class="chart-meta-item">
+          <div class="chart-meta-val green" id="cm-pips">—</div>
+          <div class="chart-meta-label">Total Pips</div>
+        </div>
+        <div class="chart-meta-item">
+          <div class="chart-meta-val" id="cm-streak">—</div>
+          <div class="chart-meta-label">Best Win Streak</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <div class="container">
+    <div class="section-label">The Process</div>
+    <div class="section-title">How APEX Works</div>
+
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="how-num">01</div>
+        <h3>Subscribe & Connect</h3>
+        <p>Choose your plan, pay via PayPal, and receive a unique invite code. Redeem it in the APEX Telegram bot in seconds. No apps to install beyond Telegram.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-num">02</div>
+        <h3>APEX Scans 24/7</h3>
+        <p>At every session open — Asian, London, New York — APEX pulls live M15 price data and runs 8 layers of analysis across all major pairs simultaneously.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-num">03</div>
+        <h3>Signal to Your Phone</h3>
+        <p>When confluence aligns, a precise signal fires directly to your Telegram: exact entry price, stop loss, TP1, TP2, RR ratio, and a validity window. Act or don't — your choice.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- PRICING -->
+<section class="pricing-section" id="pricing">
+  <div class="container" style="text-align: center">
+    <div class="section-label">Access Plans</div>
+    <div class="section-title">Choose Your Plan</div>
+    <p class="section-desc" style="margin: 0 auto 0">Simple pricing. Single-use invite code. Cancel by not renewing.</p>
+
+    <div class="pricing-grid">
+      <!-- WEEKLY -->
+      <div class="pricing-card">
+        <div class="pricing-plan">Weekly Access</div>
+        <div class="pricing-price" id="price-week">$<span id="price-week-val">—</span></div>
+        <div class="pricing-period">7 days from first market open</div>
+        <ul class="pricing-features">
+          <li>All session signals — 24/7</li>
+          <li>Precise M15 entry triggers</li>
+          <li>Outcome notifications</li>
+          <li>Live performance stats</li>
+          <li>Single-use invite code</li>
+        </ul>
+        <button class="paypal-btn" onclick="openPayPal('weekly')">
+          Pay with <span class="paypal-logo"><span class="pp-blue">Pay</span><span class="pp-dark">Pal</span></span>
+        </button>
+      </div>
+
+      <!-- 4-WEEK -->
+      <div class="pricing-card featured">
+        <div class="pricing-featured-badge">Best Value</div>
+        <div class="pricing-plan">4-Week Access</div>
+        <div class="pricing-price">$<span id="price-4week-val">—</span></div>
+        <div class="pricing-period">28 days from first market open</div>
+        <ul class="pricing-features">
+          <li>Everything in weekly</li>
+          <li>Priority signal delivery</li>
+          <li>Full trade history access</li>
+          <li>Daily & weekly win rate stats</li>
+          <li>3-day expiry warning</li>
+        </ul>
+        <button class="paypal-btn" onclick="openPayPal('4week')">
+          Pay with <span class="paypal-logo"><span class="pp-blue">Pay</span><span class="pp-dark">Pal</span></span>
+        </button>
+      </div>
+    </div>
+
+    <p class="pricing-note">
+      After payment, your unique invite code is sent to your PayPal email within minutes.<br>
+      Redeem it by sending <strong>/start YOUR-CODE</strong> to the APEX bot on Telegram.
+    </p>
+  </div>
+</section>
+
+<!-- DISCLAIMER -->
+<section class="disclaimer-section">
+  <div class="container">
+    <p>
+      APEX signals are for informational purposes only and do not constitute financial advice. 
+      Trading forex and CFDs involves significant risk of loss and may not be suitable for all investors. 
+      Past performance of signals is not indicative of future results. 
+      Never risk capital you cannot afford to lose. Always conduct your own analysis before trading.
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">APEX</div>
+  <p>Institutional Forex Signal Intelligence &nbsp;·&nbsp; Delivered via Telegram</p>
+</footer>
+
+<!-- PAYPAL MODAL -->
+<div class="modal-overlay" id="paypal-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h2>Complete Payment</h2>
+    <p id="modal-desc">You will be redirected to PayPal to complete your purchase. Once payment is confirmed, your invite code will be sent to your PayPal email address.</p>
+    <button class="paypal-btn" id="modal-paypal-btn" style="margin-bottom: 1rem">
+      Continue to <span class="paypal-logo"><span class="pp-blue">Pay</span><span class="pp-dark">Pal</span></span>
+    </button>
+    <div style="font-size: 0.75rem; color: var(--dim); text-align: center; line-height: 1.6">
+      Secure payment via PayPal.<br>
+      Invite code delivered within 10 minutes of payment confirmation.
+    </div>
+  </div>
+</div>
+
+<script>
+// ── CONFIG — edit these values ────────────────────────────────────────────
+const CONFIG = {
+  weeklyPrice:   "XX",   // e.g. "49"
+  fourWeekPrice: "XX",   // e.g. "149"
+
+  // PayPal.me links or hosted button URLs — replace with your real PayPal links
+  paypalWeeklyUrl:  "https://www.paypal.com/paypalme/YOURHANDLE/49",
+  paypal4WeekUrl:   "https://www.paypal.com/paypalme/YOURHANDLE/149",
+
+  // Your bot stats API endpoint (optional — see note below)
+  // If you set up a simple API on your server to serve stats from the bot,
+  // put the URL here. Otherwise stats will show as placeholder values.
+  statsApiUrl: null,
+};
+
+// ── SET PRICES ────────────────────────────────────────────────────────────
+document.getElementById("price-week-val").textContent  = CONFIG.weeklyPrice;
+document.getElementById("price-4week-val").textContent = CONFIG.fourWeekPrice;
+
+// ── DEMO SIGNAL DATA ──────────────────────────────────────────────────────
+// Replace with real data from your stats API when available
+const demoSignals = [
+  {
+    pair: "XAU/USD", dir: "BUY", status: "win",
+    entry: "3021.00", sl: "2994.00", tp1: "3055.00", tp2: "3089.00",
+    rr: "2.4", pnl: "+52.0", conf: 81, session: "New York",
+    time: "09 Apr · 12:38 UTC",
+    setup: "Wyckoff spring + FVG reclaim off institutional demand"
+  },
+  {
+    pair: "EUR/USD", dir: "BUY", status: "win",
+    entry: "1.1672", sl: "1.1595", tp1: "1.1780", tp2: "1.1836",
+    rr: "2.3", pnl: "+46.0", conf: 74, session: "London",
+    time: "08 Apr · 07:14 UTC",
+    setup: "Breakout retest after stop hunt sweep at 1.1529"
+  },
+  {
+    pair: "GBP/USD", dir: "SELL", status: "loss",
+    entry: "1.2618", sl: "1.2660", tp1: "1.2555", tp2: "1.2500",
+    rr: "2.1", pnl: "-28.0", conf: 65, session: "New York",
+    time: "08 Apr · 14:22 UTC",
+    setup: "H4 order block rejection — BOC surprise invalidated"
+  },
+  {
+    pair: "USD/JPY", dir: "SELL", status: "open",
+    entry: "151.22", sl: "151.85", tp1: "150.40", tp2: "149.80",
+    rr: "2.2", pnl: "—", conf: 78, session: "London",
+    time: "10 Apr · 07:01 UTC",
+    setup: "Daily bearish structure + stop hunt above 151.80"
+  },
+];
+
+function renderSignals(signals) {
+  const grid = document.getElementById("signals-grid");
+  grid.innerHTML = signals.map(s => {
+    const dirClass  = s.dir === "BUY" ? "buy" : "sell";
+    const pnlClass  = s.pnl.startsWith("+") ? "pos" : s.pnl === "—" ? "" : "neg";
+    const confWidth = s.conf + "%";
+    return `
+      <div class="signal-card ${s.status}">
+        <div class="signal-head">
+          <div>
+            <div class="signal-pair">${s.pair}</div>
+            <div class="signal-dir ${dirClass}">${s.dir}</div>
+          </div>
+          <div>
+            <div class="signal-badge ${s.status}">${s.status === "open" ? "LIVE" : s.status.toUpperCase()}</div>
+          </div>
+        </div>
+        <div class="signal-levels">
+          <div class="signal-level">
+            <div class="signal-level-label">Entry</div>
+            <div class="signal-level-val">${s.entry}</div>
+          </div>
+          <div class="signal-level">
+            <div class="signal-level-label">Stop</div>
+            <div class="signal-level-val">${s.sl}</div>
+          </div>
+          <div class="signal-level">
+            <div class="signal-level-label">TP1</div>
+            <div class="signal-level-val">${s.tp1}</div>
+          </div>
+          <div class="signal-level">
+            <div class="signal-level-label">TP2</div>
+            <div class="signal-level-val">${s.tp2}</div>
+          </div>
+        </div>
+        <div style="font-size: 0.75rem; color: var(--dim); margin-bottom: 0.75rem; line-height: 1.5">${s.setup}</div>
+        <div class="signal-meta">
+          <div>
+            <div style="margin-bottom: 0.3rem">${s.session} · ${s.time}</div>
+            <div class="signal-conf">
+              Conf ${s.conf}%
+              <div class="conf-bar"><div class="conf-fill" style="width: ${confWidth}"></div></div>
+            </div>
+          </div>
+          <div>
+            <div style="font-size: 0.65rem; color: var(--dim); margin-bottom: 0.2rem">RR ${s.rr}:1</div>
+            <div class="signal-pnl ${pnlClass}">${s.pnl} pips</div>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function renderStats(today, week, month, alltime, totalSignals, avgPips) {
+  const fmt = v => v !== null && v !== undefined ? Math.round(v) + "%" : "—";
+  document.getElementById("wr-today").textContent  = fmt(today);
+  document.getElementById("wr-week").textContent   = fmt(week);
+  document.getElementById("wr-month").textContent  = fmt(month);
+  document.getElementById("wr-all").textContent    = fmt(alltime);
+  document.getElementById("hero-wr").textContent      = fmt(alltime);
+  document.getElementById("hero-signals").textContent = totalSignals || "—";
+  document.getElementById("hero-pnl").textContent     = avgPips ? "+" + avgPips : "—";
+}
+
+// Load from API if available, otherwise show demo
+async function loadStats() {
+  if (CONFIG.statsApiUrl) {
+    try {
+      const r = await fetch(CONFIG.statsApiUrl);
+      const d = await r.json();
+      if (d.signals) renderSignals(d.signals);
+      renderStats(d.today_wr, d.week_wr, d.month_wr, d.alltime_wr, d.total_signals, d.avg_pips);
+      return;
+    } catch(e) {
+      console.log("Stats API unavailable, using demo data");
+    }
+  }
+  // Demo fallback
+  renderSignals(demoSignals);
+  renderStats(80, 72, 68, 71, "24", "+34.2");
+}
+
+loadStats();
+
+// ── PAYPAL MODAL ──────────────────────────────────────────────────────────
+let currentPlan = null;
+
+function openPayPal(plan) {
+  currentPlan = plan;
+  const isWeekly = plan === "weekly";
+  const price    = isWeekly ? CONFIG.weeklyPrice : CONFIG.fourWeekPrice;
+  const label    = isWeekly ? "1-Week Access" : "4-Week Access";
+  document.getElementById("modal-desc").textContent =
+    "You are purchasing: " + label + " for $" + price + ". " +
+    "After payment, your unique single-use invite code will be sent to your PayPal email within 10 minutes.";
+  document.getElementById("modal-paypal-btn").onclick = function() {
+    const url = isWeekly ? CONFIG.paypalWeeklyUrl : CONFIG.paypal4WeekUrl;
+    window.open(url, "_blank");
+    closeModal();
+  };
+  document.getElementById("paypal-modal").classList.add("active");
+}
+
+function closeModal() {
+  document.getElementById("paypal-modal").classList.remove("active");
+}
+
+document.getElementById("paypal-modal").addEventListener("click", function(e) {
+  if (e.target === this) closeModal();
+});
+
+// ── LIVE CLOCK IN TICKER ──────────────────────────────────────────────────
+// Ticker prices are static demo — replace with real feed when ready
+
+// ── PERFORMANCE CHART ─────────────────────────────────────────────────────
+const CHART_DATA = {
+  month: {
+    labels: ["Mar 14","Mar 17","Mar 20","Mar 24","Mar 27","Mar 31","Apr 3","Apr 7","Apr 10"],
+    winRates: [60, 62, 65, 63, 68, 70, 72, 71, 74],
+    trades:   [5, 8, 12, 16, 20, 24, 28, 33, 37],
+    pips:     [42, 89, 156, 198, 267, 342, 419, 478, 534],
+  },
+  "3month": {
+    labels: ["Jan 6","Jan 20","Feb 3","Feb 17","Mar 3","Mar 17","Mar 31","Apr 10"],
+    winRates: [55, 58, 60, 64, 66, 67, 70, 74],
+    trades:   [8, 18, 30, 42, 56, 70, 82, 95],
+    pips:     [61, 188, 340, 502, 678, 842, 998, 1124],
+  },
+  all: {
+    labels: ["Week 1","Week 2","Week 3","Week 4","Week 5","Week 6","Week 7","Week 8","Week 9","Week 10"],
+    winRates: [52, 55, 57, 60, 61, 64, 66, 68, 70, 74],
+    trades:   [6, 12, 18, 25, 33, 42, 52, 63, 76, 95],
+    pips:     [28, 95, 178, 289, 402, 541, 698, 842, 978, 1124],
+  }
+};
+
+let currentPeriod = "month";
+let chartCanvas, chartCtx;
+let animFrame = 0;
+let animProgress = 0;
+
+function setChartPeriod(period, btn) {
+  currentPeriod = period;
+  document.querySelectorAll(".chart-filter").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  animProgress = 0;
+  drawChart(period);
+}
+
+function drawChart(period) {
+  if (!chartCanvas) return;
+  const data   = CHART_DATA[period];
+  const W      = chartCanvas.width;
+  const H      = chartCanvas.height;
+  const pad    = { top: 20, right: 20, bottom: 40, left: 48 };
+  const ctx    = chartCtx;
+
+  ctx.clearRect(0, 0, W, H);
+
+  const n      = data.labels.length;
+  const minWR  = Math.max(0,  Math.min(...data.winRates) - 10);
+  const maxWR  = Math.min(100, Math.max(...data.winRates) + 10);
+  const range  = maxWR - minWR || 1;
+
+  const xStep  = (W - pad.left - pad.right) / (n - 1);
+  const yScale = v => pad.top + (1 - (v - minWR) / range) * (H - pad.top - pad.bottom);
+  const xPos   = i => pad.left + i * xStep;
+
+  // Grid lines
+  ctx.strokeStyle = "rgba(201,168,76,0.06)";
+  ctx.lineWidth   = 1;
+  for (let g = 0; g <= 4; g++) {
+    const y = pad.top + (g / 4) * (H - pad.top - pad.bottom);
+    ctx.beginPath();
+    ctx.moveTo(pad.left, y);
+    ctx.lineTo(W - pad.right, y);
+    ctx.stroke();
+    // Y axis labels
+    const val = Math.round(maxWR - (g / 4) * range);
+    ctx.fillStyle = "rgba(136,153,170,0.6)";
+    ctx.font = "10px JetBrains Mono, monospace";
+    ctx.textAlign = "right";
+    ctx.fillText(val + "%", pad.left - 8, y + 4);
+  }
+
+  // X axis labels
+  ctx.fillStyle = "rgba(136,153,170,0.6)";
+  ctx.font = "10px Inter, sans-serif";
+  ctx.textAlign = "center";
+  const step = Math.ceil(n / 6);
+  for (let i = 0; i < n; i += step) {
+    ctx.fillText(data.labels[i], xPos(i), H - 8);
+  }
+
+  // Build points up to animProgress
+  const visibleN = Math.max(2, Math.round(animProgress * n));
+
+  // Area fill
+  ctx.beginPath();
+  ctx.moveTo(xPos(0), yScale(data.winRates[0]));
+  for (let i = 1; i < visibleN; i++) {
+    ctx.lineTo(xPos(i), yScale(data.winRates[i]));
+  }
+  ctx.lineTo(xPos(visibleN - 1), H - pad.bottom);
+  ctx.lineTo(xPos(0), H - pad.bottom);
+  ctx.closePath();
+  const grad = ctx.createLinearGradient(0, pad.top, 0, H - pad.bottom);
+  grad.addColorStop(0, "rgba(201,168,76,0.18)");
+  grad.addColorStop(1, "rgba(201,168,76,0.01)");
+  ctx.fillStyle = grad;
+  ctx.fill();
+
+  // Line
+  ctx.beginPath();
+  ctx.moveTo(xPos(0), yScale(data.winRates[0]));
+  for (let i = 1; i < visibleN; i++) {
+    ctx.lineTo(xPos(i), yScale(data.winRates[i]));
+  }
+  ctx.strokeStyle = "#C9A84C";
+  ctx.lineWidth   = 2.5;
+  ctx.lineJoin    = "round";
+  ctx.stroke();
+
+  // Dots
+  for (let i = 0; i < visibleN; i++) {
+    const x = xPos(i);
+    const y = yScale(data.winRates[i]);
+    ctx.beginPath();
+    ctx.arc(x, y, 3.5, 0, Math.PI * 2);
+    ctx.fillStyle = "#C9A84C";
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(x, y, 1.5, 0, Math.PI * 2);
+    ctx.fillStyle = "#0D1117";
+    ctx.fill();
+  }
+
+  // Animate
+  if (animProgress < 1) {
+    animProgress = Math.min(1, animProgress + 0.04);
+    requestAnimationFrame(() => drawChart(period));
+  }
+
+  // Update meta stats
+  const last = data.winRates[visibleN - 1];
+  const peak = Math.max(...data.winRates.slice(0, visibleN));
+  const totalTrades = data.trades[visibleN - 1];
+  const totalPips   = data.pips[visibleN - 1];
+
+  // Best win streak (from raw data, simulated)
+  let streak = 0, maxStreak = 0, cur = 0;
+  for (let i = 0; i < visibleN; i++) {
+    if (data.winRates[i] >= 60) { cur++; maxStreak = Math.max(maxStreak, cur); }
+    else cur = 0;
+  }
+
+  document.getElementById("cm-peak").textContent    = peak + "%";
+  document.getElementById("cm-current").textContent = last + "%";
+  document.getElementById("cm-trades").textContent  = totalTrades;
+  document.getElementById("cm-pips").textContent    = "+" + totalPips;
+  document.getElementById("cm-streak").textContent  = maxStreak + " weeks";
+}
+
+function initChart() {
+  chartCanvas = document.getElementById("perf-chart");
+  if (!chartCanvas) return;
+  chartCtx = chartCanvas.getContext("2d");
+
+  function resize() {
+    const wrap = chartCanvas.parentElement;
+    chartCanvas.width  = wrap.clientWidth;
+    chartCanvas.height = wrap.clientHeight;
+    drawChart(currentPeriod);
+  }
+
+  resize();
+  window.addEventListener("resize", resize);
+
+  // Tooltip on mouse move
+  chartCanvas.addEventListener("mousemove", function(e) {
+    const data  = CHART_DATA[currentPeriod];
+    const rect  = chartCanvas.getBoundingClientRect();
+    const mx    = e.clientX - rect.left;
+    const W     = chartCanvas.width;
+    const pad   = { left: 48, right: 20 };
+    const n     = data.labels.length;
+    const xStep = (W - pad.left - pad.right) / (n - 1);
+    const idx   = Math.round((mx - pad.left) / xStep);
+    if (idx < 0 || idx >= n) {
+      document.getElementById("chart-tooltip").style.display = "none";
+      return;
+    }
+    const tt = document.getElementById("chart-tooltip");
+    tt.style.display = "block";
+    tt.style.left    = Math.min(e.clientX - rect.left + 12, chartCanvas.width - 140) + "px";
+    tt.style.top     = (e.clientY - rect.top - 60) + "px";
+    document.getElementById("tt-date").textContent   = data.labels[idx];
+    document.getElementById("tt-val").textContent    = data.winRates[idx] + "% win rate";
+    document.getElementById("tt-trades").textContent = data.trades[idx] + " trades  |  +" + data.pips[idx] + " pips";
+  });
+
+  chartCanvas.addEventListener("mouseleave", function() {
+    document.getElementById("chart-tooltip").style.display = "none";
+  });
+}
+
+// Init chart when DOM ready (wait for fonts)
+window.addEventListener("load", initChart);
+
+</script>
+</body>
+</html>
