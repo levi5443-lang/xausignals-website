@@ -1019,6 +1019,40 @@ footer .footer-logo {
   margin-top: 0.2rem;
 }
 
+
+/* ── CURRENCY DISPLAY ── */
+.pricing-local {
+  font-size: 0.75rem;
+  color: var(--dim);
+  margin-bottom: 1.25rem;
+  min-height: 1.1rem;
+  letter-spacing: 0.04em;
+}
+
+.currency-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--navy);
+  border: 1px solid var(--border);
+  padding: 0.25rem 0.75rem;
+  font-size: 0.65rem;
+  color: var(--dim);
+  letter-spacing: 0.08em;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.currency-badge:hover { border-color: var(--gold); color: var(--gold); }
+.currency-badge .flag { font-size: 0.85rem; }
+.currency-badge .loading { 
+  width: 8px; height: 8px; border-radius: 50%;
+  border: 1.5px solid var(--dim); border-top-color: var(--gold);
+  animation: spin 0.8s linear infinite; display: inline-block;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
 </style>
 </head>
 <body>
@@ -1227,7 +1261,10 @@ footer .footer-logo {
       <!-- WEEKLY -->
       <div class="pricing-card">
         <div class="pricing-plan">Weekly Access</div>
-        <div class="pricing-price" id="price-week">$<span id="price-week-val">—</span></div>
+        <div class="pricing-price" id="price-week">
+          <span id="price-week-symbol">$</span><span id="price-week-val">49</span>
+        </div>
+        <div class="pricing-local" id="price-week-local"></div>
         <div class="pricing-period">7 days from first market open</div>
         <ul class="pricing-features">
           <li>All session signals — 24/7</li>
@@ -1245,7 +1282,10 @@ footer .footer-logo {
       <div class="pricing-card featured">
         <div class="pricing-featured-badge">Best Value</div>
         <div class="pricing-plan">4-Week Access</div>
-        <div class="pricing-price">$<span id="price-4week-val">—</span></div>
+        <div class="pricing-price">
+          <span id="price-4week-symbol">$</span><span id="price-4week-val">149</span>
+        </div>
+        <div class="pricing-local" id="price-4week-local"></div>
         <div class="pricing-period">28 days from first market open</div>
         <ul class="pricing-features">
           <li>Everything in weekly</li>
@@ -1318,8 +1358,103 @@ const CONFIG = {
 };
 
 // ── SET PRICES ────────────────────────────────────────────────────────────
-document.getElementById("price-week-val").textContent  = CONFIG.weeklyPrice;
-document.getElementById("price-4week-val").textContent = CONFIG.fourWeekPrice;
+// ── CURRENCY DETECTION & PRICE DISPLAY ──────────────────────────
+const CURRENCY_SYMBOLS = {
+  USD:"$", EUR:"€", GBP:"£", AUD:"A$", CAD:"C$", NZD:"NZ$",
+  JPY:"¥", CHF:"CHF ", SGD:"S$", HKD:"HK$", SEK:"kr", NOK:"kr",
+  DKK:"kr", ZAR:"R", INR:"₹", BRL:"R$", MXN:"MX$", AED:"AED ",
+  SAR:"SAR ", KWD:"KWD ", QAR:"QAR ", TRY:"₺", PLN:"zł",
+  CZK:"Kč", HUF:"Ft", RON:"lei", BGN:"лв", HRK:"kn",
+  PHP:"₱", IDR:"Rp", MYR:"RM", THB:"฿", KRW:"₩", TWD:"NT$",
+  VND:"₫", NGN:"₦", KES:"KSh", GHS:"GH₵", EGP:"E£",
+};
+
+const COUNTRY_CURRENCY = {
+  US:"USD",GB:"GBP",EU:"EUR",DE:"EUR",FR:"EUR",IT:"EUR",ES:"EUR",
+  NL:"EUR",BE:"EUR",AT:"EUR",PT:"EUR",FI:"EUR",IE:"EUR",GR:"EUR",
+  AU:"AUD",CA:"CAD",NZ:"NZD",JP:"JPY",CH:"CHF",SG:"SGD",HK:"HKD",
+  SE:"SEK",NO:"NOK",DK:"DKK",ZA:"ZAR",IN:"INR",BR:"BRL",MX:"MXN",
+  AE:"AED",SA:"SAR",KW:"KWD",QA:"QAR",TR:"TRY",PL:"PLN",CZ:"CZK",
+  HU:"HUF",RO:"RON",BG:"BGN",PH:"PHP",ID:"IDR",MY:"MYR",TH:"THB",
+  KR:"KRW",TW:"TWD",VN:"VND",NG:"NGN",KE:"KES",GH:"GHS",EG:"EGP",
+};
+
+let detectedCurrency = "USD";
+let detectedCountry  = "";
+let exchangeRates    = {};
+
+function formatPrice(usdAmount, currency) {
+  const rate = exchangeRates[currency];
+  if (!rate || currency === "USD") return null;
+  const converted = usdAmount * rate;
+  const sym = CURRENCY_SYMBOLS[currency] || currency + " ";
+  let formatted;
+  if (["JPY","KRW","VND","IDR","HUF","CZK"].includes(currency)) {
+    formatted = sym + Math.round(converted).toLocaleString();
+  } else if (["KWD"].includes(currency)) {
+    formatted = sym + converted.toFixed(3);
+  } else {
+    formatted = sym + converted.toFixed(2);
+  }
+  return formatted;
+}
+
+function updatePriceDisplay(currency) {
+  const weekUSD  = parseFloat(CONFIG.weeklyPrice);
+  const fourUSD  = parseFloat(CONFIG.fourWeekPrice);
+  const sym      = currency === "USD" ? "$" : (CURRENCY_SYMBOLS[currency] || "$");
+
+  // Update symbol and base USD value
+  document.getElementById("price-week-val").textContent  = weekUSD;
+  document.getElementById("price-4week-val").textContent = fourUSD;
+  document.getElementById("price-week-symbol").textContent  = "$";
+  document.getElementById("price-4week-symbol").textContent = "$";
+
+  // Show local equivalent below
+  const weekLocal  = formatPrice(weekUSD,  currency);
+  const fourLocal  = formatPrice(fourUSD,  currency);
+  const weekEl     = document.getElementById("price-week-local");
+  const fourEl     = document.getElementById("price-4week-local");
+
+  if (weekLocal && currency !== "USD") {
+    weekEl.textContent = "≈ " + weekLocal + " " + currency;
+    fourEl.textContent = "≈ " + fourLocal + " " + currency;
+  } else {
+    weekEl.textContent = "";
+    fourEl.textContent = "";
+  }
+}
+
+async function fetchRates() {
+  try {
+    const r = await fetch("https://api.exchangerate-api.com/v4/latest/USD");
+    const d = await r.json();
+    exchangeRates = d.rates || {};
+    return true;
+  } catch(e) {
+    log.console("Exchange rate fetch failed:", e);
+    return false;
+  }
+}
+
+async function detectCurrency() {
+  try {
+    const r = await fetch("https://ipapi.co/json/");
+    const d = await r.json();
+    detectedCountry  = d.country_code || "US";
+    detectedCurrency = d.currency || COUNTRY_CURRENCY[detectedCountry] || "USD";
+    return detectedCurrency;
+  } catch(e) {
+    return "USD";
+  }
+}
+
+async function initCurrency() {
+  await Promise.all([fetchRates(), detectCurrency()]);
+  updatePriceDisplay(detectedCurrency);
+}
+
+initCurrency();
 
 // ── DEMO SIGNAL DATA ──────────────────────────────────────────────────────
 // Replace with real data from your stats API when available
