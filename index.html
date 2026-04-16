@@ -2467,34 +2467,35 @@ function buildLiveChartData(series) {
 function renderLiveSignals(signals) {
   const wrap = document.getElementById("signals-wrap");
   if (!wrap) return;
-  wrap.innerHTML = signals.map(s => {
-    const isWin  = s.result === "WIN";
-    const isLoss = s.result === "LOSS";
-    const cls    = isWin ? "win" : isLoss ? "loss" : "open";
-    const pips   = s.pips ? (s.pips > 0 ? "+" + s.pips : s.pips) + " pips" : "—";
-    const conf   = s.confidence ? Math.round(s.confidence) : "—";
-    const rr     = s.rr ? s.rr + ":1" : "—";
-    return \`<div class="signal-card \${cls}">
-      <div class="signal-header">
-        <span class="signal-pair">\${s.pair || "—"}</span>
-        <span class="signal-dir \${(s.direction||"").toLowerCase()}">\${s.direction || "—"}</span>
-        <span class="signal-grade">Grade \${s.grade || "—"}</span>
-      </div>
-      <div class="signal-meta">
-        <span>\${s.session || "—"}</span>
-        <span>Conf: \${conf}/10</span>
-        <span>RR: \${rr}</span>
-      </div>
-      <div class="signal-levels">
-        <div><span class="lvl-label">Entry</span><span class="lvl-val">\${s.entry || "—"}</span></div>
-        <div><span class="lvl-label">SL</span><span class="lvl-val">\${s.sl || "—"}</span></div>
-        <div><span class="lvl-label">TP1</span><span class="lvl-val">\${s.tp1 || "—"}</span></div>
-        <div><span class="lvl-label">TP2</span><span class="lvl-val">\${s.tp2 || "—"}</span></div>
-      </div>
-      <div class="signal-result \${cls}">
-        \${isWin ? "✅ WIN" : isLoss ? "❌ LOSS" : "⏳ OPEN"} \${pips}
-      </div>
-    </div>\`;
+  wrap.innerHTML = signals.map(function(s) {
+    var isWin  = s.result === "WIN";
+    var isLoss = s.result === "LOSS";
+    var cls    = isWin ? "win" : isLoss ? "loss" : "open";
+    var pips   = s.pips ? (s.pips > 0 ? "+" + s.pips : s.pips) + " pips" : "—";
+    var conf   = s.confidence ? Math.round(s.confidence) : "—";
+    var rr     = s.rr ? s.rr + ":1" : "—";
+    var dir    = (s.direction || "").toLowerCase();
+    var res    = isWin ? "WIN" : isLoss ? "LOSS" : "OPEN";
+    var emoji  = isWin ? "✅ WIN" : isLoss ? "❌ LOSS" : "⏳ OPEN";
+    return "<div class=\"signal-card " + cls + "\">" +
+      "<div class=\"signal-header\">" +
+        "<span class=\"signal-pair\">" + (s.pair || "—") + "</span>" +
+        "<span class=\"signal-dir " + dir + "\">" + (s.direction || "—") + "</span>" +
+        "<span class=\"signal-grade\">Grade " + (s.grade || "—") + "</span>" +
+      "</div>" +
+      "<div class=\"signal-meta\">" +
+        "<span>" + (s.session || "—") + "</span>" +
+        "<span>Conf: " + conf + "/10</span>" +
+        "<span>RR: " + rr + "</span>" +
+      "</div>" +
+      "<div class=\"signal-levels\">" +
+        "<div><span class=\"lvl-label\">Entry</span><span class=\"lvl-val\">" + (s.entry || "—") + "</span></div>" +
+        "<div><span class=\"lvl-label\">SL</span><span class=\"lvl-val\">" + (s.sl || "—") + "</span></div>" +
+        "<div><span class=\"lvl-label\">TP1</span><span class=\"lvl-val\">" + (s.tp1 || "—") + "</span></div>" +
+        "<div><span class=\"lvl-label\">TP2</span><span class=\"lvl-val\">" + (s.tp2 || "—") + "</span></div>" +
+      "</div>" +
+      "<div class=\"signal-result " + cls + "\">" + emoji + " " + pips + "</div>" +
+    "</div>";
   }).join("");
 }
 
