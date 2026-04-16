@@ -1175,6 +1175,69 @@ footer .footer-logo {
 
 
 
+
+/* ── COMMANDS SECTION ── */
+.commands-section {
+  padding: 6rem 0;
+  background: var(--navy);
+  border-top: 1px solid var(--border);
+}
+
+.commands-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-top: 3rem;
+}
+
+.command-card {
+  background: var(--navy2);
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+  transition: border-color 0.2s;
+}
+
+.command-card:hover { border-color: var(--border2); }
+
+.command-label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.command-admin {
+  display: inline-block;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--navy);
+  background: var(--gold);
+  padding: 0.15rem 0.4rem;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+}
+
+.command-desc {
+  font-size: 0.8rem;
+  color: var(--dim);
+  line-height: 1.65;
+}
+
+.commands-category {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 2.5rem 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
 /* ── PARTNERS / AFFILIATES ── */
 .partners-section {
   padding: 6rem 0;
@@ -1361,6 +1424,124 @@ footer .footer-logo {
   .hamburger { display: flex; }
   .nav-links  { display: none !important; }
   .nav-cta    { display: none; }
+}
+
+
+/* ── COMMANDS SECTION ── */
+.commands-section {
+  padding: 6rem 0;
+  background: var(--navy);
+  border-top: 1px solid var(--border);
+}
+
+.commands-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.command-group {
+  background: var(--navy2);
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+}
+
+.command-group-title {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.command-item {
+  display: flex;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(201,168,76,0.05);
+  align-items: flex-start;
+}
+
+.command-item:last-child { border-bottom: none; }
+
+.command-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--gold2);
+  white-space: nowrap;
+  min-width: 110px;
+  padding-top: 1px;
+}
+
+.command-desc {
+  font-size: 0.78rem;
+  color: var(--dim);
+  line-height: 1.6;
+}
+
+.command-desc strong {
+  color: var(--white);
+  font-weight: 500;
+}
+
+
+/* ── COMMANDS SECTION ── */
+.commands-section {
+  padding: 6rem 0;
+  background: var(--navy);
+  border-top: 1px solid var(--border);
+}
+
+.commands-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-top: 3rem;
+}
+
+.command-card {
+  background: var(--navy2);
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+  transition: border-color 0.2s;
+}
+
+.command-card:hover {
+  border-color: var(--border2);
+}
+
+.command-tag {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gold);
+  background: rgba(201,168,76,0.08);
+  border: 1px solid rgba(201,168,76,0.2);
+  display: inline-block;
+  padding: 0.3rem 0.7rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+.command-desc {
+  font-size: 0.82rem;
+  color: var(--dim);
+  line-height: 1.7;
+}
+
+.command-category {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 2rem 0 1rem;
+  opacity: 0.7;
 }
 
 /* ── NEWS CALENDAR ── */
@@ -1601,9 +1782,12 @@ footer .footer-logo {
     <li><a href="#signals" onclick="closeMenu()">Live Signals</a></li>
     <li><a href="#performance" onclick="closeMenu()">Performance</a></li>
     <li><a href="#how" onclick="closeMenu()">How It Works</a></li>
+    <li><a href="#commands" onclick="closeMenu()">Commands</a></li>
     <li><a href="#news" onclick="closeMenu()">News</a></li>
     <li><a href="#calculator" onclick="closeMenu()">Risk Calc</a></li>
+    <li><a href="#commands" onclick="closeMenu()">Commands</a></li>
     <li><a href="#partners" onclick="closeMenu()">Prop Firms</a></li>
+    <li><a href="#commands" onclick="closeMenu()">Commands</a></li>
     <li><a href="#pricing" onclick="closeMenu()">Pricing</a></li>
   </ul>
   <a href="#pricing" class="nav-cta">Get Access</a>
@@ -1616,9 +1800,12 @@ footer .footer-logo {
   <a href="#signals" onclick="closeMenu()">Live Signals</a>
   <a href="#performance" onclick="closeMenu()">Performance</a>
   <a href="#how" onclick="closeMenu()">How It Works</a>
+  <a href="#commands" onclick="closeMenu()">Commands</a>
   <a href="#news" onclick="closeMenu()">News</a>
   <a href="#calculator" onclick="closeMenu()">Risk Calc</a>
+  <a href="#commands" onclick="closeMenu()">Commands</a>
   <a href="#partners" onclick="closeMenu()">Prop Firms</a>
+  <a href="#commands" onclick="closeMenu()">Commands</a>
   <a href="#pricing" onclick="closeMenu()">Pricing</a>
   <a href="#pricing" class="mobile-cta" onclick="closeMenu()">Get Access →</a>
 </div>
@@ -1805,6 +1992,182 @@ footer .footer-logo {
 </section>
 
 
+
+
+<!-- COMMANDS -->
+<section class="commands-section" id="commands">
+  <div class="container">
+    <div class="section-label">Bot Guide</div>
+    <div class="section-title" style="text-align:center">Signal Bot Commands</div>
+    <p class="section-desc" style="text-align:center;margin:0 auto">Everything you can do inside <a href="https://t.me/levztradingbot" target="_blank" style="color:var(--gold);text-decoration:none">@XAUSignals</a> on Telegram once you're activated.</p>
+
+    <div class="commands-grid">
+
+      <!-- GETTING STARTED -->
+      <div class="command-group">
+        <div class="command-group-title">Getting Started</div>
+        <div class="command-item">
+          <span class="command-name">/start CODE</span>
+          <span class="command-desc"><strong>Activate your access.</strong> Replace CODE with your unique invite code. Starts your subscription timer from the next market open.</span>
+        </div>
+        <div class="command-item">
+          <span class="command-name">/mysub</span>
+          <span class="command-desc"><strong>Check your subscription.</strong> Shows your access status, expiry date, and how many days remain.</span>
+        </div>
+        <div class="command-item">
+          <span class="command-name">/status</span>
+          <span class="command-desc"><strong>Bot health check.</strong> Confirms the bot is online, next scan time, and current session.</span>
+        </div>
+      </div>
+
+      <!-- SIGNALS -->
+      <div class="command-group">
+        <div class="command-group-title">Signals</div>
+        <div class="command-item">
+          <span class="command-name">/signal</span>
+          <span class="command-desc"><strong>Trigger a manual scan.</strong> Runs APEX analysis on all session pairs immediately — same as an auto scan, on demand.</span>
+        </div>
+        <div class="command-item">
+          <span class="command-name">/pair XAUUSD</span>
+          <span class="command-desc"><strong>Analyse a specific pair.</strong> Get an instant APEX signal for any supported pair — e.g. /pair EURUSD or /pair GBPJPY.</span>
+        </div>
+        <div class="command-item">
+          <span class="command-name">/price XAUUSD</span>
+          <span class="command-desc"><strong>Live price check.</strong> Returns the current bid/ask price for any pair.</span>
+        </div>
+        <div class="command-item">
+          <span class="command-name">/open</span>
+          <span class="command-desc"><strong>View open signals.</strong> Lists all currently active signals with their entry, SL, TP and time remaining.</span>
+        </div>
+      </div>
+
+      <!-- PERFORMANCE -->
+      <div class="command-group">
+        <div class="command-group-title">Performance & History</div>
+        <div class="command-item">
+          <span class="command-name">/stats</span>
+          <span class="command-desc"><strong>Win rate dashboard.</strong> Shows today, weekly, monthly and all-time win rates with trade counts.</span>
+        </div>
+        <div class="command-item">
+          <span class="command-name">/history</span>
+          <span class="command-desc"><strong>Recent trade history.</strong> Lists the last 10 closed signals with result, pips gained/lost, and pair.</span>
+        </div>
+        <div class="command-item">
+          <span class="command-name">/learning</span>
+          <span class="command-desc"><strong>What APEX has learned.</strong> Shows per-pair win rates, grade performance, session stats, and what adjustments APEX is making based on its trade history.</span>
+        </div>
+      </div>
+
+      <!-- AUTO SCANS -->
+      <div class="command-group">
+        <div class="command-group-title">Auto Scan Schedule</div>
+        <div class="command-item">
+          <span class="command-name">6:16 PM MDT</span>
+          <span class="command-desc"><strong>Asian session open.</strong> Scans USDJPY, AUDUSD, NZDUSD, XAUUSD — 15 minutes after session open for confirmed M15 candle close.</span>
+        </div>
+        <div class="command-item">
+          <span class="command-name">2:16 AM MDT</span>
+          <span class="command-desc"><strong>London session open.</strong> Scans EURUSD, GBPUSD, XAUUSD, USDJPY, EURGBP, GBPJPY — highest liquidity window of the day.</span>
+        </div>
+        <div class="command-item">
+          <span class="command-name">7:16 AM MDT</span>
+          <span class="command-desc"><strong>New York session open.</strong> Scans EURUSD, GBPUSD, XAUUSD, USDJPY, USDCAD, GBPJPY — London/NY overlap for maximum volatility setups.</span>
+        </div>
+        <div class="command-item">
+          <span class="command-name">Volatility filter</span>
+          <span class="command-desc"><strong>Automatic risk adjustment.</strong> Before each scan APEX checks the 4H ATR for every pair. Contracting volatility raises the minimum grade to A and caps position size at 0.5%.</span>
+        </div>
+      </div>
+
+    </div>
+
+    <p style="text-align:center;font-size:0.72rem;color:var(--dim);margin-top:2.5rem;line-height:1.8">
+      Signals are delivered automatically — no commands needed once activated.<br>
+      All commands work in your private chat with <a href="https://t.me/levztradingbot" target="_blank" style="color:var(--gold);text-decoration:none">@XAUSignals</a>.
+    </p>
+  </div>
+</section>
+
+
+<!-- BOT COMMANDS -->
+<section class="commands-section" id="commands">
+  <div class="container">
+    <div class="section-label">Bot Guide</div>
+    <div class="section-title" style="text-align:center">Signal Bot Commands</div>
+    <p class="section-desc" style="text-align:center;margin:0 auto">Everything you can do inside <a href="https://t.me/levztradingbot" target="_blank" style="color:var(--gold);text-decoration:none;font-weight:600">@XAUSignals</a> on Telegram. Send any command to get started.</p>
+
+    <div class="command-category">Getting Started</div>
+    <div class="commands-grid">
+
+      <div class="command-card">
+        <div class="command-tag">/start YOUR-CODE</div>
+        <div class="command-desc">Activate your subscription with your invite code. Once activated you will receive all signals automatically. Example: <strong>/start APEX-X7K2</strong></div>
+      </div>
+
+      <div class="command-card">
+        <div class="command-tag">/mysub</div>
+        <div class="command-desc">Check your subscription status — shows your invite code, when access expires, and how many days remain.</div>
+      </div>
+
+      <div class="command-card">
+        <div class="command-tag">/status</div>
+        <div class="command-desc">Check if the bot is online and scanning. Shows the current session, next scan time, and number of active members.</div>
+      </div>
+
+    </div>
+
+    <div class="command-category">Signals & Analysis</div>
+    <div class="commands-grid">
+
+      <div class="command-card">
+        <div class="command-tag">/signal</div>
+        <div class="command-desc">Trigger a manual scan right now across all pairs for the current session. Fires APEX analysis immediately without waiting for the scheduled scan time.</div>
+      </div>
+
+      <div class="command-card">
+        <div class="command-tag">/pair XAUUSD</div>
+        <div class="command-desc">Request an instant signal analysis for a specific pair. Works with any pair: XAUUSD, EURUSD, GBPUSD, USDJPY, GBPJPY, USDCAD, AUDUSD, NZDUSD, EURGBP.</div>
+      </div>
+
+      <div class="command-card">
+        <div class="command-tag">/price XAUUSD</div>
+        <div class="command-desc">Get the current live price for any pair. Quick reference without triggering a full signal analysis.</div>
+      </div>
+
+      <div class="command-card">
+        <div class="command-tag">/open</div>
+        <div class="command-desc">View all currently open signals — pairs, direction, entry levels, and how long they have been active. Useful for tracking live setups.</div>
+      </div>
+
+    </div>
+
+    <div class="command-category">Performance & History</div>
+    <div class="commands-grid">
+
+      <div class="command-card">
+        <div class="command-tag">/stats</div>
+        <div class="command-desc">Full performance breakdown — today, this week, this month, and all-time win rates. See exactly how APEX is performing across all pairs and sessions.</div>
+      </div>
+
+      <div class="command-card">
+        <div class="command-tag">/history</div>
+        <div class="command-desc">View the last 10 closed trades with full details — pair, direction, grade, entry, exit, result, and pips gained or lost.</div>
+      </div>
+
+      <div class="command-card">
+        <div class="command-tag">/learning</div>
+        <div class="command-desc">See what APEX has learned from its trade history. Shows win rates by pair and session, which pairs are being avoided, and what the engine is adjusting in real time.</div>
+      </div>
+
+    </div>
+
+    <div style="margin-top:2.5rem;text-align:center">
+      <a href="https://t.me/levztradingbot" target="_blank" class="stripe-btn" style="display:inline-block;width:auto;padding:0.85rem 2.5rem;text-decoration:none;font-size:0.8rem">
+        Open @XAUSignals on Telegram →
+      </a>
+    </div>
+  </div>
+</section>
 
 <!-- PRICING -->
 <section class="pricing-section" id="pricing">
@@ -2118,6 +2481,96 @@ footer .footer-logo {
       * These are affiliate links. We may earn a commission if you sign up through our links at no extra cost to you.<br>
       Rules are based on publicly available information and may change. Always verify current rules directly with each firm before purchasing a challenge.<br>
       Not financial advice. Prop firm trading involves risk of loss of challenge fees.
+    </p>
+  </div>
+</section>
+
+
+<!-- BOT COMMANDS -->
+<section class="commands-section" id="commands">
+  <div class="container">
+    <div class="section-label" style="text-align:center">Bot Reference</div>
+    <div class="section-title" style="text-align:center">Signal Bot Commands</div>
+    <p class="section-desc" style="text-align:center;margin:0 auto">Everything you can do inside the XAU Signals Telegram bot. Open <a href="https://t.me/levztradingbot" target="_blank" style="color:var(--gold);text-decoration:none">@XAUSignals</a> and try them.</p>
+
+    <div class="commands-category">Member Commands</div>
+    <div class="commands-grid">
+
+      <div class="command-card">
+        <div class="command-label">/start CODE</div>
+        <div class="command-desc">Activate your subscription using your invite code. Run this once when you first join. Example: <span style="color:var(--gold);font-family:monospace">/start APEX-X7K2</span></div>
+      </div>
+
+      <div class="command-card">
+        <div class="command-label">/mysub</div>
+        <div class="command-desc">Check your subscription status — shows your invite code, activation date, and exact expiry time so you always know how much access you have left.</div>
+      </div>
+
+      <div class="command-card">
+        <div class="command-label">/stats</div>
+        <div class="command-desc">View the bot's live performance stats — overall win rate, today's results, this week, this month, total trades fired, and average pips per trade.</div>
+      </div>
+
+      <div class="command-card">
+        <div class="command-label">/history</div>
+        <div class="command-desc">See the last 10 closed signals with results — pair, direction, grade, entry, exit, and outcome. WIN, LOSS, or EXPIRED with pip values.</div>
+      </div>
+
+      <div class="command-card">
+        <div class="command-label">/open</div>
+        <div class="command-desc">List all currently active open signals — pairs, direction, entry price, SL, TPs, and how long they've been live. Know what's in play at any moment.</div>
+      </div>
+
+      <div class="command-card">
+        <div class="command-label">/price PAIR</div>
+        <div class="command-desc">Get the current live price for any supported pair. Example: <span style="color:var(--gold);font-family:monospace">/price XAUUSD</span> — returns the latest mid-price from Twelve Data.</div>
+      </div>
+
+      <div class="command-card">
+        <div class="command-label">/status</div>
+        <div class="command-desc">Check that the bot is online and running. Shows current scan schedule, session times, and next scheduled scan window.</div>
+      </div>
+
+    </div>
+
+    <div class="commands-category">Admin Commands <span style="font-size:0.6rem;color:var(--dim);font-weight:400;text-transform:none;letter-spacing:0">— visible to subscribers for transparency</span></div>
+    <div class="commands-grid">
+
+      <div class="command-card">
+        <div class="command-label">/signal <span class="command-admin">Admin</span></div>
+        <div class="command-desc">Manually trigger a full scan across all session pairs right now — without waiting for the scheduled scan time. Useful for on-demand analysis.</div>
+      </div>
+
+      <div class="command-card">
+        <div class="command-label">/pair XAUUSD <span class="command-admin">Admin</span></div>
+        <div class="command-desc">Run APEX analysis on a single specific pair immediately. Returns the full signal or a NO TRADE verdict with the reason.</div>
+      </div>
+
+      <div class="command-card">
+        <div class="command-label">/learning <span class="command-admin">Admin</span></div>
+        <div class="command-desc">View what APEX has learned from its trade history — win rates by pair, grade, and session, plus what adjustments it's making to improve accuracy.</div>
+      </div>
+
+      <div class="command-card">
+        <div class="command-label">/gencode LABEL <span class="command-admin">Admin</span></div>
+        <div class="command-desc">Generate a new single-use invite code. The label helps identify who it was created for. Codes are valid for the subscription period from first use.</div>
+      </div>
+
+      <div class="command-card">
+        <div class="command-label">/members <span class="command-admin">Admin</span></div>
+        <div class="command-desc">View all active subscribers — names, chat IDs, code used, activation date, and expiry. Full member roster at a glance.</div>
+      </div>
+
+      <div class="command-card">
+        <div class="command-label">/codes <span class="command-admin">Admin</span></div>
+        <div class="command-desc">List all generated invite codes — used, unused, active, and revoked. Shows which codes have been activated and by whom.</div>
+      </div>
+
+    </div>
+
+    <p style="font-size:0.72rem;color:var(--dim);text-align:center;margin-top:2rem;line-height:1.7">
+      All signals are delivered automatically at session opens — no commands needed.<br>
+      Commands are for checking stats, managing your subscription, and on-demand analysis.
     </p>
   </div>
 </section>
