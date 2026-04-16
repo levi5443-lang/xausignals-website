@@ -726,41 +726,13 @@ section {
   flex-shrink: 0;
 }
 
-.paypal-btn {
-  width: 100%;
-  background: #0070BA;
-  color: white;
-  border: none;
-  padding: 1rem;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  cursor: pointer;
-  transition: background 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-}
 
-.paypal-btn:hover { background: #003087; }
 
-.paypal-logo {
-  font-style: italic;
-  font-weight: 800;
-  font-size: 1rem;
-}
 
-.paypal-logo .pp-blue { color: #009CDE; }
-.paypal-logo .pp-dark { color: #003087; }
 
-.pricing-note {
-  text-align: center;
-  margin-top: 1.5rem;
-  font-size: 0.75rem;
-  color: var(--dim);
-}
+
+
+
 
 /* ── TESTIMONIAL / DISCLAIMER ── */
 .disclaimer-section {
@@ -1053,7 +1025,569 @@ footer .footer-logo {
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
+
+/* ── STRIPE BUTTONS ── */
+.stripe-btn {
+  width: 100%;
+  padding: 1rem;
+  background: var(--gold);
+  color: var(--navy);
+  border: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 1.5rem;
+  text-transform: uppercase;
+}
+
+.stripe-btn:hover {
+  background: var(--gold2);
+  transform: translateY(-1px);
+}
+
+.stripe-btn.featured {
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  box-shadow: 0 4px 20px rgba(201,168,76,0.4);
+}
+
+/* ── STRIPE MODAL ── */
+.stripe-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+
+.stripe-modal-overlay.active {
+  display: flex;
+}
+
+.stripe-modal-box {
+  background: var(--navy2);
+  border: 1px solid var(--border2);
+  padding: 2.5rem;
+  max-width: 420px;
+  width: 90%;
+  position: relative;
+}
+
+.stripe-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: var(--dim);
+  font-size: 1.2rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.stripe-modal-close:hover { color: var(--white); }
+
+.stripe-modal-plan {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+
+.stripe-modal-price {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 2.5rem;
+  font-weight: 500;
+  color: var(--white);
+  margin-bottom: 1.5rem;
+  line-height: 1;
+}
+
+.stripe-modal-features {
+  list-style: none;
+  margin-bottom: 2rem;
+}
+
+.stripe-modal-features li {
+  font-size: 0.85rem;
+  color: var(--dim);
+  padding: 0.4rem 0;
+  padding-left: 1.2rem;
+  position: relative;
+}
+
+.stripe-modal-features li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--green);
+  font-size: 0.75rem;
+}
+
+.stripe-confirm-btn {
+  width: 100%;
+  padding: 1rem;
+  background: var(--gold);
+  color: var(--navy);
+  border: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.stripe-confirm-btn:hover { background: var(--gold2); }
+.stripe-confirm-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.stripe-modal-note {
+  font-size: 0.68rem;
+  color: var(--dim);
+  text-align: center;
+  margin-top: 1rem;
+  line-height: 1.5;
+}
+
+/* ── SUCCESS BANNER ── */
+.success-banner {
+  display: none;
+  background: rgba(34,197,94,0.15);
+  border: 1px solid rgba(34,197,94,0.4);
+  color: var(--green);
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+}
+
+
+
+/* ── PARTNERS / AFFILIATES ── */
+.partners-section {
+  padding: 6rem 0;
+  background: var(--navy2);
+  border-top: 1px solid var(--border);
+}
+
+.partners-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.partner-card {
+  background: var(--navy);
+  border: 1px solid var(--border);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: border-color 0.2s, transform 0.2s;
+  position: relative;
+}
+
+.partner-card:hover {
+  border-color: var(--border2);
+  transform: translateY(-2px);
+}
+
+.partner-card.recommended {
+  border-color: rgba(201,168,76,0.4);
+}
+
+.partner-badge {
+  position: absolute;
+  top: -1px;
+  right: 1.5rem;
+  background: var(--gold);
+  color: var(--navy);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+}
+
+.partner-name {
+  font-family: 'Cinzel', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--white);
+  letter-spacing: 0.05em;
+}
+
+.partner-tagline {
+  font-size: 0.78rem;
+  color: var(--dim);
+  line-height: 1.6;
+  flex: 1;
+}
+
+.partner-specs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.partner-spec {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: rgba(201,168,76,0.08);
+  border: 1px solid rgba(201,168,76,0.2);
+  padding: 0.2rem 0.5rem;
+}
+
+.partner-btn {
+  display: block;
+  text-align: center;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  border: 1px solid var(--border2);
+  color: var(--gold);
+  text-decoration: none;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.partner-btn:hover {
+  background: var(--gold);
+  color: var(--navy);
+}
+
+.partner-btn.coming-soon {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.partners-disclaimer {
+  font-size: 0.68rem;
+  color: rgba(136,153,170,0.5);
+  text-align: center;
+  margin-top: 2rem;
+  line-height: 1.7;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ── HAMBURGER & MOBILE MENU ── */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  z-index: 200;
+}
+
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--gold);
+  transition: all 0.3s;
+  transform-origin: center;
+}
+
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 60px;
+  left: 0;
+  right: 0;
+  background: var(--navy2);
+  border-bottom: 1px solid var(--border);
+  z-index: 150;
+  padding: 1rem 0;
+  flex-direction: column;
+}
+
+.mobile-menu.open { display: flex; }
+
+.mobile-menu a {
+  padding: 0.85rem 2rem;
+  color: var(--dim);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(201,168,76,0.05);
+  transition: color 0.2s;
+}
+
+.mobile-menu a:hover { color: var(--gold); }
+
+.mobile-menu .mobile-cta {
+  margin: 1rem 2rem 0.5rem;
+  padding: 0.85rem 1.5rem;
+  background: var(--gold);
+  color: var(--navy);
+  font-weight: 700;
+  text-align: center;
+  border: none;
+  border-bottom: none;
+}
+
+@media (max-width: 768px) {
+  .hamburger { display: flex; }
+  .nav-links  { display: none !important; }
+  .nav-cta    { display: none; }
+}
+
+/* ── NEWS CALENDAR ── */
+.news-section {
+  padding: 6rem 0;
+  background: var(--navy);
+  border-top: 1px solid var(--border);
+}
+
+.news-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.news-tab {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--dim);
+  padding: 0.4rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.2s;
+}
+
+.news-tab.active, .news-tab:hover {
+  background: var(--gold);
+  color: var(--navy);
+  border-color: var(--gold);
+}
+
+.news-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.news-table th {
+  text-align: left;
+  padding: 0.6rem 1rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dim);
+  border-bottom: 1px solid var(--border);
+}
+
+.news-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(201,168,76,0.07);
+  color: var(--white);
+  vertical-align: middle;
+}
+
+.news-table tr:hover td { background: rgba(201,168,76,0.03); }
+
+.impact-high {
+  display: inline-block;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--red);
+  margin-right: 0.4rem;
+}
+
+.impact-medium {
+  display: inline-block;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: #F59E0B;
+  margin-right: 0.4rem;
+}
+
+.news-currency {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.news-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--dim);
+}
+
+.news-event { color: var(--white); }
+.news-empty { text-align: center; padding: 3rem; color: var(--dim); font-size: 0.85rem; }
+
+.news-loading {
+  text-align: center;
+  padding: 3rem;
+  color: var(--dim);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+}
+
+/* ── RISK CALCULATOR ── */
+.calc-section {
+  padding: 6rem 0;
+  background: var(--navy2);
+  border-top: 1px solid var(--border);
+}
+
+.calc-wrap {
+  max-width: 600px;
+  margin: 3rem auto 0;
+  background: var(--navy);
+  border: 1px solid var(--border);
+  padding: 2.5rem;
+}
+
+.calc-field {
+  margin-bottom: 1.5rem;
+}
+
+.calc-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.calc-input {
+  width: 100%;
+  background: var(--navy2);
+  border: 1px solid var(--border);
+  color: var(--white);
+  padding: 0.85rem 1rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.calc-input:focus { border-color: var(--gold); }
+
+.calc-slider {
+  width: 100%;
+  -webkit-appearance: none;
+  height: 4px;
+  background: var(--border);
+  outline: none;
+  margin-top: 0.75rem;
+}
+
+.calc-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--gold);
+  cursor: pointer;
+}
+
+.calc-slider::-moz-range-thumb {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--gold);
+  cursor: pointer;
+  border: none;
+}
+
+.calc-result {
+  background: var(--navy2);
+  border: 1px solid var(--border2);
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.calc-result-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.calc-result-item { text-align: center; }
+
+.calc-result-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.calc-result-label {
+  font-size: 0.65rem;
+  color: var(--dim);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 0.4rem;
+}
+
+.calc-warning {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.calc-warning.danger { 
+  background: rgba(239,68,68,0.1); 
+  color: var(--red); 
+  border: 1px solid rgba(239,68,68,0.3);
+}
+
+.calc-warning.safe { 
+  background: rgba(34,197,94,0.1); 
+  color: var(--green); 
+  border: 1px solid rgba(34,197,94,0.3);
+}
+
+.risk-pct-display {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  color: var(--gold);
+  float: right;
+}
+
 </style>
+<script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
 
@@ -1063,13 +1597,31 @@ footer .footer-logo {
     XAU
     <span>Signal Intelligence</span>
   </div>
-  <ul class="nav-links">
-    <li><a href="#signals">Live Signals</a></li>
-    <li><a href="#how">How It Works</a></li>
-    <li><a href="#pricing">Pricing</a></li>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="#signals" onclick="closeMenu()">Live Signals</a></li>
+    <li><a href="#performance" onclick="closeMenu()">Performance</a></li>
+    <li><a href="#how" onclick="closeMenu()">How It Works</a></li>
+    <li><a href="#news" onclick="closeMenu()">News</a></li>
+    <li><a href="#calculator" onclick="closeMenu()">Risk Calc</a></li>
+    <li><a href="#partners" onclick="closeMenu()">Prop Firms</a></li>
+    <li><a href="#pricing" onclick="closeMenu()">Pricing</a></li>
   </ul>
   <a href="#pricing" class="nav-cta">Get Access</a>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#signals" onclick="closeMenu()">Live Signals</a>
+  <a href="#performance" onclick="closeMenu()">Performance</a>
+  <a href="#how" onclick="closeMenu()">How It Works</a>
+  <a href="#news" onclick="closeMenu()">News</a>
+  <a href="#calculator" onclick="closeMenu()">Risk Calc</a>
+  <a href="#partners" onclick="closeMenu()">Prop Firms</a>
+  <a href="#pricing" onclick="closeMenu()">Pricing</a>
+  <a href="#pricing" class="mobile-cta" onclick="closeMenu()">Get Access →</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -1238,12 +1790,12 @@ footer .footer-logo {
       <div class="how-card">
         <div class="how-num">01</div>
         <h3>Subscribe & Connect</h3>
-        <p>Choose your plan, pay via PayPal, and receive a unique invite code. Open <a href="https://t.me/levztradingbot" target="_blank" style="color:var(--gold)">XAU Signals</a> on Telegram and send <strong>/start YOUR-CODE</strong> to activate. No apps to install beyond Telegram.</p>
+        <p>Choose your plan, pay via <a href="https://t.me/levztradingbot" target="_blank" style="color:var(--gold)">XAU Signals</a> on Telegram and send <strong>/start YOUR-CODE</strong> to activate. No apps to install beyond Telegram.</p>
       </div>
       <div class="how-card">
         <div class="how-num">02</div>
-        <h3>XAU Scans 24/7</h3>
-        <p>At every session open — Asian, London, New York — XAU pulls live M15 price data and runs 8 layers of analysis across all major pairs simultaneously.</p>
+        <h3>Scans Every Session Open</h3>
+        <p>15 minutes into every session open — Asian, London, New York — APEX pulls live M15 data after the opening candle closes and runs 8 layers of analysis across all active pairs simultaneously.</p>
       </div>
       <div class="how-card">
         <div class="how-num">03</div>
@@ -1261,58 +1813,270 @@ footer .footer-logo {
   <div class="container" style="text-align: center">
     <div class="section-label">Access Plans</div>
     <div class="section-title">Choose Your Plan</div>
-    <p class="section-desc" style="margin: 0 auto 0">Simple pricing. Single-use invite code. Cancel by not renewing.</p>
+    <p class="section-desc" style="margin: 0 auto 0">Simple, transparent pricing. Recurring subscription — cancel anytime from your Stripe account.</p>
 
     <div class="pricing-grid">
       <!-- WEEKLY -->
       <div class="pricing-card">
-        <div class="pricing-plan">Weekly Access</div>
+        <div class="pricing-plan">7 Day Access</div>
         <div class="pricing-price" id="price-week">
-          <span id="price-week-symbol">$</span><span id="price-week-val">49</span>
+          <span id="price-week-symbol">$</span><span id="price-week-val">9</span>
         </div>
         <div class="pricing-local" id="price-week-local"></div>
-        <div class="pricing-period">7 days from first market open</div>
+        <div class="pricing-period">7 days · cancel anytime</div>
         <ul class="pricing-features">
-          <li>All session signals — 24/7</li>
+          <li>15 min into every session open</li>
           <li>Precise M15 entry triggers</li>
           <li>Outcome notifications</li>
           <li>Live performance stats</li>
-          <li>Single-use invite code</li>
+          <li>Invite code on payment</li>
         </ul>
-        <button class="paypal-btn" onclick="openPayPal('weekly')">
-          Pay with <span class="paypal-logo"><span class="pp-blue">Pay</span><span class="pp-dark">Pal</span></span>
+        <button class="stripe-btn" onclick="openStripeCheckout('weekly')">
+          Subscribe — $9 / 7 days
         </button>
       </div>
 
-      <!-- 4-WEEK -->
-      <div class="pricing-card featured">
-        <div class="pricing-featured-badge">Best Value</div>
-        <div class="pricing-plan">4-Week Access</div>
+      <!-- MONTHLY -->
+      <div class="pricing-card">
+        <div class="pricing-plan">28 Day Access</div>
         <div class="pricing-price">
-          <span id="price-4week-symbol">$</span><span id="price-4week-val">149</span>
+          <span id="price-monthly-symbol">$</span><span id="price-monthly-val">30</span>
         </div>
-        <div class="pricing-local" id="price-4week-local"></div>
-        <div class="pricing-period">28 days from first market open</div>
+        <div class="pricing-local" id="price-monthly-local"></div>
+        <div class="pricing-period">28 days · cancel anytime</div>
         <ul class="pricing-features">
           <li>Everything in weekly</li>
-          <li>Priority signal delivery</li>
           <li>Full trade history access</li>
           <li>Daily & weekly win rate stats</li>
-          <li>3-day expiry warning</li>
+          <li>Priority support</li>
+          <li>Invite code on payment</li>
         </ul>
-        <button class="paypal-btn" onclick="openPayPal('4week')">
-          Pay with <span class="paypal-logo"><span class="pp-blue">Pay</span><span class="pp-dark">Pal</span></span>
+        <button class="stripe-btn" onclick="openStripeCheckout('monthly')">
+          Subscribe — $30 / 28 days
+        </button>
+      </div>
+
+      <!-- ANNUAL -->
+      <div class="pricing-card featured">
+        <div class="pricing-featured-badge">Best Value</div>
+        <div class="pricing-plan">365 Day Access</div>
+        <div class="pricing-price">
+          <span id="price-annual-symbol">$</span><span id="price-annual-val">365</span>
+        </div>
+        <div class="pricing-local" id="price-annual-local"></div>
+        <div class="pricing-period">365 days · $1/day · cancel anytime</div>
+        <ul class="pricing-features">
+          <li>Everything in 28 day</li>
+          <li>Just $1/day — lowest rate</li>
+          <li>Save $103 vs weekly billing</li>
+          <li>12 months uninterrupted access</li>
+          <li>First access to new features</li>
+        </ul>
+        <button class="stripe-btn featured" onclick="openStripeCheckout('annual')">
+          Subscribe — $365 / 365 days
         </button>
       </div>
     </div>
 
     <p class="pricing-note">
-      After payment, your unique invite code is sent to your PayPal email within minutes.<br>
+      After payment, your unique invite code is sent to your <br>
       Open <a href="https://t.me/levztradingbot" target="_blank" style="color:var(--gold);text-decoration:none;font-weight:600">XAU Signals</a> on Telegram and send <strong>/start YOUR-CODE</strong> to activate your access.
     </p>
     <p style="font-size: 0.7rem; color: rgba(136,153,170,0.5); margin-top: 1rem; max-width: 560px; margin-left: auto; margin-right: auto; line-height: 1.7">
       Not financial advice. For informational purposes only. Plan prices are subject to change based on bot performance over time. 
       Past performance is not indicative of future results.
+    </p>
+  </div>
+</section>
+
+
+<!-- NEWS CALENDAR -->
+<section class="news-section" id="news">
+  <div class="container">
+    <div class="section-label">Market Events</div>
+    <div class="section-title">High Impact News Calendar</div>
+    <p class="section-desc">Know when to stand down. High and medium impact events that move markets — displayed in your local time.</p>
+
+    <div style="margin-top: 2.5rem">
+      <div class="news-tabs">
+        <button class="news-tab active" onclick="setNewsTab('today', this)">Today</button>
+        <button class="news-tab" onclick="setNewsTab('24h', this)">Next 24h</button>
+        <button class="news-tab" onclick="setNewsTab('week', this)">This Week</button>
+      </div>
+
+      <div style="overflow-x: auto">
+        <table class="news-table" id="news-table">
+          <thead>
+            <tr>
+              <th>Time (Local)</th>
+              <th>Currency</th>
+              <th>Event</th>
+              <th>Impact</th>
+            </tr>
+          </thead>
+          <tbody id="news-body">
+            <tr><td colspan="4" class="news-loading">Loading economic calendar...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RISK CALCULATOR -->
+<section class="calc-section" id="calculator">
+  <div class="container" style="text-align: center">
+    <div class="section-label">Risk Management</div>
+    <div class="section-title">Position Size Calculator</div>
+    <p class="section-desc" style="margin: 0 auto">Know exactly how much to risk before you enter. Built for prop firm challenge accounts.</p>
+
+    <div class="calc-wrap">
+      <div class="calc-field">
+        <label class="calc-label">Account Balance ($)</label>
+        <input class="calc-input" type="number" id="calc-balance" value="10000" placeholder="10000" oninput="calcRisk()">
+      </div>
+
+      <div class="calc-field">
+        <label class="calc-label">
+          Risk Percentage
+          <span class="risk-pct-display" id="risk-pct-display">1.0%</span>
+        </label>
+        <input class="calc-slider" type="range" id="calc-risk-pct" min="0.1" max="5" step="0.1" value="1" oninput="updateRiskSlider()">
+      </div>
+
+      <div class="calc-field">
+        <label class="calc-label">Entry Price</label>
+        <input class="calc-input" type="number" id="calc-entry" value="4750" placeholder="4750.00" oninput="calcRisk()" step="0.01">
+      </div>
+
+      <div class="calc-field">
+        <label class="calc-label">Stop Loss Price</label>
+        <input class="calc-input" type="number" id="calc-sl" value="4735" placeholder="4735.00" oninput="calcRisk()" step="0.01">
+      </div>
+
+      <div class="calc-field">
+        <label class="calc-label">Instrument</label>
+        <select class="calc-input" id="calc-pair" onchange="calcRisk()" style="cursor:pointer">
+          <option value="XAUUSD">XAU/USD (Gold)</option>
+          <option value="EURUSD">EUR/USD</option>
+          <option value="GBPUSD">GBP/USD</option>
+          <option value="USDJPY">USD/JPY</option>
+          <option value="GBPJPY">GBP/JPY</option>
+          <option value="USDCAD">USD/CAD</option>
+          <option value="AUDUSD">AUD/USD</option>
+          <option value="NZDUSD">NZD/USD</option>
+          <option value="EURGBP">EUR/GBP</option>
+        </select>
+      </div>
+
+      <div class="calc-result" id="calc-result">
+        <div class="calc-result-grid">
+          <div class="calc-result-item">
+            <div class="calc-result-val" id="res-risk-usd">$100</div>
+            <div class="calc-result-label">Risk Amount</div>
+          </div>
+          <div class="calc-result-item">
+            <div class="calc-result-val" id="res-lots">0.17</div>
+            <div class="calc-result-label">Lot Size</div>
+          </div>
+          <div class="calc-result-item">
+            <div class="calc-result-val" id="res-pips">15.0</div>
+            <div class="calc-result-label">Pips to Stop</div>
+          </div>
+          <div class="calc-result-item">
+            <div class="calc-result-val" id="res-pip-val">$1.70</div>
+            <div class="calc-result-label">Pip Value</div>
+          </div>
+        </div>
+        <div class="calc-warning safe" id="calc-warning">
+          Risk is within safe parameters for a prop firm challenge.
+        </div>
+      </div>
+
+      <p style="font-size: 0.7rem; color: var(--dim); margin-top: 1rem; line-height: 1.6">
+        Calculations are estimates. Always verify position sizing with your broker before entering a trade.
+        Not financial advice.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- PARTNERS / PROP FIRMS -->
+<section class="partners-section" id="partners">
+  <div class="container" style="text-align: center">
+    <div class="section-label">Recommended Partners</div>
+    <div class="section-title">Trusted Prop Firms</div>
+    <p class="section-desc" style="margin: 0 auto">Ready to attempt a funded challenge? These are the firms we recommend. Start your challenge, trade with discipline, get funded.</p>
+
+    <div class="partners-grid">
+
+      <!-- SOAR FUNDING -->
+      <div class="partner-card recommended">
+        <div class="partner-badge">Our Choice</div>
+        <div class="partner-name">Soar Funding</div>
+        <div class="partner-tagline">The prop firm our signal system was built around. Competitive drawdown rules, fast payouts, and a trader-first approach. Our top recommendation.</div>
+        <div class="partner-specs">
+          <span class="partner-spec">4% Daily DD</span>
+          <span class="partner-spec">8% Max DD</span>
+          <span class="partner-spec">Fast Payouts</span>
+          <span class="partner-spec">News Trading OK</span>
+        </div>
+        <a href="SOAR_AFFILIATE_LINK" target="_blank" rel="noopener" class="partner-btn">
+          Start Challenge →
+        </a>
+      </div>
+
+      <!-- FTMO -->
+      <div class="partner-card">
+        <div class="partner-name">FTMO</div>
+        <div class="partner-tagline">The most recognized name in prop trading. Industry-standard rules, strong community, and a proven track record of funding traders worldwide.</div>
+        <div class="partner-specs">
+          <span class="partner-spec">5% Daily DD</span>
+          <span class="partner-spec">10% Max DD</span>
+          <span class="partner-spec">Up to $200k</span>
+          <span class="partner-spec">Free Retry</span>
+        </div>
+        <a href="FTMO_AFFILIATE_LINK" target="_blank" rel="noopener" class="partner-btn">
+          Start Challenge →
+        </a>
+      </div>
+
+      <!-- THE FUNDED TRADER -->
+      <div class="partner-card">
+        <div class="partner-name">The Funded Trader</div>
+        <div class="partner-tagline">Aggressive scaling plan and competitive payouts. Popular with newer traders for its flexible challenge options and active trading community.</div>
+        <div class="partner-specs">
+          <span class="partner-spec">5% Daily DD</span>
+          <span class="partner-spec">10% Max DD</span>
+          <span class="partner-spec">Scaling Plan</span>
+          <span class="partner-spec">Multiple Accounts</span>
+        </div>
+        <a href="FUNDED_TRADER_AFFILIATE_LINK" target="_blank" rel="noopener" class="partner-btn">
+          Start Challenge →
+        </a>
+      </div>
+
+      <!-- MY FOREX FUNDS -->
+      <div class="partner-card">
+        <div class="partner-name">MyForexFunds</div>
+        <div class="partner-tagline">Affordable challenge fees and straightforward rules make this a solid starting point for traders new to the prop firm space.</div>
+        <div class="partner-specs">
+          <span class="partner-spec">5% Daily DD</span>
+          <span class="partner-spec">12% Max DD</span>
+          <span class="partner-spec">Low Entry Cost</span>
+          <span class="partner-spec">Fast Scaling</span>
+        </div>
+        <a href="MFF_AFFILIATE_LINK" target="_blank" rel="noopener" class="partner-btn">
+          Start Challenge →
+        </a>
+      </div>
+
+    </div>
+
+    <p class="partners-disclaimer">
+      * These are affiliate links. We may earn a commission if you sign up through our links at no extra cost to you.<br>
+      We only recommend firms we have researched and believe are legitimate. Always conduct your own due diligence before purchasing a challenge.
     </p>
   </div>
 </section>
@@ -1350,35 +2114,23 @@ footer .footer-logo {
   <p>Institutional Forex Signal Intelligence &nbsp;·&nbsp; Delivered via Telegram</p>
 </footer>
 
-<!-- PAYPAL MODAL -->
-<div class="modal-overlay" id="paypal-modal">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <h2>Complete Payment</h2>
-    <p id="modal-desc">You will be redirected to PayPal to complete your purchase. Once payment is confirmed, your invite code will be sent to your PayPal email address.</p>
-    <button class="paypal-btn" id="modal-paypal-btn" style="margin-bottom: 1rem">
-      Continue to <span class="paypal-logo"><span class="pp-blue">Pay</span><span class="pp-dark">Pal</span></span>
-    </button>
-    <div style="font-size: 0.75rem; color: var(--dim); text-align: center; line-height: 1.6">
-      Secure payment via PayPal.<br>
-      Invite code delivered within 10 minutes of payment confirmation.
-    </div>
   </div>
 </div>
 
 <script>
 // ── CONFIG — edit these values ────────────────────────────────────────────
 const CONFIG = {
-  weeklyPrice:   "49",
-  fourWeekPrice: "149",
+  weeklyPrice:   "9",
+  monthlyPrice:  "30",
+  annualPrice:   "365",
 
-  // PayPal.me links or hosted button URLs — replace with your real PayPal links
-  paypalWeeklyUrl:  "https://www.paypal.com/paypalme/YOURPAYPALHANDLE/49",
-  paypal4WeekUrl:   "https://www.paypal.com/paypalme/YOURPAYPALHANDLE/149",
+  // Stripe configuration — replace with your real keys after creating Stripe account
+  stripePublishableKey: "pk_test_51TMIGSGaDvTYehZ1BHmo7r9yOjYss4cJiBLmgDBzqobvgnumbJKCCkcevSMGqoDnt9kneLzH7mLFyxK6SQzaUhA400fcgwEQUb",
+  stripePriceWeekly:    "price_1TMeSsGaDvTYehZ127EzwQ0e",
+  stripePriceMonthly:   "price_1TMeTZGaDvTYehZ1YACYDSya",
+  stripePriceAnnual:    "price_1TMeU3GaDvTYehZ1uKdutA13",
 
-  // Your bot stats API endpoint (optional — see note below)
-  // If you set up a simple API on your server to serve stats from the bot,
-  // put the URL here. Otherwise stats will show as placeholder values.
+  // Your bot stats API endpoint (optional)
   statsApiUrl: null,
 };
 
@@ -1426,20 +2178,22 @@ function formatPrice(usdAmount, currency) {
 
 function updatePriceDisplay(currency) {
   const weekUSD  = parseFloat(CONFIG.weeklyPrice);
-  const fourUSD  = parseFloat(CONFIG.fourWeekPrice);
+  const monthlyUSD = parseFloat(CONFIG.monthlyPrice || "30");
   const sym      = currency === "USD" ? "$" : (CURRENCY_SYMBOLS[currency] || "$");
 
   // Update symbol and base USD value
-  document.getElementById("price-week-val").textContent  = weekUSD;
-  document.getElementById("price-4week-val").textContent = fourUSD;
+  document.getElementById("price-week-val").textContent     = weekUSD;
+  document.getElementById("price-monthly-val").textContent  = monthlyUSD;
+  document.getElementById("price-annual-val").textContent   = annualUSD;
   document.getElementById("price-week-symbol").textContent  = "$";
-  document.getElementById("price-4week-symbol").textContent = "$";
+  document.getElementById("price-monthly-symbol").textContent = "$";
+  const annualUSD = parseFloat(CONFIG.annualPrice || "365");
 
   // Show local equivalent below
   const weekLocal  = formatPrice(weekUSD,  currency);
   const fourLocal  = formatPrice(fourUSD,  currency);
   const weekEl     = document.getElementById("price-week-local");
-  const fourEl     = document.getElementById("price-4week-local");
+  const fourEl     = document.getElementById("price-monthly-local");
 
   if (weekLocal && currency !== "USD") {
     weekEl.textContent = "≈ " + weekLocal + " " + currency;
@@ -1599,32 +2353,291 @@ async function loadStats() {
 
 loadStats();
 
-// ── PAYPAL MODAL ──────────────────────────────────────────────────────────
-let currentPlan = null;
+// ── STRIPE CHECKOUT ──────────────────────────────────────────────
+let stripeInstance = null;
 
-function openPayPal(plan) {
-  currentPlan = plan;
-  const isWeekly = plan === "weekly";
-  const price    = isWeekly ? CONFIG.weeklyPrice : CONFIG.fourWeekPrice;
-  const label    = isWeekly ? "1-Week Access" : "4-Week Access";
-  document.getElementById("modal-desc").textContent =
-    "You are purchasing: " + label + " for $" + price + ". " +
-    "After payment, your unique single-use invite code will be sent to your PayPal email within 10 minutes.";
-  document.getElementById("modal-paypal-btn").onclick = function() {
-    const url = isWeekly ? CONFIG.paypalWeeklyUrl : CONFIG.paypal4WeekUrl;
-    window.open(url, "_blank");
-    closeModal();
-  };
-  document.getElementById("paypal-modal").classList.add("active");
+function getStripe() {
+  if (!stripeInstance && CONFIG.stripePublishableKey && !CONFIG.stripePublishableKey.includes("REPLACE")) {
+    stripeInstance = Stripe(CONFIG.stripePublishableKey);
+  }
+  return stripeInstance;
 }
 
-function closeModal() {
-  document.getElementById("paypal-modal").classList.remove("active");
+async function openStripeCheckout(plan) {
+  const priceId = plan === "weekly" ? CONFIG.stripePriceWeekly :
+                  plan === "monthly" ? CONFIG.stripePriceMonthly :
+                  CONFIG.stripePriceAnnual;
+  const price   = plan === "weekly" ? CONFIG.weeklyPrice :
+                  plan === "monthly" ? CONFIG.monthlyPrice :
+                  CONFIG.annualPrice;
+  const label   = plan === "weekly" ? "7 Day Access" :
+                  plan === "monthly" ? "28 Day Access" : "365 Day Access";
+
+  document.getElementById("stripe-modal-plan").textContent  = label;
+  document.getElementById("stripe-modal-price").textContent = "$" + price + (plan === "weekly" ? " / 7 days" : plan === "monthly" ? " / 28 days" : " / 365 days");
+  document.getElementById("stripe-modal").classList.add("active");
+
+  const btn = document.getElementById("stripe-confirm-btn");
+  btn.setAttribute("data-plan", plan);
+  btn.setAttribute("data-price-id", priceId);
+  btn.textContent = "Complete Purchase";
+  btn.disabled    = false;
 }
 
-document.getElementById("paypal-modal").addEventListener("click", function(e) {
-  if (e.target === this) closeModal();
+async function confirmStripeCheckout() {
+  const btn     = document.getElementById("stripe-confirm-btn");
+  const priceId = btn.getAttribute("data-price-id");
+  const stripe  = getStripe();
+
+  if (!stripe) {
+    alert("Payments are being configured. Please check back soon or contact us on Telegram.");
+    return;
+  }
+
+  btn.textContent = "Redirecting to Stripe...";
+  btn.disabled    = true;
+
+  try {
+    const { error } = await stripe.redirectToCheckout({
+      lineItems:  [{ price: priceId, quantity: 1 }],
+      mode:       "subscription",
+      successUrl: window.location.origin + "/?success=true&plan=" + plan,
+      cancelUrl:  window.location.href,
+    });
+    if (error) {
+      alert("Error: " + error.message);
+      btn.textContent = "Complete Purchase";
+      btn.disabled    = false;
+    }
+  } catch(e) {
+    alert("Checkout error. Please try again.");
+    btn.textContent = "Complete Purchase";
+    btn.disabled    = false;
+  }
+}
+
+function closeStripeModal() {
+  document.getElementById("stripe-modal").classList.remove("active");
+}
+
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get("success") === "true") {
+  setTimeout(() => {
+    const b = document.getElementById("success-banner");
+    if (b) b.style.display = "block";
+    window.scrollTo(0, 0);
+  }, 200);
+}
+
+
+
+function toggleMenu() {
+  const menu = document.getElementById("mobile-menu");
+  const btn  = document.getElementById("hamburger");
+  menu.classList.toggle("open");
+  btn.classList.toggle("open");
+}
+
+function closeMenu() {
+  document.getElementById("mobile-menu").classList.remove("open");
+  document.getElementById("hamburger").classList.remove("open");
+}
+
+// Close menu on outside click
+document.addEventListener("click", function(e) {
+  const menu = document.getElementById("mobile-menu");
+  const btn  = document.getElementById("hamburger");
+  if (menu.classList.contains("open") && !menu.contains(e.target) && !btn.contains(e.target)) {
+    closeMenu();
+  }
 });
+
+// ── NEWS CALENDAR ─────────────────────────────────────────────────────────
+let currentNewsTab = "today";
+let allNewsEvents  = [];
+
+async function loadNews() {
+  try {
+    const today = new Date();
+    const yyyy  = today.getFullYear();
+    const mm    = String(today.getMonth() + 1).padStart(2, "0");
+    const dd    = String(today.getDate()).padStart(2, "0");
+    const from  = yyyy + "-" + mm + "-" + dd;
+
+    const end   = new Date(today);
+    end.setDate(end.getDate() + 7);
+    const ey    = end.getFullYear();
+    const em    = String(end.getMonth() + 1).padStart(2, "0");
+    const ed    = String(end.getDate()).padStart(2, "0");
+    const to    = ey + "-" + em + "-" + ed;
+
+    // Using ForexFactory-compatible public data via fmpcloud or similar
+    // Fallback to demo data if API unavailable
+    const r = await fetch(
+      "https://economic-calendar.tradingview.com/events?from=" + from + "T00:00:00Z&to=" + to + "T23:59:59Z&countries=US,GB,EU,JP,CA,AU,NZ,CH",
+      { headers: { "Accept": "application/json" } }
+    );
+
+    if (r.ok) {
+      const d = await r.json();
+      allNewsEvents = (d.result || []).filter(e =>
+        e.importance >= 2  // 2=medium, 3=high
+      );
+    } else {
+      allNewsEvents = getDemoNews();
+    }
+  } catch(e) {
+    allNewsEvents = getDemoNews();
+  }
+  renderNews(currentNewsTab);
+}
+
+function getDemoNews() {
+  const now = new Date();
+  const pad = n => String(n).padStart(2, "0");
+  const fmt = d => d.getFullYear() + "-" + pad(d.getMonth()+1) + "-" + pad(d.getDate()) + "T" + pad(d.getHours()) + ":00:00Z";
+  const events = [];
+  const pairs  = [
+    {c:"USD", e:"Non-Farm Payrolls", imp:3},
+    {c:"USD", e:"CPI m/m", imp:3},
+    {c:"USD", e:"FOMC Meeting Minutes", imp:3},
+    {c:"GBP", e:"BOE Interest Rate Decision", imp:3},
+    {c:"EUR", e:"ECB Press Conference", imp:3},
+    {c:"USD", e:"GDP q/q", imp:2},
+    {c:"GBP", e:"CPI y/y", imp:2},
+    {c:"JPY", e:"BOJ Policy Rate", imp:3},
+    {c:"USD", e:"Initial Jobless Claims", imp:2},
+    {c:"EUR", e:"German Manufacturing PMI", imp:2},
+    {c:"AUD", e:"RBA Rate Decision", imp:3},
+    {c:"USD", e:"Retail Sales m/m", imp:2},
+  ];
+  pairs.forEach((p, i) => {
+    const d = new Date(now.getTime() + (i * 4 * 3600000));
+    events.push({ title: p.e, country: p.c, importance: p.imp, date: fmt(d) });
+  });
+  return events;
+}
+
+function setNewsTab(tab, btn) {
+  currentNewsTab = tab;
+  document.querySelectorAll(".news-tab").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  renderNews(tab);
+}
+
+function renderNews(tab) {
+  const now   = new Date();
+  const end24 = new Date(now.getTime() + 24 * 3600000);
+  const endWk = new Date(now.getTime() + 7 * 24 * 3600000);
+
+  const filtered = allNewsEvents.filter(e => {
+    const t = new Date(e.date);
+    if (tab === "today") {
+      return t.toDateString() === now.toDateString();
+    } else if (tab === "24h") {
+      return t >= now && t <= end24;
+    } else {
+      return t >= now && t <= endWk;
+    }
+  });
+
+  const tbody = document.getElementById("news-body");
+  if (!filtered.length) {
+    tbody.innerHTML = "<tr><td colspan='4' class='news-empty'>No " + (tab === "today" ? "events today" : tab === "24h" ? "events in next 24 hours" : "events this week") + " matching filter.</td></tr>";
+    return;
+  }
+
+  tbody.innerHTML = filtered.map(e => {
+    const t      = new Date(e.date);
+    const time   = t.toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"});
+    const date   = t.toLocaleDateString([], {weekday:"short", month:"short", day:"numeric"});
+    const isHigh = e.importance >= 3;
+    const dot    = isHigh ? "<span class='impact-high'></span>" : "<span class='impact-medium'></span>";
+    const label  = isHigh ? "HIGH" : "MEDIUM";
+    const color  = isHigh ? "style='color:var(--red)'" : "style='color:#F59E0B'";
+    return "<tr>" +
+      "<td class='news-time'>" + (tab === "today" ? time : date + " " + time) + "</td>" +
+      "<td><span class='news-currency'>" + (e.country || e.currency || "?") + "</span></td>" +
+      "<td class='news-event'>" + (e.title || e.event || "?") + "</td>" +
+      "<td>" + dot + "<span " + color + " style='font-size:0.7rem;font-weight:600;letter-spacing:0.08em'>" + label + "</span></td>" +
+      "</tr>";
+  }).join("");
+}
+
+loadNews();
+// Refresh every 10 minutes
+setInterval(loadNews, 600000);
+
+
+// ── RISK CALCULATOR ───────────────────────────────────────────────────────
+const PIP_VALUES = {
+  XAUUSD: { pipSize: 0.1,   pipValue: 1.0  },   // $1 per pip per 0.01 lot — actually $10 per pip per lot
+  EURUSD: { pipSize: 0.0001, pipValue: 10.0 },
+  GBPUSD: { pipSize: 0.0001, pipValue: 10.0 },
+  USDCAD: { pipSize: 0.0001, pipValue: 10.0 },
+  AUDUSD: { pipSize: 0.0001, pipValue: 10.0 },
+  NZDUSD: { pipSize: 0.0001, pipValue: 10.0 },
+  EURGBP: { pipSize: 0.0001, pipValue: 10.0 },
+  USDJPY: { pipSize: 0.01,   pipValue: 9.09 },
+  GBPJPY: { pipSize: 0.01,   pipValue: 9.09 },
+};
+
+function updateRiskSlider() {
+  const val = parseFloat(document.getElementById("calc-risk-pct").value);
+  document.getElementById("risk-pct-display").textContent = val.toFixed(1) + "%";
+  calcRisk();
+}
+
+function calcRisk() {
+  const balance  = parseFloat(document.getElementById("calc-balance").value) || 0;
+  const riskPct  = parseFloat(document.getElementById("calc-risk-pct").value) || 1;
+  const entry    = parseFloat(document.getElementById("calc-entry").value) || 0;
+  const sl       = parseFloat(document.getElementById("calc-sl").value) || 0;
+  const pair     = document.getElementById("calc-pair").value;
+
+  if (!balance || !entry || !sl || entry === sl) return;
+
+  const riskUsd  = balance * (riskPct / 100);
+  const pv       = PIP_VALUES[pair] || PIP_VALUES["EURUSD"];
+  const pipDiff  = Math.abs(entry - sl);
+  const pips     = pair === "XAUUSD" ? pipDiff * 10 :
+                   (pair === "USDJPY" || pair === "GBPJPY") ? pipDiff * 100 :
+                   pipDiff * 10000;
+
+  if (pips <= 0) return;
+
+  const pipValuePerLot = pv.pipValue;
+  const lots     = riskUsd / (pips * pipValuePerLot);
+  const pipVal   = pipValuePerLot * lots;
+
+  document.getElementById("res-risk-usd").textContent = "$" + riskUsd.toFixed(2);
+  document.getElementById("res-lots").textContent     = lots.toFixed(2);
+  document.getElementById("res-pips").textContent     = pips.toFixed(1);
+  document.getElementById("res-pip-val").textContent  = "$" + (pipValuePerLot * lots).toFixed(2);
+
+  const warn    = document.getElementById("calc-warning");
+  const maxDaily = balance * 0.04;
+  const tradesLeft = riskPct > 0 ? Math.floor((maxDaily / riskUsd)) : 0;
+
+  if (riskPct > 4) {
+    warn.className = "calc-warning danger";
+    warn.textContent = "🚫 " + riskPct.toFixed(1) + "% risk — a single loss wipes " + ((riskPct / 4) * 100).toFixed(0) + "% of your daily drawdown limit. Most prop firms will flag this as reckless sizing.";
+  } else if (riskPct > 3) {
+    warn.className = "calc-warning danger";
+    warn.textContent = "⚠️ " + riskPct.toFixed(1) + "% risk — above the recommended 3% cap. On a $" + balance.toLocaleString() + " account your daily limit is $" + maxDaily.toFixed(0) + ". You could only take " + tradesLeft + " losing trade" + (tradesLeft === 1 ? "" : "s") + " before hitting your daily limit.";
+  } else if (riskPct > 2) {
+    warn.className = "calc-warning danger";
+    warn.textContent = "⚠️ " + riskPct.toFixed(1) + "% risk — manageable but leaves limited room. At this size you have room for " + tradesLeft + " losing trade" + (tradesLeft === 1 ? "" : "s") + " today before hitting your $" + maxDaily.toFixed(0) + " daily limit. Consider sizing down.";
+  } else if (riskPct > 1) {
+    warn.className = "calc-warning safe";
+    warn.textContent = "✓ " + riskPct.toFixed(1) + "% risk — solid sizing. $" + riskUsd.toFixed(2) + " at risk. You have room for " + tradesLeft + " losing trades before your daily limit of $" + maxDaily.toFixed(0) + ". This is how funded traders size positions.";
+  } else {
+    warn.className = "calc-warning safe";
+    warn.textContent = "✓ " + riskPct.toFixed(1) + "% risk — conservative sizing. $" + riskUsd.toFixed(2) + " at risk. Perfect for building confidence on a new challenge account. " + tradesLeft + " trades before daily limit.";
+  }
+}
+
+calcRisk();
 
 // ── LIVE CLOCK IN TICKER ──────────────────────────────────────────────────
 // Ticker prices are static demo — replace with real feed when ready
@@ -1825,5 +2838,33 @@ function initChart() {
 window.addEventListener("load", initChart);
 
 </script>
+<!-- SUCCESS BANNER -->
+<div class="success-banner" id="success-banner">
+  ✓ Payment successful! Check your email for your invite code. Welcome to XAU Signals.
+</div>
+
+<!-- STRIPE MODAL -->
+<div class="stripe-modal-overlay" id="stripe-modal" onclick="if(event.target===this)closeStripeModal()">
+  <div class="stripe-modal-box">
+    <button class="stripe-modal-close" onclick="closeStripeModal()">✕</button>
+    <div class="stripe-modal-plan" id="stripe-modal-plan">Weekly Access</div>
+    <div class="stripe-modal-price" id="stripe-modal-price">$9/week</div>
+    <ul class="stripe-modal-features">
+      <li>Signals 15 min into every session open</li>
+      <li>M15 precision entry, SL and TP levels</li>
+      <li>Live win rate and performance stats</li>
+      <li>Outcome notifications on every trade</li>
+      <li>Cancel anytime — no lock-in</li>
+    </ul>
+    <button class="stripe-confirm-btn" id="stripe-confirm-btn" onclick="confirmStripeCheckout()" data-plan="" data-price-id="">
+      Complete Purchase
+    </button>
+    <p class="stripe-modal-note">
+      Powered by Stripe · Secured with 256-bit SSL encryption<br>
+      Subscription renews automatically. Cancel anytime in your account.
+    </p>
+  </div>
+</div>
+
 </body>
 </html>
