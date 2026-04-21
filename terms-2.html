@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Service — XAU Signals</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:    #0D1117;
+  --navy2:   #161B22;
+  --navy3:   #1A2133;
+  --gold:    #C9A84C;
+  --gold2:   #E8C76A;
+  --gold3:   #F5E0A0;
+  --dim:     #8899AA;
+  --white:   #F0F4FF;
+  --green:   #22C55E;
+  --red:     #EF4444;
+  --border:  rgba(201,168,76,0.15);
+  --border2: rgba(201,168,76,0.3);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--navy);
+  color: var(--white);
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 1.25rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(13,17,23,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: 'Cinzel', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.12em;
+  text-decoration: none;
+}
+
+.nav-logo span {
+  font-size: 0.6rem;
+  color: var(--dim);
+  letter-spacing: 0.2em;
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  margin-top: -2px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--dim);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--gold); }
+
+.nav-cta {
+  background: transparent;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  padding: 0.5rem 1.25rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.nav-cta:hover { background: var(--gold); color: var(--navy); }
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--gold);
+  transition: all 0.3s;
+}
+
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 60px; left: 0; right: 0;
+  background: var(--navy2);
+  border-bottom: 1px solid var(--border);
+  z-index: 150;
+  padding: 1rem 0;
+  flex-direction: column;
+}
+
+.mobile-menu.open { display: flex; }
+
+.mobile-menu a {
+  padding: 0.85rem 2rem;
+  color: var(--dim);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(201,168,76,0.05);
+  transition: color 0.2s;
+}
+
+.mobile-menu a:hover { color: var(--gold); }
+
+.mobile-menu .mobile-cta {
+  margin: 1rem 2rem 0.5rem;
+  padding: 0.85rem 1.5rem;
+  background: var(--gold);
+  color: var(--navy);
+  font-weight: 700;
+  text-align: center;
+  border: none;
+}
+
+@media (max-width: 768px) {
+  .hamburger { display: flex; }
+  .nav-links  { display: none !important; }
+  .nav-cta    { display: none; }
+}
+
+.page-header {
+  padding: 9rem 2rem 4rem;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  z-index: 1;
+}
+
+.page-header-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--gold);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.page-header h1 {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+}
+
+.page-header h1 span { color: var(--gold); }
+
+.page-header-meta {
+  font-size: 0.8rem;
+  color: var(--dim);
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.05em;
+}
+
+.content-wrap {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 4rem 2rem 6rem;
+  position: relative;
+  z-index: 1;
+}
+
+.section { margin-bottom: 3.5rem; }
+
+.section-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-subtitle {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--white);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin: 1.5rem 0 0.75rem;
+}
+
+p {
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: var(--dim);
+  margin-bottom: 1rem;
+}
+
+ul { list-style: none; margin: 0.5rem 0 1rem 0; }
+
+ul li {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--dim);
+  padding: 0.3rem 0 0.3rem 1.25rem;
+  position: relative;
+}
+
+ul li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+  font-size: 0.75rem;
+}
+
+.callout {
+  border-left: 3px solid var(--gold);
+  background: rgba(201,168,76,0.05);
+  padding: 1rem 1.25rem;
+  margin: 1.25rem 0;
+  border-radius: 0 4px 4px 0;
+}
+
+.callout.red {
+  border-color: var(--red);
+  background: rgba(239,68,68,0.05);
+}
+
+.callout-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.4rem;
+}
+
+.callout.red .callout-label { color: var(--red); }
+.callout p { margin: 0; font-size: 0.85rem; color: var(--dim); }
+
+.contact-block {
+  background: var(--navy2);
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+  margin-top: 1rem;
+}
+
+.contact-block p { margin: 0.2rem 0; font-size: 0.85rem; }
+.contact-block a { color: var(--gold); text-decoration: none; }
+.contact-block a:hover { color: var(--gold2); }
+
+footer {
+  background: var(--navy2);
+  border-top: 1px solid var(--border);
+  padding: 2rem;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--dim);
+  position: relative;
+  z-index: 1;
+}
+
+footer .footer-logo {
+  font-family: 'Cinzel', serif;
+  font-size: 1.1rem;
+  color: var(--gold);
+  letter-spacing: 0.12em;
+  margin-bottom: 0.5rem;
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">XAU<span>Signal Intelligence</span></a>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="/#signals">Live Signals</a></li>
+    <li><a href="/#performance">Performance</a></li>
+    <li><a href="/#how">How It Works</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+  </ul>
+  <a href="/#pricing" class="nav-cta">Get Access</a>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <a href="/#signals" onclick="closeMenu()">Live Signals</a>
+  <a href="/#performance" onclick="closeMenu()">Performance</a>
+  <a href="/#how" onclick="closeMenu()">How It Works</a>
+  <a href="/#pricing" onclick="closeMenu()">Pricing</a>
+  <a href="/#pricing" class="mobile-cta" onclick="closeMenu()">Get Access →</a>
+</div>
+
+<div class="page-header">
+  <div class="page-header-tag">// Legal Documentation</div>
+  <h1>Terms of <span>Service</span></h1>
+  <div class="page-header-meta">Effective: April 2025 &nbsp;|&nbsp; Jurisdiction: Alberta, Canada &nbsp;|&nbsp; Last Updated: April 2025</div>
+</div>
+
+<div class="content-wrap">
+
+  <div class="section">
+    <div class="section-title">1. Acceptance of Terms</div>
+    <p>By accessing or using xausignals.com, any associated subdomains, the Agent Levz™ signal system, the XAU Signals Skool community, or any courses, products, or services offered by XAU Signals (collectively, the "Services"), you agree to be bound by these Terms of Service ("Terms").</p>
+    <p>If you do not agree to these Terms, you may not access or use the Services. XAU Signals reserves the right to modify these Terms at any time. Continued use of the Services following any modification constitutes acceptance of the updated Terms.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">2. Description of Services</div>
+    <p>XAU Signals provides:</p>
+    <ul>
+      <li>Automated and AI-assisted trading signals and market intelligence, primarily for XAU/USD (Gold) and related instruments, delivered via xausignals.com and affiliated platforms</li>
+      <li>Agent Levz™, a proprietary signal analysis system developed exclusively by XAU Signals</li>
+      <li>Educational content, courses, and community access via Skool and related platforms</li>
+      <li>Any future products, tools, or services released under the XAU Signals brand</li>
+    </ul>
+    <div class="callout">
+      <div class="callout-label">ℹ Note</div>
+      <p>The Services are for informational and educational purposes only. Nothing on this platform constitutes financial advice, investment advice, or a solicitation to trade.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">3. No Financial Advice — Important Disclaimer</div>
+    <div class="callout red">
+      <div class="callout-label">⚠ Important</div>
+      <p>ALL content, signals, analysis, commentary, and educational material provided through XAU Signals and Agent Levz™ is strictly for informational and educational purposes only. XAU Signals is NOT a registered investment advisor, broker-dealer, or licensed financial professional.</p>
+    </div>
+    <p>Nothing contained in the Services constitutes financial, investment, tax, or legal advice, a recommendation to buy or sell any financial instrument, or a guarantee of trading performance or profit.</p>
+    <p>Trading foreign exchange, commodities, and related instruments involves substantial risk of loss. Past performance of any signal, strategy, or system is not indicative of future results. You may lose some or all of your invested capital. You should never trade with money you cannot afford to lose.</p>
+    <p>By using the Services, you acknowledge and accept full responsibility for all trading decisions and their outcomes.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">4. Intellectual Property</div>
+    <div class="section-subtitle">4.1 Ownership</div>
+    <p>All content, technology, systems, and materials associated with XAU Signals and Agent Levz™ are the exclusive intellectual property of XAU Signals, including but not limited to:</p>
+    <ul>
+      <li>The Agent Levz™ name, character, brand identity, and all associated imagery and trademarks</li>
+      <li>The multi-layer signal analysis methodology and system architecture underlying Agent Levz™</li>
+      <li>All website content, course materials, written content, signal formatting, and educational resources</li>
+      <li>All software, algorithms, automation systems, bots, and code developed by XAU Signals</li>
+      <li>The "XAU Signals" name, logo, branding, and all associated trademarks</li>
+    </ul>
+
+    <div class="section-subtitle">4.2 Restrictions</div>
+    <p>You may not, without express written permission from XAU Signals:</p>
+    <ul>
+      <li>Copy, reproduce, distribute, or publicly display any content from the Services</li>
+      <li>Reverse engineer, decompile, or attempt to extract the source code or methodology of Agent Levz™ or any XAU Signals system</li>
+      <li>Create derivative works based on XAU Signals content, methodology, or systems</li>
+      <li>Use the XAU Signals or Agent Levz™ name, brand, or likeness for any commercial purpose</li>
+      <li>Resell, sublicense, or transfer access to any part of the Services</li>
+    </ul>
+    <p>Unauthorized use of XAU Signals intellectual property will be pursued to the fullest extent permitted by law.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">5. Community & Course Access</div>
+    <ul>
+      <li>Access is granted to the purchasing individual only and is non-transferable</li>
+      <li>Course materials are provided for personal educational use only</li>
+      <li>You may not share, redistribute, record, or republish course content in any form</li>
+      <li>Community membership may be revoked at XAU Signals' discretion for violations of these Terms or community guidelines</li>
+      <li>Refund requests must be submitted within 7 days of purchase for digital products, unless otherwise stated at point of sale, and are assessed in accordance with applicable Alberta consumer protection legislation</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-title">6. User Conduct</div>
+    <p>You agree not to:</p>
+    <ul>
+      <li>Use the Services for any unlawful purpose</li>
+      <li>Impersonate XAU Signals, Agent Levz™, or any staff member</li>
+      <li>Attempt to gain unauthorized access to any system, account, or data</li>
+      <li>Harass, abuse, or harm other community members</li>
+      <li>Share signals, content, or course materials outside of authorized channels</li>
+      <li>Use automated tools to scrape, copy, or aggregate content from the Services</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-title">7. Limitation of Liability</div>
+    <p>To the fullest extent permitted by applicable law, XAU Signals, its owners, operators, and affiliates shall not be liable for:</p>
+    <ul>
+      <li>Any trading losses, financial losses, or damages arising from use of the Services</li>
+      <li>Any indirect, incidental, special, consequential, or punitive damages</li>
+      <li>Loss of data, business, revenue, or profits</li>
+      <li>Any reliance placed on signals, analysis, or educational content provided through the Services</li>
+    </ul>
+    <p>In no event shall XAU Signals' total liability to you for any claim exceed the amount you paid for the Services in the preceding 30 days.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">8. Indemnification</div>
+    <p>You agree to indemnify, defend, and hold harmless XAU Signals, Agent Levz™, and their respective owners and operators from and against any claims, liabilities, damages, losses, and expenses arising from your use of the Services, your violation of these Terms, or your violation of any third-party rights.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">9. Privacy</div>
+    <p>XAU Signals collects and processes user data in accordance with its <a href="/privacy.html" style="color:var(--gold)">Privacy Policy</a> and applicable Canadian privacy legislation, including PIPEDA and Alberta's PIPA, both of which are incorporated into these Terms by reference. By using the Services, you consent to such data practices.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">10. Termination</div>
+    <p>XAU Signals reserves the right to suspend or terminate your access to the Services at any time, with or without notice, for any violation of these Terms or for conduct XAU Signals determines to be harmful to the community, the brand, or other users.</p>
+    <p>Upon termination, all licenses granted to you under these Terms immediately cease. Provisions that by their nature should survive termination — including intellectual property protections, disclaimers, and limitations of liability — shall survive.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">11. Governing Law</div>
+    <p>These Terms shall be governed by and construed in accordance with the laws of the Province of Alberta, Canada, without regard to its conflict of law provisions. Any disputes arising under these Terms shall be resolved in the appropriate courts of Alberta. If you are accessing the Services from outside Canada, you agree that Alberta law governs regardless of your location.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">12. Contact</div>
+    <p>For questions regarding these Terms, intellectual property concerns, or to request permissions:</p>
+    <div class="contact-block">
+      <p style="color:var(--gold);font-family:'Cinzel',serif;font-size:0.95rem;letter-spacing:0.1em;margin-bottom:0.75rem">XAU SIGNALS</p>
+      <p>Legal inquiries: <a href="mailto:legal@xausignals.com">legal@xausignals.com</a></p>
+      <p>General support: <a href="mailto:support@xausignals.com">support@xausignals.com</a></p>
+      <p>Website: <a href="https://xausignals.com">xausignals.com</a></p>
+      <p style="margin-top:0.5rem;color:var(--dim)">Jurisdiction: Alberta, Canada</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-logo">XAU</div>
+  <div style="margin-bottom:0.75rem">© 2025 XAU Signals. All rights reserved. Agent Levz™ is a proprietary product of XAU Signals.</div>
+  <div>
+    <a href="/terms.html" style="color:var(--gold);text-decoration:none;margin:0 0.75rem">Terms of Service</a>
+    <a href="/privacy.html" style="color:var(--dim);text-decoration:none;margin:0 0.75rem;transition:color 0.2s" onmouseover="this.style.color='#C9A84C'" onmouseout="this.style.color='#8899AA'">Privacy Policy</a>
+  </div>
+</footer>
+
+<script>
+function toggleMenu() {
+  document.getElementById('mobile-menu').classList.toggle('open');
+  document.getElementById('hamburger').classList.toggle('open');
+}
+function closeMenu() {
+  document.getElementById('mobile-menu').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
+}
+</script>
+</body>
+</html>

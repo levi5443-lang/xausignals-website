@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — XAU Signals</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:    #0D1117;
+  --navy2:   #161B22;
+  --navy3:   #1A2133;
+  --gold:    #C9A84C;
+  --gold2:   #E8C76A;
+  --gold3:   #F5E0A0;
+  --dim:     #8899AA;
+  --white:   #F0F4FF;
+  --green:   #22C55E;
+  --red:     #EF4444;
+  --border:  rgba(201,168,76,0.15);
+  --border2: rgba(201,168,76,0.3);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--navy);
+  color: var(--white);
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 1.25rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(13,17,23,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: 'Cinzel', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.12em;
+  text-decoration: none;
+}
+
+.nav-logo span {
+  font-size: 0.6rem;
+  color: var(--dim);
+  letter-spacing: 0.2em;
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  margin-top: -2px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--dim);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--gold); }
+
+.nav-cta {
+  background: transparent;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  padding: 0.5rem 1.25rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.nav-cta:hover { background: var(--gold); color: var(--navy); }
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--gold);
+  transition: all 0.3s;
+}
+
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 60px; left: 0; right: 0;
+  background: var(--navy2);
+  border-bottom: 1px solid var(--border);
+  z-index: 150;
+  padding: 1rem 0;
+  flex-direction: column;
+}
+
+.mobile-menu.open { display: flex; }
+
+.mobile-menu a {
+  padding: 0.85rem 2rem;
+  color: var(--dim);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(201,168,76,0.05);
+  transition: color 0.2s;
+}
+
+.mobile-menu a:hover { color: var(--gold); }
+
+.mobile-menu .mobile-cta {
+  margin: 1rem 2rem 0.5rem;
+  padding: 0.85rem 1.5rem;
+  background: var(--gold);
+  color: var(--navy);
+  font-weight: 700;
+  text-align: center;
+  border: none;
+}
+
+@media (max-width: 768px) {
+  .hamburger { display: flex; }
+  .nav-links  { display: none !important; }
+  .nav-cta    { display: none; }
+}
+
+/* ── PAGE HEADER ── */
+.page-header {
+  padding: 9rem 2rem 4rem;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  z-index: 1;
+}
+
+.page-header-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--gold);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.page-header h1 {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+}
+
+.page-header h1 span { color: var(--gold); }
+
+.page-header-meta {
+  font-size: 0.8rem;
+  color: var(--dim);
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.05em;
+}
+
+/* ── CONTENT ── */
+.content-wrap {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 4rem 2rem 6rem;
+  position: relative;
+  z-index: 1;
+}
+
+.section {
+  margin-bottom: 3.5rem;
+}
+
+.section-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-subtitle {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--white);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin: 1.5rem 0 0.75rem;
+}
+
+p {
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: var(--dim);
+  margin-bottom: 1rem;
+}
+
+ul {
+  list-style: none;
+  margin: 0.5rem 0 1rem 0;
+}
+
+ul li {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--dim);
+  padding: 0.3rem 0 0.3rem 1.25rem;
+  position: relative;
+}
+
+ul li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+  font-size: 0.75rem;
+}
+
+/* ── DATA TABLE ── */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.25rem 0 1.5rem;
+  font-size: 0.82rem;
+}
+
+.data-table th {
+  background: var(--navy3);
+  color: var(--gold);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border: 1px solid var(--border);
+}
+
+.data-table td {
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(201,168,76,0.08);
+  color: var(--dim);
+  line-height: 1.6;
+  vertical-align: top;
+}
+
+.data-table tr:nth-child(even) td { background: rgba(22,27,34,0.5); }
+.data-table tr:hover td { background: rgba(201,168,76,0.03); }
+
+/* ── CALLOUT ── */
+.callout {
+  border-left: 3px solid var(--gold);
+  background: rgba(201,168,76,0.05);
+  padding: 1rem 1.25rem;
+  margin: 1.25rem 0;
+  border-radius: 0 4px 4px 0;
+}
+
+.callout.green {
+  border-color: var(--green);
+  background: rgba(34,197,94,0.05);
+}
+
+.callout.red {
+  border-color: var(--red);
+  background: rgba(239,68,68,0.05);
+}
+
+.callout-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.4rem;
+}
+
+.callout.green .callout-label { color: var(--green); }
+.callout.red .callout-label { color: var(--red); }
+
+.callout p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--dim);
+}
+
+/* ── CONTACT BLOCK ── */
+.contact-block {
+  background: var(--navy2);
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+  margin-top: 1rem;
+}
+
+.contact-block p {
+  margin: 0.2rem 0;
+  font-size: 0.85rem;
+}
+
+.contact-block a {
+  color: var(--gold);
+  text-decoration: none;
+}
+
+.contact-block a:hover { color: var(--gold2); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--navy2);
+  border-top: 1px solid var(--border);
+  padding: 2rem;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--dim);
+  position: relative;
+  z-index: 1;
+}
+
+footer .footer-logo {
+  font-family: 'Cinzel', serif;
+  font-size: 1.1rem;
+  color: var(--gold);
+  letter-spacing: 0.12em;
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .data-table { font-size: 0.75rem; }
+  .data-table th, .data-table td { padding: 0.6rem 0.7rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">XAU<span>Signal Intelligence</span></a>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="/#signals">Live Signals</a></li>
+    <li><a href="/#performance">Performance</a></li>
+    <li><a href="/#how">How It Works</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+  </ul>
+  <a href="/#pricing" class="nav-cta">Get Access</a>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="/#signals" onclick="closeMenu()">Live Signals</a>
+  <a href="/#performance" onclick="closeMenu()">Performance</a>
+  <a href="/#how" onclick="closeMenu()">How It Works</a>
+  <a href="/#pricing" onclick="closeMenu()">Pricing</a>
+  <a href="/#pricing" class="mobile-cta" onclick="closeMenu()">Get Access →</a>
+</div>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-header-tag">// Legal Documentation</div>
+  <h1>Privacy <span>Policy</span></h1>
+  <div class="page-header-meta">Effective: April 2025 &nbsp;|&nbsp; Jurisdiction: Alberta, Canada &nbsp;|&nbsp; Last Updated: April 2025</div>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+  <div class="section">
+    <div class="section-title">1. Overview</div>
+    <p>XAU Signals ("we", "us", "our") operates xausignals.com and all associated products including Agent Levz™, the XAU Security Agent, and the XAU Signals Skool community (collectively, the "Services"). This Privacy Policy explains what personal information we collect, why we collect it, how we use it, and your rights under Canadian privacy law.</p>
+    <p>We comply with the Personal Information Protection and Electronic Documents Act (PIPEDA) and Alberta's Personal Information Protection Act (PIPA).</p>
+    <div class="callout green">
+      <div class="callout-label">✓ Our Commitment</div>
+      <p>We do not sell your personal information to third parties. We never have and never will.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">2. Information We Collect</div>
+    <p>We collect the following categories of personal information across our products:</p>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Data Collected</th>
+          <th>Why We Collect It</th>
+          <th>Retention</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Email address</td>
+          <td>Account creation, license delivery, product updates, support</td>
+          <td>Duration of account + 2 years</td>
+        </tr>
+        <tr>
+          <td>Payment information</td>
+          <td>Processing purchases via Stripe. We never see or store your card number — Stripe handles all card data.</td>
+          <td>Transaction records kept 7 years (tax/legal requirement)</td>
+        </tr>
+        <tr>
+          <td>Telegram user ID / Chat ID</td>
+          <td>Delivering signal alerts and security agent notifications</td>
+          <td>Duration of active subscription</td>
+        </tr>
+        <tr>
+          <td>License key & hardware fingerprint</td>
+          <td>Validating XAU Security Agent licenses and preventing unauthorised sharing</td>
+          <td>Duration of license + 1 year</td>
+        </tr>
+        <tr>
+          <td>Usage & analytics data</td>
+          <td>Understanding how features are used to improve the product (aggregated where possible)</td>
+          <td>13 months rolling</td>
+        </tr>
+        <tr>
+          <td>Support communications</td>
+          <td>Resolving support requests</td>
+          <td>3 years</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="section-subtitle">What We Do NOT Collect</div>
+    <ul>
+      <li>Your trading account credentials or exchange API keys</li>
+      <li>The contents of files on your machine</li>
+      <li>Your wallet addresses or crypto balances</li>
+      <li>Biometric data of any kind</li>
+      <li>Information about anyone under 18 — our Services are for adults only</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-title">3. How We Use Your Information</div>
+    <ul>
+      <li>Delivering the Services you purchased — signals, license keys, community access</li>
+      <li>Sending transactional emails — purchase confirmations, license delivery, security alerts</li>
+      <li>Providing customer support when you contact us</li>
+      <li>Improving our products based on aggregated usage patterns</li>
+      <li>Meeting our legal obligations under Canadian tax and business law</li>
+      <li>Detecting and preventing fraud, abuse, or Terms of Service violations</li>
+    </ul>
+    <div class="callout green">
+      <div class="callout-label">✓ No Advertising</div>
+      <p>We do not use your information for advertising, profiling, or selling to data brokers. We do not send marketing emails without your explicit opt-in.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">4. How We Share Your Information</div>
+    <p>We share your information only with the following service providers, and only to the extent necessary to deliver our Services:</p>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Provider</th>
+          <th>What They Receive</th>
+          <th>Purpose</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Stripe</td>
+          <td>Email address, transaction amount</td>
+          <td>Payment processing</td>
+        </tr>
+        <tr>
+          <td>Render</td>
+          <td>Email address, license data (encrypted at rest)</td>
+          <td>Hosting license server and backend services</td>
+        </tr>
+        <tr>
+          <td>Skool</td>
+          <td>Email address, name</td>
+          <td>Community platform for courses</td>
+        </tr>
+        <tr>
+          <td>Telegram</td>
+          <td>Chat ID for alert delivery</td>
+          <td>Signal and security alert notifications</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>We may also disclose your information where required by law, court order, or government authority in Canada.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">5. Data Storage & Security</div>
+    <p>Your personal information is stored on servers located in the United States (Render) and is subject to US data protection laws in addition to Canadian law. By using our Services, you consent to this cross-border transfer.</p>
+    <ul>
+      <li>Encrypted data transmission (HTTPS/TLS) for all web traffic</li>
+      <li>Encrypted storage for license and account data on Render</li>
+      <li>Stripe PCI DSS compliance for all payment data — we never store card numbers</li>
+      <li>Access controls limiting who can access personal data</li>
+    </ul>
+    <div class="callout">
+      <div class="callout-label">⚠ Security Notice</div>
+      <p>No method of transmission or storage is 100% secure. If you become aware of any security issue involving your XAU Signals account, contact us immediately at <a href="mailto:privacy@xausignals.com" style="color:var(--gold)">privacy@xausignals.com</a>.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">6. Cookies & Analytics</div>
+    <p>xausignals.com uses cookies for session management, analytics, and functionality. We do not use third-party advertising cookies or share browsing data with ad networks.</p>
+    <ul>
+      <li>Session cookies — keeping you logged in during your visit</li>
+      <li>Analytics — understanding which pages are visited (aggregated, not individual tracking)</li>
+      <li>Functionality — remembering your preferences</li>
+    </ul>
+    <p>You can disable cookies in your browser settings, though some site features may not function correctly without them.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">7. Your Rights Under Canadian Privacy Law</div>
+    <p>Under PIPEDA and Alberta PIPA, you have the following rights:</p>
+    <ul>
+      <li><strong style="color:var(--white)">Access</strong> — Request a copy of the personal information we hold about you</li>
+      <li><strong style="color:var(--white)">Correction</strong> — Ask us to correct inaccurate or incomplete information</li>
+      <li><strong style="color:var(--white)">Withdrawal of consent</strong> — Withdraw consent to our use of your information (may affect your ability to use the Services)</li>
+      <li><strong style="color:var(--white)">Deletion</strong> — Request deletion of your personal information, subject to legal retention obligations</li>
+      <li><strong style="color:var(--white)">Complaint</strong> — File a complaint with the Office of the Privacy Commissioner of Canada or the OIPC Alberta</li>
+    </ul>
+    <p>To exercise any of these rights, email <a href="mailto:privacy@xausignals.com" style="color:var(--gold)">privacy@xausignals.com</a>. We will respond within 30 days as required by law.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">8. Data Retention</div>
+    <ul>
+      <li>Active account data — retained for the duration of your account</li>
+      <li>Transaction records — 7 years (Canadian tax law requirement)</li>
+      <li>Support communications — 3 years</li>
+      <li>Analytics data — 13 months rolling</li>
+      <li>Deleted account data — purged within 90 days of deletion request, except where legal retention applies</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-title">9. Children's Privacy</div>
+    <p>Our Services are intended for adults aged 18 and over. We do not knowingly collect personal information from anyone under 18. If you believe a minor has provided us with personal information, contact <a href="mailto:privacy@xausignals.com" style="color:var(--gold)">privacy@xausignals.com</a> and we will delete it promptly.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">10. Changes to This Policy</div>
+    <p>We may update this Privacy Policy from time to time. When we do, we will update the "Last Updated" date at the top of this page and notify active customers by email if the changes are material.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">11. Contact Us</div>
+    <p>For privacy-related questions, requests, or concerns:</p>
+    <div class="contact-block">
+      <p style="color:var(--gold);font-family:'Cinzel',serif;font-size:0.95rem;letter-spacing:0.1em;margin-bottom:0.75rem">XAU SIGNALS</p>
+      <p>Privacy inquiries: <a href="mailto:privacy@xausignals.com">privacy@xausignals.com</a></p>
+      <p>General support: <a href="mailto:support@xausignals.com">support@xausignals.com</a></p>
+      <p>Website: <a href="https://xausignals.com">xausignals.com</a></p>
+      <p style="margin-top:0.75rem;color:var(--dim)">If you are not satisfied with our response, you may contact:</p>
+      <p>Office of the Privacy Commissioner of Canada — <a href="https://priv.gc.ca" target="_blank">priv.gc.ca</a> &nbsp;|&nbsp; 1-800-282-1376</p>
+      <p>OIPC Alberta — <a href="https://oipc.ab.ca" target="_blank">oipc.ab.ca</a> &nbsp;|&nbsp; 780-422-6860</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">XAU</div>
+  <div style="margin-bottom:0.75rem">© 2025 XAU Signals. All rights reserved. Agent Levz™ is a proprietary product of XAU Signals.</div>
+  <div>
+    <a href="/terms.html" style="color:var(--dim);text-decoration:none;margin:0 0.75rem;transition:color 0.2s" onmouseover="this.style.color='#C9A84C'" onmouseout="this.style.color='#8899AA'">Terms of Service</a>
+    <a href="/privacy.html" style="color:var(--gold);text-decoration:none;margin:0 0.75rem">Privacy Policy</a>
+  </div>
+</footer>
+
+<script>
+function toggleMenu() {
+  document.getElementById('mobile-menu').classList.toggle('open');
+  document.getElementById('hamburger').classList.toggle('open');
+}
+function closeMenu() {
+  document.getElementById('mobile-menu').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
+}
+</script>
+</body>
+</html>
