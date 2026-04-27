@@ -225,6 +225,7 @@ footer{background:var(--navy2);border-top:1px solid var(--border);padding:2.5rem
     <li><a href="#about">About</a></li>
     <li><a href="#record">Track Record</a></li>
     <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#calculator">Risk Calc</a></li>
     <li><a href="#partners">Prop Firms</a></li>
     <li><a href="https://t.me/AgentLevz" target="_blank" class="nav-cta">Start on Telegram →</a></li>
   </ul>
@@ -321,17 +322,26 @@ footer{background:var(--navy2);border-top:1px solid var(--border);padding:2.5rem
   <p class="body">Every signal fired, every outcome recorded. Expired trades excluded from win rate — only resolved trades count.</p>
 
   <div class="record-grid">
-    <div class="record-card"><span class="rec-val">86%</span><span class="rec-label">Win Rate</span><p class="rec-note">6W / 1L of 7 resolved</p></div>
+    <div class="record-card"><span class="rec-val" id="rec-wr">86%</span><span class="rec-label">Win Rate</span><p class="rec-note" id="rec-resolved">6W / 1L of 7 resolved</p></div>
     <div class="record-card"><span class="rec-val">164p</span><span class="rec-label">Best Trade</span><p class="rec-note">XAUUSD BUY — Asian</p></div>
     <div class="record-card"><span class="rec-val">5×</span><span class="rec-label">Daily Scans</span><p class="rec-note">All major sessions</p></div>
     <div class="record-card"><span class="rec-val">8</span><span class="rec-label">Analysis Layers</span><p class="rec-note">Per signal, every time</p></div>
   </div>
 
+  <!-- Cumulative PnL Chart -->
+  <div style="background:var(--navy2);border:1px solid var(--border);padding:2rem 2rem 1.5rem;margin-top:2rem">
+    <p style="font-family:'Syncopate',sans-serif;font-size:0.58rem;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;margin-bottom:1.25rem">Cumulative PnL — Per Trade</p>
+    <div id="pnl-chart-wrap" style="min-height:180px">
+      <p style="color:var(--dim);font-size:0.82rem;opacity:0.5;padding:2rem 0">Loading chart data...</p>
+    </div>
+  </div>
+
   <table class="data-table">
+    <caption style="font-family:'Syncopate',sans-serif;font-size:0.6rem;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;text-align:left;padding-bottom:1rem;caption-side:top">Recent Closed Positions</caption>
     <thead>
       <tr><th>Pair</th><th>Direction</th><th>Grade</th><th>Session</th><th>Result</th><th>Pips</th></tr>
     </thead>
-    <tbody>
+    <tbody id="recent-trades-body">
       <tr><td>XAUUSD</td><td><span class="pill pill-buy">BUY</span></td><td>B</td><td>Asian</td><td><span class="pill pill-win">WIN</span></td><td style="color:#4ade80">+164.0p</td></tr>
       <tr><td>XAUUSD</td><td><span class="pill pill-buy">BUY</span></td><td>B</td><td>Asian</td><td><span class="pill pill-win">WIN</span></td><td style="color:#4ade80">+83.6p</td></tr>
       <tr><td>XAUUSD</td><td><span class="pill pill-sell">SELL</span></td><td>B</td><td>New York</td><td><span class="pill pill-win">WIN</span></td><td style="color:#4ade80">+173.0p</td></tr>
@@ -392,7 +402,7 @@ footer{background:var(--navy2);border-top:1px solid var(--border);padding:2.5rem
           <li>Order type and session context</li>
           <li>Outcome notifications</li>
         </ul>
-        <button class="price-btn pbtn-out" onclick="openStripe('weekly')">Subscribe — $9</button>
+      <button class="price-btn pbtn-out" onclick="window.open('https://t.me/AgentLevz','_blank')">Subscribe on Telegram →</button>
       </div>
 
       <div class="price-card feat">
@@ -406,7 +416,7 @@ footer{background:var(--navy2);border-top:1px solid var(--border);padding:2.5rem
           <li>Win rate stats and learning feed</li>
           <li>Priority support</li>
         </ul>
-        <button class="price-btn pbtn-gold" onclick="openStripe('monthly')">Subscribe — $30</button>
+        <button class="price-btn pbtn-gold" onclick="window.open('https://t.me/AgentLevz','_blank')">Subscribe on Telegram →</button>
       </div>
 
       <div class="price-card">
@@ -420,11 +430,11 @@ footer{background:var(--navy2);border-top:1px solid var(--border);padding:2.5rem
           <li>First access to new features</li>
           <li>Lock in the lowest rate</li>
         </ul>
-        <button class="price-btn pbtn-out" onclick="openStripe('annual')">Subscribe — $365</button>
+        <button class="price-btn pbtn-out" onclick="window.open('https://t.me/AgentLevz','_blank')">Subscribe on Telegram →</button>
       </div>
     </div>
 
-    <p style="font-size:0.77rem;color:var(--dim);margin:1.1rem 0 3rem;line-height:1.65">After payment your invite code is sent to your email. Open <a href="https://t.me/AgentLevz" target="_blank" style="color:var(--gold);text-decoration:none">@AgentLevz</a> on Telegram and send <strong style="color:var(--white)">/start YOUR-CODE</strong> to activate.</p>
+    <p style="font-size:0.77rem;color:var(--dim);margin:1.1rem 0 3rem;line-height:1.65">Open <a href="https://t.me/AgentLevz" target="_blank" style="color:var(--gold);text-decoration:none">@AgentLevz</a> on Telegram — Levz will present your subscription options directly. Your invite code is emailed automatically after payment. Send <strong style="color:var(--white)">/start YOUR-CODE</strong> to activate.</p>
 
     <div style="border-top:1px solid var(--border);margin:0 0 2.5rem"></div>
 
@@ -434,7 +444,18 @@ footer{background:var(--navy2);border-top:1px solid var(--border);padding:2.5rem
       <div class="price-step-text"><strong>Add Automated Execution</strong><br><small>Optional — requires active signal subscription to function</small></div>
     </div>
 
-    <p class="body" style="margin-bottom:1.25rem">Connect your MT5 prop firm account and Levz executes every signal automatically. Entry, stop loss, take profit, and lot size — hands completely free.</p>
+    <p class="body" style="margin-bottom:1.5rem">Levz fires the signal. The bot executes it on your MT5 account in real time — correct lot size, stop loss, and take profit placed automatically. You don't touch a thing.</p>
+
+    <a href="https://t.me/LevzSignalExecutionBot" target="_blank" style="display:flex;align-items:center;justify-content:space-between;background:rgba(201,168,76,0.05);border:1px solid rgba(201,168,76,0.3);padding:1.25rem 1.75rem;text-decoration:none;margin-bottom:1.75rem;transition:all 0.2s" onmouseover="this.style.background='rgba(201,168,76,0.08)'" onmouseout="this.style.background='rgba(201,168,76,0.05)'">
+      <div style="display:flex;align-items:center;gap:1rem">
+        <span style="font-size:1.4rem">🤖</span>
+        <div>
+          <p style="font-family:'Syncopate',sans-serif;font-size:0.62rem;letter-spacing:0.15em;color:var(--gold);text-transform:uppercase;margin-bottom:0.25rem">@LevzSignalExecutionBot</p>
+          <p style="font-size:0.78rem;color:var(--dim);line-height:1.5">Connect your MT5 account · Challenge or funded · All prop firms supported</p>
+        </div>
+      </div>
+      <span style="font-family:'Syncopate',sans-serif;font-size:0.6rem;letter-spacing:0.12em;color:var(--gold);text-transform:uppercase;flex-shrink:0;margin-left:1rem">Start →</span>
+    </a>
 
     <div class="gate-note">
       <span style="color:var(--gold);flex-shrink:0;margin-top:0.1rem">🔒</span>
@@ -456,7 +477,86 @@ footer{background:var(--navy2);border-top:1px solid var(--border);padding:2.5rem
       </tbody>
     </table>
 
-    <p style="font-size:0.72rem;color:var(--dim);margin-top:0.9rem;opacity:0.65">To set up execution — start <a href="https://t.me/Soarprop" target="_blank" style="color:var(--gold);text-decoration:none">@Soarprop</a> on Telegram after activating your signal subscription.</p>
+    <p style="font-size:0.72rem;color:var(--dim);margin-top:0.9rem;opacity:0.55;line-height:1.6">Challenge and funded account execution available. Pricing applied based on your account size at setup.</p>
+  </div>
+</section>
+
+<!-- CALCULATOR -->
+<section class="section" id="calculator">
+  <p class="lbl">Risk Management</p>
+  <h2 class="h2">Position size<br><em>calculator.</em></h2>
+  <p class="body">Know exactly how much to risk before you enter. Built for prop firm challenge accounts.</p>
+
+  <div style="max-width:680px;margin:3rem auto 0">
+
+    <!-- Inputs -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:1px">
+      <div style="background:var(--navy2);padding:1.5rem 1.75rem">
+        <label style="font-family:'Syncopate',sans-serif;font-size:0.55rem;letter-spacing:0.18em;color:var(--gold);text-transform:uppercase;display:block;margin-bottom:0.65rem">Account Balance ($)</label>
+        <input id="calc-balance" type="number" value="10000" oninput="calcRisk()" style="background:transparent;border:none;border-bottom:1px solid var(--border);color:var(--white);font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;width:100%;outline:none;padding:0.25rem 0">
+      </div>
+      <div style="background:var(--navy2);padding:1.5rem 1.75rem">
+        <label style="font-family:'Syncopate',sans-serif;font-size:0.55rem;letter-spacing:0.18em;color:var(--gold);text-transform:uppercase;display:block;margin-bottom:0.65rem">Instrument</label>
+        <select id="calc-pair" onchange="calcRisk()" style="background:transparent;border:none;border-bottom:1px solid var(--border);color:var(--white);font-family:'DM Sans',sans-serif;font-size:0.95rem;width:100%;outline:none;padding:0.25rem 0;cursor:pointer">
+          <option value="XAUUSD" style="background:var(--navy2)">XAU/USD (Gold)</option>
+          <option value="EURUSD" style="background:var(--navy2)">EUR/USD</option>
+          <option value="GBPUSD" style="background:var(--navy2)">GBP/USD</option>
+          <option value="USDJPY" style="background:var(--navy2)">USD/JPY</option>
+          <option value="GBPJPY" style="background:var(--navy2)">GBP/JPY</option>
+          <option value="USDCAD" style="background:var(--navy2)">USD/CAD</option>
+          <option value="AUDUSD" style="background:var(--navy2)">AUD/USD</option>
+          <option value="NZDUSD" style="background:var(--navy2)">NZD/USD</option>
+          <option value="EURGBP" style="background:var(--navy2)">EUR/GBP</option>
+        </select>
+      </div>
+      <div style="background:var(--navy2);padding:1.5rem 1.75rem">
+        <label style="font-family:'Syncopate',sans-serif;font-size:0.55rem;letter-spacing:0.18em;color:var(--gold);text-transform:uppercase;display:block;margin-bottom:0.65rem">Entry Price</label>
+        <input id="calc-entry" type="number" value="4750" step="0.01" oninput="calcRisk()" style="background:transparent;border:none;border-bottom:1px solid var(--border);color:var(--white);font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;width:100%;outline:none;padding:0.25rem 0">
+      </div>
+      <div style="background:var(--navy2);padding:1.5rem 1.75rem">
+        <label style="font-family:'Syncopate',sans-serif;font-size:0.55rem;letter-spacing:0.18em;color:var(--gold);text-transform:uppercase;display:block;margin-bottom:0.65rem">Stop Loss Price</label>
+        <input id="calc-sl" type="number" value="4735" step="0.01" oninput="calcRisk()" style="background:transparent;border:none;border-bottom:1px solid var(--border);color:var(--white);font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;width:100%;outline:none;padding:0.25rem 0">
+      </div>
+    </div>
+
+    <!-- Risk slider -->
+    <div style="background:var(--navy2);border:1px solid var(--border);padding:1.5rem 1.75rem;margin-bottom:1px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem">
+        <label style="font-family:'Syncopate',sans-serif;font-size:0.55rem;letter-spacing:0.18em;color:var(--gold);text-transform:uppercase">Risk Percentage</label>
+        <span id="risk-pct-display" style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;color:var(--gold)">1.0%</span>
+      </div>
+      <input id="calc-risk-pct" type="range" min="0.1" max="5" step="0.1" value="1" oninput="updateRiskSlider()" style="width:100%;accent-color:var(--gold);cursor:pointer">
+      <div style="display:flex;justify-content:space-between;font-size:0.68rem;color:var(--dim);margin-top:0.4rem;opacity:0.6">
+        <span>0.1%</span><span>Levz uses 1%</span><span>5%</span>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:1px">
+      <div style="background:var(--navy3);padding:1.5rem 1.25rem;text-align:center">
+        <div id="res-risk-usd" style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:600;color:var(--gold);line-height:1;margin-bottom:0.35rem">$100</div>
+        <div style="font-family:'Syncopate',sans-serif;font-size:0.5rem;letter-spacing:0.15em;color:var(--dim);text-transform:uppercase">Risk Amount</div>
+      </div>
+      <div style="background:var(--navy3);padding:1.5rem 1.25rem;text-align:center">
+        <div id="res-lots" style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:600;color:var(--gold);line-height:1;margin-bottom:0.35rem">0.17</div>
+        <div style="font-family:'Syncopate',sans-serif;font-size:0.5rem;letter-spacing:0.15em;color:var(--dim);text-transform:uppercase">Lot Size</div>
+      </div>
+      <div style="background:var(--navy3);padding:1.5rem 1.25rem;text-align:center">
+        <div id="res-pips" style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:600;color:var(--gold);line-height:1;margin-bottom:0.35rem">15.0</div>
+        <div style="font-family:'Syncopate',sans-serif;font-size:0.5rem;letter-spacing:0.15em;color:var(--dim);text-transform:uppercase">Pips to Stop</div>
+      </div>
+      <div style="background:var(--navy3);padding:1.5rem 1.25rem;text-align:center">
+        <div id="res-pip-val" style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:600;color:var(--gold);line-height:1;margin-bottom:0.35rem">$1.70</div>
+        <div style="font-family:'Syncopate',sans-serif;font-size:0.5rem;letter-spacing:0.15em;color:var(--dim);text-transform:uppercase">Pip Value</div>
+      </div>
+    </div>
+
+    <!-- Warning -->
+    <div id="calc-warning" style="background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.2);padding:1rem 1.5rem;font-size:0.82rem;color:#4ade80;line-height:1.6">
+      ✓ 1.0% risk — conservative sizing. Perfect for building confidence on a new challenge account.
+    </div>
+
+    <p style="font-size:0.7rem;color:var(--dim);margin-top:0.9rem;opacity:0.55;line-height:1.6">Calculations are estimates. Always verify position sizing with your broker. Not financial advice.</p>
   </div>
 </section>
 
@@ -512,13 +612,158 @@ footer{background:var(--navy2);border-top:1px solid var(--border);padding:2.5rem
 </div>
 
 <script>
-const STRIPE_PRICES = { weekly:'', monthly:'', annual:'' };
+// ── Live Stats API ───────────────────────────────────────────────────────
+const STATS_API = 'https://soarpropbot-webservice.onrender.com';
 
-function openStripe(plan) {
-  const id = STRIPE_PRICES[plan];
-  if (!id) { window.open('https://t.me/AgentLevz','_blank'); return; }
-  window.location.href = 'https://buy.stripe.com/' + id;
+async function loadLiveStats() {
+  try {
+    const [statsRes, recentRes] = await Promise.all([
+      fetch(STATS_API + '/api/stats'),
+      fetch(STATS_API + '/api/recent'),
+    ]);
+
+    if (statsRes.ok) {
+      const s = await statsRes.json();
+
+      // ── Hero stats ──────────────────────────────────────────────────
+      const resolved = (s.wins || 0) + (s.losses || 0);
+      if (resolved > 0) {
+        document.getElementById('stat-wr').textContent      = s.win_rate + '%';
+        document.getElementById('stat-trades').textContent  = resolved;
+      }
+
+      // ── Record cards ────────────────────────────────────────────────
+      if (resolved > 0) {
+        document.getElementById('rec-wr').textContent      = s.win_rate + '%';
+        document.getElementById('rec-resolved').textContent = s.wins + 'W / ' + s.losses + 'L of ' + resolved + ' resolved';
+      }
+
+      // ── Cumulative PnL bar chart ─────────────────────────────────────
+      if (s.pnl_series && s.pnl_series.length > 0) {
+        renderChart(s.pnl_series);
+      }
+    }
+
+    if (recentRes.ok) {
+      const r = await recentRes.json();
+      if (r.signals && r.signals.length > 0) {
+        renderRecentTable(r.signals);
+      }
+    }
+  } catch(e) {
+    console.log('Live stats unavailable — showing static data');
+  }
 }
+
+function renderChart(series) {
+  const wrap = document.getElementById('pnl-chart-wrap');
+  if (!wrap) return;
+
+  const max     = Math.max(...series.map(s => Math.abs(s.cumulative)), 1);
+  const barW    = Math.max(28, Math.floor((wrap.offsetWidth - 40) / series.length) - 4);
+
+  let html = '<div style="display:flex;align-items:flex-end;gap:4px;height:140px;padding:0 0 0.5rem">';
+  series.forEach(s => {
+    const pct    = Math.abs(s.cumulative) / max * 100;
+    const height = Math.max(4, pct * 1.2);
+    const isWin  = s.result === 'WIN';
+    const color  = isWin ? 'rgba(74,222,128,0.7)' : 'rgba(248,113,113,0.7)';
+    const border = isWin ? 'rgba(74,222,128,0.9)' : 'rgba(248,113,113,0.9)';
+    html += '<div title="' + s.pair + ' ' + (s.pips > 0 ? '+' : '') + s.pips + 'p | Cumulative: ' + s.cumulative + 'p" style="' +
+      'flex:1;min-width:' + barW + 'px;max-width:48px;height:' + height + 'px;' +
+      'background:' + color + ';border-top:2px solid ' + border + ';' +
+      'transition:opacity 0.2s;cursor:default;position:relative;bottom:0" ' +
+      'onmouseover="this.style.opacity=\'0.8\'" onmouseout="this.style.opacity=\'1\'"></div>';
+  });
+  html += '</div>';
+
+  // X axis labels
+  html += '<div style="display:flex;justify-content:space-between;font-family:\'Syncopate\',sans-serif;font-size:0.5rem;letter-spacing:0.1em;color:var(--dim);opacity:0.6;margin-top:0.25rem">';
+  html += '<span>' + (series[0]?.date || '') + '</span>';
+  if (series.length > 1) html += '<span>' + (series[series.length-1]?.date || '') + '</span>';
+  html += '</div>';
+
+  // Cumulative total
+  const total = series[series.length-1]?.cumulative || 0;
+  html += '<div style="display:flex;justify-content:space-between;align-items:center;margin-top:1rem;padding-top:0.75rem;border-top:1px solid var(--border)">';
+  html += '<span style="font-family:\'Syncopate\',sans-serif;font-size:0.55rem;letter-spacing:0.15em;color:var(--dim);text-transform:uppercase">Cumulative PnL</span>';
+  html += '<span style="font-family:\'Cormorant Garamond\',serif;font-size:1.6rem;font-weight:600;color:' + (total >= 0 ? '#4ade80' : '#f87171') + '">' + (total >= 0 ? '+' : '') + total + 'p</span>';
+  html += '</div>';
+
+  wrap.innerHTML = html;
+}
+
+function renderRecentTable(signals) {
+  const tbody = document.getElementById('recent-trades-body');
+  if (!tbody) return;
+  tbody.innerHTML = signals.map(t => {
+    const dirPill  = t.direction === 'BUY'
+      ? '<span class="pill pill-buy">BUY</span>'
+      : '<span class="pill pill-sell">SELL</span>';
+    const resPill  = t.result === 'WIN'
+      ? '<span class="pill pill-win">WIN</span>'
+      : '<span class="pill pill-loss">LOSS</span>';
+    const pipsCol  = t.result === 'WIN'
+      ? '<td style="color:#4ade80">+' + t.pips + 'p</td>'
+      : '<td style="color:#f87171">' + t.pips + 'p</td>';
+    return '<tr><td>' + (t.pair||'') + '</td><td>' + dirPill + '</td><td>' + (t.grade||'') + '</td><td>' + (t.session||'') + '</td><td>' + resPill + '</td>' + pipsCol + '</tr>';
+  }).join('');
+}
+
+window.addEventListener('load', loadLiveStats);
+
+const PIP_VALUES = {
+  XAUUSD: { pipValue: 1.0  },
+  EURUSD: { pipValue: 10.0 },
+  GBPUSD: { pipValue: 10.0 },
+  USDCAD: { pipValue: 10.0 },
+  AUDUSD: { pipValue: 10.0 },
+  NZDUSD: { pipValue: 10.0 },
+  EURGBP: { pipValue: 10.0 },
+  USDJPY: { pipValue: 9.09 },
+  GBPJPY: { pipValue: 9.09 },
+};
+
+function updateRiskSlider() {
+  const v = parseFloat(document.getElementById('calc-risk-pct').value);
+  document.getElementById('risk-pct-display').textContent = v.toFixed(1) + '%';
+  calcRisk();
+}
+
+function calcRisk() {
+  const balance = parseFloat(document.getElementById('calc-balance').value) || 0;
+  const riskPct = parseFloat(document.getElementById('calc-risk-pct').value) || 1;
+  const entry   = parseFloat(document.getElementById('calc-entry').value) || 0;
+  const sl      = parseFloat(document.getElementById('calc-sl').value) || 0;
+  const pair    = document.getElementById('calc-pair').value;
+  if (!balance || !entry || !sl || entry === sl) return;
+  const riskUsd = balance * (riskPct / 100);
+  const pv      = PIP_VALUES[pair] || PIP_VALUES['EURUSD'];
+  const pipDiff = Math.abs(entry - sl);
+  const pips    = pair === 'XAUUSD' ? pipDiff * 10 :
+                  (pair === 'USDJPY' || pair === 'GBPJPY') ? pipDiff * 100 :
+                  pipDiff * 10000;
+  if (pips <= 0) return;
+  const lots    = riskUsd / (pips * pv.pipValue);
+  document.getElementById('res-risk-usd').textContent = '$' + riskUsd.toFixed(2);
+  document.getElementById('res-lots').textContent     = lots.toFixed(2);
+  document.getElementById('res-pips').textContent     = pips.toFixed(1);
+  document.getElementById('res-pip-val').textContent  = '$' + (pv.pipValue * lots).toFixed(2);
+  const warn      = document.getElementById('calc-warning');
+  const maxDaily  = balance * 0.04;
+  const tradesLeft = riskPct > 0 ? Math.floor(maxDaily / riskUsd) : 0;
+  if (riskPct > 4) {
+    warn.style.cssText = 'background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.2);padding:1rem 1.5rem;font-size:0.82rem;color:#f87171;line-height:1.6';
+    warn.textContent = '🚫 ' + riskPct.toFixed(1) + '% risk — a single loss wipes ' + ((riskPct/4)*100).toFixed(0) + '% of your daily drawdown. Most prop firms will flag this as reckless sizing.';
+  } else if (riskPct > 2) {
+    warn.style.cssText = 'background:rgba(251,191,36,0.06);border:1px solid rgba(251,191,36,0.2);padding:1rem 1.5rem;font-size:0.82rem;color:#fbbf24;line-height:1.6';
+    warn.textContent = '⚠️ ' + riskPct.toFixed(1) + '% risk — manageable but tight. You have room for ' + tradesLeft + ' losing trade' + (tradesLeft===1?'':'s') + ' before hitting your $' + maxDaily.toFixed(0) + ' daily limit.';
+  } else {
+    warn.style.cssText = 'background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.2);padding:1rem 1.5rem;font-size:0.82rem;color:#4ade80;line-height:1.6';
+    warn.textContent = '✓ ' + riskPct.toFixed(1) + '% risk — $' + riskUsd.toFixed(2) + ' at risk. ' + tradesLeft + ' losing trades before your $' + maxDaily.toFixed(0) + ' daily limit. ' + (riskPct <= 1 ? 'This is how Levz sizes every position.' : 'This is how funded traders size positions.');
+  }
+}
+calcRisk();
 
 function acceptCookies() { localStorage.setItem('levz_cookie','accepted'); document.getElementById('cookie-banner').style.display='none'; }
 function declineCookies() { localStorage.setItem('levz_cookie','declined'); document.getElementById('cookie-banner').style.display='none'; }
