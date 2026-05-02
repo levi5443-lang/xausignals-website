@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Agent Levz — The world's first agentic AI persona built for prop firm trading.">
+<meta property="og:title" content="Agent Levz — AI Trading Persona">
+<meta property="og:description" content="The world's first agentic AI persona built for prop firm trading.">
+<title>Agent Levz — The World's First AI Trading Persona</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syncopate:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#080C12;--navy2:#0D1219;--navy3:#121A24;
+  --gold:#C9A84C;--gold2:#E8C76A;
+  --dim:#7A8FA8;--white:#EEF2F8;
+  --border:rgba(201,168,76,0.12);--border2:rgba(201,168,76,0.06);
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--white);line-height:1.7;overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.25rem 3rem;display:flex;align-items:center;justify-content:space-between;background:rgba(8,12,18,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:'Syncopate',sans-serif;font-size:0.8rem;font-weight:700;color:var(--gold);letter-spacing:0.2em;text-decoration:none}
+.nav-links{display:flex;align-items:center;gap:2rem;list-style:none}
+.nav-links a{color:var(--dim);text-decoration:none;font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;transition:color 0.2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{background:var(--gold)!important;color:var(--navy)!important;padding:0.45rem 1.1rem!important;font-weight:500!important}
+.nav-cta:hover{background:var(--gold2)!important}
+
+/* HERO */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:0 6rem;gap:4rem;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;top:-20%;right:-10%;width:600px;height:600px;background:radial-gradient(circle,rgba(201,168,76,0.06) 0%,transparent 70%);pointer-events:none}
+.hero-content{position:relative;z-index:1;animation:fadeUp 1s ease both}
+.eyebrow{font-family:'Syncopate',sans-serif;font-size:0.6rem;font-weight:700;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:1.5rem;display:flex;align-items:center;gap:0.75rem}
+.eyebrow::before{content:'';width:28px;height:1px;background:var(--gold);opacity:0.6}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,5vw,5.5rem);font-weight:300;line-height:1.05;margin-bottom:1.5rem}
+.hero-title em{font-style:italic;color:var(--gold)}
+.hero-sub{font-size:0.97rem;color:var(--dim);max-width:440px;line-height:1.85;margin-bottom:2.5rem;font-weight:300}
+.hero-stats{display:flex;gap:2.5rem;margin-bottom:2.5rem;padding-bottom:2.5rem;border-bottom:1px solid var(--border)}
+.stat-val{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:600;color:var(--gold);line-height:1;display:block}
+.stat-label{font-size:0.68rem;color:var(--dim);letter-spacing:0.06em;text-transform:uppercase;margin-top:0.3rem;display:block}
+.cta-group{display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
+.btn-gold{display:inline-flex;align-items:center;gap:0.5rem;background:var(--gold);color:var(--navy);font-weight:500;font-size:0.85rem;letter-spacing:0.05em;padding:0.9rem 2rem;text-decoration:none;transition:background 0.2s}
+.btn-gold:hover{background:var(--gold2)}
+.btn-ghost{display:inline-flex;align-items:center;gap:0.4rem;color:var(--dim);font-size:0.82rem;text-decoration:none;border-bottom:1px solid transparent;transition:all 0.2s;padding-bottom:2px}
+.btn-ghost:hover{color:var(--gold);border-color:var(--gold)}
+.hero-img-wrap{position:relative;display:flex;justify-content:center;animation:fadeIn 1.2s ease both 0.3s}
+.hero-img-wrap::before{content:'';position:absolute;inset:-2px;background:linear-gradient(135deg,rgba(201,168,76,0.25),transparent,rgba(201,168,76,0.08));clip-path:polygon(10% 0%,100% 0%,90% 100%,0% 100%)}
+.hero-img{width:100%;max-width:440px;height:560px;object-fit:cover;object-position:top;clip-path:polygon(10% 0%,100% 0%,90% 100%,0% 100%);position:relative;z-index:1;filter:contrast(1.05)}
+.img-tag{position:absolute;bottom:1.5rem;right:1.5rem;background:rgba(8,12,18,0.9);border:1px solid var(--border);padding:0.55rem 0.9rem;z-index:2;backdrop-filter:blur(8px)}
+.img-tag p{font-family:'Syncopate',sans-serif;font-size:0.55rem;letter-spacing:0.18em;color:var(--gold);text-transform:uppercase}
+
+/* TICKER */
+.ticker-wrap{background:var(--navy2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:0.8rem 0;overflow:hidden}
+.ticker-track{display:flex;animation:ticker 28s linear infinite;white-space:nowrap}
+.ticker-item{display:inline-flex;align-items:center;gap:0.5rem;padding:0 2rem;font-family:'Syncopate',sans-serif;font-size:0.58rem;letter-spacing:0.12em;color:var(--dim);text-transform:uppercase;border-right:1px solid var(--border)}
+.ticker-item span{color:var(--gold)}
+
+/* SECTIONS */
+.section{padding:7rem 6rem;position:relative}
+.section-alt{background:var(--navy2)}
+.lbl{font-family:'Syncopate',sans-serif;font-size:0.58rem;font-weight:700;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:0.9rem;display:flex;align-items:center;gap:0.6rem}
+.lbl::before{content:'';width:20px;height:1px;background:var(--gold);opacity:0.5}
+.h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3.5vw,3.5rem);font-weight:300;line-height:1.1;margin-bottom:1.25rem}
+.h2 em{font-style:italic;color:var(--gold)}
+.body{color:var(--dim);font-size:0.93rem;max-width:560px;line-height:1.85;font-weight:300}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;margin-top:4rem}
+.qualities{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2rem}
+.quality{padding:1.5rem;border:1px solid var(--border);background:var(--border2);transition:border-color 0.3s}
+.quality:hover{border-color:rgba(201,168,76,0.28)}
+.quality-icon{font-size:1.3rem;margin-bottom:0.65rem;display:block}
+.quality-title{font-family:'Syncopate',sans-serif;font-size:0.58rem;letter-spacing:0.12em;color:var(--gold);text-transform:uppercase;margin-bottom:0.4rem}
+.quality-desc{font-size:0.8rem;color:var(--dim);line-height:1.6}
+.quote-block{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-style:italic;font-weight:300;color:var(--white);line-height:1.55;padding:2.5rem;border-left:2px solid var(--gold);background:var(--border2);position:relative}
+.quote-block::before{content:'"';font-size:6rem;color:var(--gold);opacity:0.12;position:absolute;top:-1.2rem;left:1.5rem;font-family:'Cormorant Garamond',serif;line-height:1}
+.quote-by{font-family:'Syncopate',sans-serif;font-size:0.52rem;letter-spacing:0.15em;color:var(--gold);opacity:0.65;font-style:normal;display:block;margin-top:1.25rem}
+
+/* RECORD */
+.record-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-top:3.5rem}
+.record-card{background:var(--navy);padding:2.5rem 2rem;text-align:center;transition:background 0.3s}
+.record-card:hover{background:var(--navy3)}
+.rec-val{font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:600;color:var(--gold);line-height:1;display:block;margin-bottom:0.4rem}
+.rec-label{font-family:'Syncopate',sans-serif;font-size:0.52rem;letter-spacing:0.18em;color:var(--dim);text-transform:uppercase}
+.rec-note{font-size:0.7rem;color:var(--dim);margin-top:0.4rem;opacity:0.65}
+
+/* TABLE */
+.data-table{width:100%;border-collapse:collapse;margin-top:2.5rem}
+.data-table th{font-family:'Syncopate',sans-serif;font-size:0.52rem;letter-spacing:0.18em;color:var(--gold);text-transform:uppercase;padding:0.9rem 1.25rem;text-align:left;border-bottom:1px solid var(--border);font-weight:400}
+.data-table td{padding:1rem 1.25rem;font-size:0.83rem;color:var(--dim);border-bottom:1px solid var(--border2)}
+.data-table tr:hover td{background:var(--border2);color:var(--white)}
+.pill{display:inline-block;padding:0.18rem 0.6rem;font-size:0.67rem;font-weight:500}
+.pill-win{background:rgba(34,197,94,0.1);color:#4ade80}
+.pill-loss{background:rgba(239,68,68,0.1);color:#f87171}
+.pill-buy{background:rgba(59,130,246,0.1);color:#60a5fa}
+.pill-sell{background:rgba(251,191,36,0.1);color:#fbbf24}
+
+/* STEPS */
+.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-top:3.5rem}
+.step{background:var(--navy2);padding:3rem 2.5rem;position:relative;transition:background 0.3s}
+.step:hover{background:var(--navy3)}
+.step-num{font-family:'Cormorant Garamond',serif;font-size:5rem;font-weight:300;color:var(--gold);opacity:0.12;line-height:1;position:absolute;top:1rem;right:1.5rem}
+.step-title{font-family:'Syncopate',sans-serif;font-size:0.62rem;letter-spacing:0.12em;color:var(--gold);text-transform:uppercase;margin-bottom:0.9rem}
+.step-desc{font-size:0.85rem;color:var(--dim);line-height:1.75;font-weight:300}
+
+/* PRICING */
+.price-step{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem}
+.price-step-num{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.78rem;font-weight:600;flex-shrink:0}
+.p-active{background:var(--gold);color:var(--navy)}
+.p-opt{background:transparent;border:1px solid rgba(201,168,76,0.3);color:var(--gold)}
+.price-step-text{font-family:'Syncopate',sans-serif;font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase}
+.price-step-text strong{color:var(--white)}
+.price-step-text small{color:var(--dim);font-size:0.55rem}
+.price-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:1px}
+.price-card{background:var(--navy);padding:2.5rem 2rem;transition:background 0.3s}
+.price-card:hover{background:var(--navy3)}
+.price-card.feat{background:var(--navy3)}
+.price-badge{font-family:'Syncopate',sans-serif;font-size:0.52rem;letter-spacing:0.18em;color:var(--gold);text-transform:uppercase;margin-bottom:0.65rem;display:block}
+.price-plan{font-family:'Syncopate',sans-serif;font-size:0.62rem;letter-spacing:0.12em;color:var(--white);text-transform:uppercase;margin-bottom:1.25rem}
+.price-val{font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:600;color:var(--gold);line-height:1;margin-bottom:0.3rem}
+.price-val sup{font-size:1.2rem;vertical-align:super}
+.price-period{font-size:0.73rem;color:var(--dim);margin-bottom:1.75rem}
+.price-feats{list-style:none;margin-bottom:1.75rem}
+.price-feats li{font-size:0.8rem;color:var(--dim);padding:0.45rem 0;border-bottom:1px solid var(--border2);display:flex;gap:0.5rem;line-height:1.5}
+.price-feats li::before{content:'—';color:var(--gold);opacity:0.5;flex-shrink:0}
+.price-btn{display:block;text-align:center;padding:0.8rem;font-size:0.76rem;font-weight:500;letter-spacing:0.06em;text-decoration:none;transition:all 0.2s;cursor:pointer;border:none;width:100%;font-family:'DM Sans',sans-serif}
+.pbtn-gold{background:var(--gold);color:var(--navy)}
+.pbtn-gold:hover{background:var(--gold2)}
+.pbtn-out{background:transparent;color:var(--gold);border:1px solid rgba(201,168,76,0.35)}
+.pbtn-out:hover{border-color:var(--gold);background:rgba(201,168,76,0.04)}
+.gate-note{background:var(--border2);border:1px solid var(--border);padding:1rem 1.5rem;display:flex;align-items:flex-start;gap:0.75rem;margin:2rem 0}
+.gate-note p{font-size:0.78rem;color:var(--dim);line-height:1.65}
+.gate-note strong{color:var(--white)}
+.exec-table{width:100%;border-collapse:collapse;border:1px solid var(--border)}
+.exec-table th{font-family:'Syncopate',sans-serif;font-size:0.52rem;letter-spacing:0.18em;color:var(--gold);text-transform:uppercase;padding:0.9rem 1.5rem;text-align:left;border-bottom:1px solid var(--border);background:var(--navy2);font-weight:400}
+.exec-table td{padding:0.9rem 1.5rem;font-size:0.83rem;color:var(--dim);border-bottom:1px solid var(--border2)}
+.exec-table tr:hover td{background:var(--border2)}
+.exec-table td:last-child{color:var(--gold);font-weight:500}
+
+/* FIRMS */
+.firms-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-top:3.5rem}
+.firm-card{background:var(--navy);padding:2.5rem 2rem;text-align:center;text-decoration:none;transition:background 0.3s;display:block}
+.firm-card:hover{background:var(--navy3)}
+.firm-rank{font-family:'Syncopate',sans-serif;font-size:0.52rem;letter-spacing:0.15em;color:var(--gold);text-transform:uppercase;margin-bottom:0.65rem;opacity:0.75}
+.firm-name{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;color:var(--white);margin-bottom:0.5rem}
+.firm-tag{font-size:0.75rem;color:var(--dim);margin-bottom:1.25rem;line-height:1.55}
+.firm-link{font-family:'Syncopate',sans-serif;font-size:0.52rem;letter-spacing:0.15em;color:var(--gold);text-transform:uppercase;opacity:0.7}
+
+/* CTA */
+.cta-section{padding:8rem 6rem;text-align:center;position:relative;overflow:hidden}
+.cta-section::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:400px;background:radial-gradient(ellipse,rgba(201,168,76,0.05) 0%,transparent 70%);pointer-events:none}
+.cta-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,4vw,4.5rem);font-weight:300;line-height:1.1;margin-bottom:1.5rem}
+.cta-title em{font-style:italic;color:var(--gold)}
+.cta-sub{color:var(--dim);font-size:0.97rem;max-width:440px;margin:0 auto 3rem;line-height:1.85;font-weight:300}
+
+/* FOOTER */
+footer{background:var(--navy2);border-top:1px solid var(--border);padding:2.5rem 6rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem}
+.foot-logo{font-family:'Syncopate',sans-serif;font-size:0.78rem;font-weight:700;color:var(--gold);letter-spacing:0.2em}
+.foot-links{display:flex;gap:2rem;list-style:none}
+.foot-links a{color:var(--dim);text-decoration:none;font-size:0.76rem;letter-spacing:0.05em;transition:color 0.2s}
+.foot-links a:hover{color:var(--gold)}
+.foot-copy{color:var(--dim);font-size:0.7rem;opacity:0.5}
+
+/* COOKIE */
+#cookie-banner{display:none;position:fixed;bottom:0;left:0;right:0;z-index:999;background:var(--navy2);border-top:1px solid var(--border);padding:1.25rem 2.5rem;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+#cookie-banner p{color:var(--dim);font-size:0.78rem;line-height:1.6}
+#cookie-banner a{color:var(--gold);text-decoration:none}
+.ck-btns{display:flex;gap:0.75rem;flex-shrink:0}
+.ck-btn{padding:0.48rem 1.15rem;font-size:0.76rem;font-family:'DM Sans',sans-serif;cursor:pointer;border:none;transition:all 0.2s}
+.ck-accept{background:var(--gold);color:var(--navy);font-weight:600}
+.ck-accept:hover{background:var(--gold2)}
+.ck-decline{background:transparent;color:var(--dim);border:1px solid rgba(136,153,170,0.3)}
+.ck-decline:hover{color:var(--white)}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .section{padding:5rem 2rem}
+  .about-grid{grid-template-columns:1fr;gap:3rem}
+  .record-grid{grid-template-columns:repeat(2,1fr)}
+  .steps-grid{grid-template-columns:1fr}
+  .price-cards{grid-template-columns:1fr}
+  .firms-grid{grid-template-columns:1fr!important}
+  footer{flex-direction:column;align-items:flex-start;padding:2rem}
+  nav{padding:1rem 1.5rem}
+  .nav-links{display:none}
+  .cta-section{padding:5rem 2rem}
+}
+@media(max-width:768px){
+  .hero{grid-template-columns:1fr;padding:8rem 2rem 4rem;gap:1.5rem}
+  .hero-content{order:2}
+  .hero-img-wrap{order:1;display:flex;justify-content:center;margin:0 auto;width:100%}
+  .hero-img{max-width:260px;height:330px}
+  .section{padding:5rem 2rem}
+  .about-grid{grid-template-columns:1fr;gap:3rem}
+  .record-grid{grid-template-columns:repeat(2,1fr)}
+  .steps-grid{grid-template-columns:1fr}
+  .price-cards{grid-template-columns:1fr}
+  .edu-grid{grid-template-columns:1fr!important}
+  .firms-grid{grid-template-columns:repeat(2,1fr)}
+  footer{flex-direction:column;align-items:flex-start;padding:2rem}
+  nav{padding:1rem 1.5rem}
+  .nav-links{display:none}
+  .cta-section{padding:5rem 2rem}
+}
+@media(max-width:640px){
+  .hero-stats{gap:1.5rem}
+  .record-grid{grid-template-columns:1fr 1fr}
+  .firms-grid{grid-template-columns:1fr!important}
+  .qualities{grid-template-columns:1fr}
+  .hero{padding:7rem 1.5rem 3rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">AGENT LEVZ</a>
+  <ul class="nav-links">
+    <li><a href="#about">Intelligence & Process</a></li>
+    <li><a href="#record">Track Record</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#calculator">Risk Calc</a></li>
+    <li><a href="#partners">Prop Firms</a></li>
+    <li><a href="https://t.me/LevzSignalExecutionBot" target="_blank" class="nav-cta">Start on Telegram →</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <p class="eyebrow">The World's First AI Trading Persona</p>
+    <h1 class="hero-title">She doesn't guess.<br>She <em>calculates.</em></h1>
+    <p class="hero-sub">Agent Levz is the world's first agentic AI persona built for prop firm trading. She scans five sessions daily, learns from every outcome, and speaks only when the setup is exceptional.</p>
+    <div class="hero-stats">
+      <div><span class="stat-val">5×</span><span class="stat-label">Daily Scans</span></div>
+      <div><span class="stat-val">6</span><span class="stat-label">Pairs Covered</span></div>
+      <div><span class="stat-val">8</span><span class="stat-label">Analysis Layers</span></div>
+    </div>
+    <div class="cta-group">
+      <a href="https://t.me/LevzSignalExecutionBot" target="_blank" class="btn-gold"><span>Get Started</span><span>→</span></a>
+      <a href="#about" class="btn-ghost">See how she works ↓</a>
+    </div>
+  </div>
+
+  <div class="hero-img-wrap">
+    <img src="AI Agent Levz.png" alt="Agent Levz" class="hero-img">
+    <div class="img-tag"><p>Agent Levz — AI Trading Persona</p></div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <div class="ticker-item">XAUUSD <span>STRONG ✓</span></div>
+    <div class="ticker-item">Win Rate <span>86%</span></div>
+    <div class="ticker-item">5 Scans Daily <span>All Sessions</span></div>
+    <div class="ticker-item">Prop Firm <span>Optimised</span></div>
+    <div class="ticker-item">MT5 <span>Auto Execution</span></div>
+    <div class="ticker-item">8-Layer Analysis <span>Every Signal</span></div>
+    <div class="ticker-item">Self-Learning <span>AI Core</span></div>
+    <div class="ticker-item">XAUUSD <span>STRONG ✓</span></div>
+    <div class="ticker-item">Win Rate <span>86%</span></div>
+    <div class="ticker-item">5 Scans Daily <span>All Sessions</span></div>
+    <div class="ticker-item">Prop Firm <span>Optimised</span></div>
+    <div class="ticker-item">MT5 <span>Auto Execution</span></div>
+    <div class="ticker-item">8-Layer Analysis <span>Every Signal</span></div>
+    <div class="ticker-item">Self-Learning <span>AI Core</span></div>
+  </div>
+</div>
+
+<!-- EDUCATION -->
+<section class="section" id="education">
+  <p class="lbl">Learn The System</p>
+  <h2 class="h2">Don't just follow signals.<br><em>Understand them.</em></h2>
+  <p class="body" style="margin-bottom:3rem">Ascending with AI Agent Levz is a free community built for traders who want to go from zero to funded. Learn how to read Levz's signals, set up MT5, manage risk, and pass your prop firm challenge — step by step.</p>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-bottom:3rem" class="edu-grid">
+    <div style="background:var(--navy2);border:1px solid var(--border);padding:2rem 1.75rem">
+      <div style="font-size:1.8rem;margin-bottom:1rem">📊</div>
+      <p style="font-family:'Syncopate',sans-serif;font-size:0.6rem;letter-spacing:0.15em;color:var(--gold);text-transform:uppercase;margin-bottom:0.75rem">Module 1</p>
+      <p style="font-size:1rem;color:var(--white);font-weight:500;margin-bottom:0.5rem">What is xauSignals.ca</p>
+      <p style="font-size:0.8rem;color:var(--dim);line-height:1.6">Understand the system — how Levz works, what she's scanning for, and why this approach is built for prop firms.</p>
+    </div>
+    <div style="background:var(--navy2);border:1px solid var(--border);padding:2rem 1.75rem">
+      <div style="font-size:1.8rem;margin-bottom:1rem">🤖</div>
+      <p style="font-family:'Syncopate',sans-serif;font-size:0.6rem;letter-spacing:0.15em;color:var(--gold);text-transform:uppercase;margin-bottom:0.75rem">Module 2</p>
+      <p style="font-size:1rem;color:var(--white);font-weight:500;margin-bottom:0.5rem">Meet AI Agent Levz</p>
+      <p style="font-size:0.8rem;color:var(--dim);line-height:1.6">Who she is, how she thinks, and what separates an agentic AI persona from a simple signal bot.</p>
+    </div>
+    <div style="background:var(--navy2);border:1px solid var(--border);padding:2rem 1.75rem">
+      <div style="font-size:1.8rem;margin-bottom:1rem">🏆</div>
+      <p style="font-family:'Syncopate',sans-serif;font-size:0.6rem;letter-spacing:0.15em;color:var(--gold);text-transform:uppercase;margin-bottom:0.75rem">Module 3</p>
+      <p style="font-size:1rem;color:var(--white);font-weight:500;margin-bottom:0.5rem">Zero to Funded</p>
+      <p style="font-size:0.8rem;color:var(--dim);line-height:1.6">MT5 setup, reading signals, prop firm rules, risk management, and how to go live and scale up.</p>
+    </div>
+  </div>
+
+  <!-- Skool CTA — bold standalone button -->
+  <div style="display:flex;flex-direction:column;align-items:flex-start;gap:1rem;margin-top:1rem">
+    <div style="background:linear-gradient(135deg,rgba(201,168,76,0.12),rgba(201,168,76,0.04));border:1.5px solid var(--gold);padding:2rem 2.5rem;max-width:640px;width:100%">
+      <p style="font-family:'Syncopate',sans-serif;font-size:0.58rem;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;margin-bottom:0.6rem">Free Community</p>
+      <p style="font-size:1.35rem;color:var(--white);font-weight:600;margin-bottom:0.4rem;line-height:1.3">Ascending with AI Agent Levz</p>
+      <p style="font-size:0.85rem;color:var(--dim);line-height:1.6;margin-bottom:1.5rem">Join the free Skool community. Full course included. From zero to funded trader — guided by Levz.</p>
+      <a href="https://www.skool.com/ascending-with-ai-agent-levz-8813/about?ref=f5522be7f4614c1eb74b9d98c40e0de3" target="_blank" class="btn-gold" style="font-size:0.85rem;padding:0.85rem 2rem;display:inline-flex;align-items:center;gap:0.5rem;text-decoration:none">
+        <span>Join Free on Skool</span><span>→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <p class="lbl">The Intelligence & The Process</p>
+  <h2 class="h2">Not human. Not a bot.<br><em>Something new.</em></h2>
+  <p class="body">Agent Levz is what you'd get if you took the most experienced trader in the world — removed all their emotion — and gave them perfect memory and infinite patience.</p>
+
+  <div class="about-grid" style="margin-top:4rem">
+    <div>
+      <div class="qualities">
+        <div class="quality">
+          <span class="quality-icon">🔍</span>
+          <p class="quality-title">She Scans</p>
+          <p class="quality-desc">Five times daily — Asian open, London open, London mid, New York open, and the NY-London overlap. Six pairs analysed in parallel across M15 with full 8-layer confluence.</p>
+        </div>
+        <div class="quality">
+          <span class="quality-icon">🧠</span>
+          <p class="quality-title">She Decides</p>
+          <p class="quality-desc">If fewer than three layers align — she says nothing. When she fires, the signal includes entry, stop loss, two take profit levels, order type, and a plain-language explanation of her reasoning.</p>
+        </div>
+        <div class="quality">
+          <span class="quality-icon">⚡</span>
+          <p class="quality-title">She Executes</p>
+          <p class="quality-desc">The signal hits the executor bot which places the trade on your MT5 in real time — correct lot size, stop loss, and take profit. You don't touch a thing.</p>
+        </div>
+        <div class="quality">
+          <span class="quality-icon">📚</span>
+          <p class="quality-title">She Learns</p>
+          <p class="quality-desc">Every outcome feeds back into her adaptive system. Per-pair thresholds, session filters, and volatility caps all adjust automatically based on evidence — not instructions.</p>
+        </div>
+        <div class="quality">
+          <span class="quality-icon">🎯</span>
+          <p class="quality-title">She Adapts</p>
+          <p class="quality-desc">She sets her own grade thresholds, avoided pairs, conviction pairs, and session bias. If a pair keeps losing she raises the bar. If conditions improve she loosens them. No one tells her to.</p>
+        </div>
+        <div class="quality">
+          <span class="quality-icon">🛡️</span>
+          <p class="quality-title">She Protects</p>
+          <p class="quality-desc">1% risk per trade. 2% max open risk. 3% daily loss limit. Drawdown protection, breakeven logic, and order expiry — all built for prop firm rules from the ground up.</p>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="quote-block">
+        The market is broadly compressed. Six of six pairs operating below average range. I found no setup worth the risk in these conditions. I am watching. I will speak when the market gives me something worth saying.
+        <span class="quote-by">— Agent Levz, Stand Down Message</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <p class="lbl">Track Record</p>
+  <h2 class="h2">The numbers<br><em>speak for her.</em></h2>
+  <p class="body">Every signal fired, every outcome recorded. Expired trades excluded from win rate — only resolved trades count.</p>
+
+  <div class="record-grid">
+    <div class="record-card"><span class="rec-val" id="rec-wr">86%</span><span class="rec-label">Win Rate</span><p class="rec-note" id="rec-resolved">6W / 1L of 7 resolved</p></div>
+    <div class="record-card"><span class="rec-val">164p</span><span class="rec-label">Best Trade</span><p class="rec-note">XAUUSD BUY — Asian</p></div>
+    <div class="record-card"><span class="rec-val">5×</span><span class="rec-label">Daily Scans</span><p class="rec-note">All major sessions</p></div>
+    <div class="record-card"><span class="rec-val">8</span><span class="rec-label">Analysis Layers</span><p class="rec-note">Per signal, every time</p></div>
+  </div>
+
+  <!-- Cumulative PnL Chart -->
+  <div style="background:var(--navy2);border:1px solid var(--border);padding:2rem 2rem 1.5rem;margin-top:2rem">
+    <p style="font-family:'Syncopate',sans-serif;font-size:0.58rem;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;margin-bottom:1.25rem">Cumulative PnL — Per Trade</p>
+    <div id="pnl-chart-wrap" style="min-height:180px">
+      <p style="color:var(--dim);font-size:0.82rem;opacity:0.5;padding:2rem 0">Loading chart data...</p>
+    </div>
+  </div>
+
+  <table class="data-table">
+    <caption style="font-family:'Syncopate',sans-serif;font-size:0.6rem;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;text-align:left;padding-bottom:1rem;caption-side:top">Recent Closed Positions</caption>
+    <thead>
+      <tr><th>Pair</th><th>Direction</th><th>Grade</th><th>Session</th><th>Result</th><th>Pips</th></tr>
+    </thead>
+    <tbody id="recent-trades-body">
+      <tr><td>XAUUSD</td><td><span class="pill pill-buy">BUY</span></td><td>B</td><td>Asian</td><td><span class="pill pill-win">WIN</span></td><td style="color:#4ade80">+164.0p</td></tr>
+      <tr><td>XAUUSD</td><td><span class="pill pill-buy">BUY</span></td><td>B</td><td>Asian</td><td><span class="pill pill-win">WIN</span></td><td style="color:#4ade80">+83.6p</td></tr>
+      <tr><td>XAUUSD</td><td><span class="pill pill-sell">SELL</span></td><td>B</td><td>New York</td><td><span class="pill pill-win">WIN</span></td><td style="color:#4ade80">+173.0p</td></tr>
+      <tr><td>GBPJPY</td><td><span class="pill pill-buy">BUY</span></td><td>B</td><td>New York</td><td><span class="pill pill-win">WIN</span></td><td style="color:#4ade80">+89.0p</td></tr>
+      <tr><td>USDJPY</td><td><span class="pill pill-sell">SELL</span></td><td>B</td><td>New York</td><td><span class="pill pill-win">WIN</span></td><td style="color:#4ade80">+15.0p</td></tr>
+      <tr><td>XAUUSD</td><td><span class="pill pill-buy">BUY</span></td><td>B</td><td>New York</td><td><span class="pill pill-win">WIN</span></td><td style="color:#4ade80">+45.0p</td></tr>
+      <tr><td>XAUUSD</td><td><span class="pill pill-buy">BUY</span></td><td>B</td><td>New York</td><td><span class="pill pill-loss">LOSS</span></td><td style="color:#f87171">-38.0p</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:0.72rem;color:var(--dim);margin-top:0.9rem;opacity:0.55">Past performance is not indicative of future results. Updated periodically.</p>
+</section>
+
+<!-- PRICING -->
+<section class="section section-alt" id="pricing">
+  <p class="lbl">Access Plans</p>
+  <h2 class="h2">Free to start.<br><em>Pay when you're funded.</em></h2>
+  <p class="body" style="margin-bottom:3.5rem">Connect your MT5 account. Levz executes signals on your prop firm challenge — completely free. You only pay once you pass and go live.</p>
+
+  <div style="margin-top:3.5rem">
+
+    <!-- Free Challenge -->
+    <div class="price-step">
+      <div class="price-step-num p-active">1</div>
+      <div class="price-step-text"><strong>Challenge Phase — Free</strong><br><small>Full signal execution on your prop firm challenge. No payment required.</small></div>
+    </div>
+
+    <div class="price-cards" style="grid-template-columns:1fr;max-width:480px">
+      <div class="price-card feat">
+        <span class="price-badge">Free to Start</span>
+        <span class="price-plan">Signal Execution Challenge</span>
+        <div class="price-val"><sup></sup>Free</div>
+        <p class="price-period">No payment required · one free challenge per account</p>
+        <ul class="price-feats">
+          <li>Levz signals via Telegram — all session opens</li>
+          <li>Auto-execution on your MT5 account</li>
+          <li>Correct lot size, SL and TP placed automatically</li>
+          <li>Drawdown protection and breakeven logic</li>
+          <li>Works with all major prop firms</li>
+          <li>Daily challenge progress monitoring</li>
+        </ul>
+        <button class="price-btn pbtn-gold" onclick="window.open('https://t.me/LevzSignalExecutionBot','_blank')">Start Free on Telegram →</button>
+      </div>
+    </div>
+
+    <p style="font-size:0.77rem;color:var(--dim);margin:1.1rem 0 3rem;line-height:1.65">Open <a href="https://t.me/LevzSignalExecutionBot" target="_blank" style="color:var(--gold);text-decoration:none">@LevzSignalExecutionBot</a> on Telegram — connect your MT5 account. Execution activates immediately. No card required.</p>
+
+    <div style="border-top:1px solid var(--border);margin:0 0 2.5rem"></div>
+
+    <!-- Funded Phase -->
+    <div class="price-step">
+      <div class="price-step-num p-active">2</div>
+      <div class="price-step-text"><strong>Once You Pass — Pay 1% of account size</strong><br><small>Discounted first month, then 1% of account size ongoing</small></div>
+    </div>
+
+    <p class="body" style="margin-bottom:1.5rem">When Levz helps you pass your challenge, pricing kicks in automatically. First month is discounted — then 1% of your account size per month. One good trade covers it.</p>
+
+    <table class="exec-table">
+      <thead>
+        <tr><th>Phase</th><th>Account Size</th><th>Fee</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Challenge</td><td>All sizes</td><td><strong>Free</strong></td><td>One free challenge per account</td></tr>
+        <tr><td>Funded Month 1</td><td>$10k</td><td>$49</td><td>Discounted first month</td></tr>
+        <tr><td>Funded Month 1</td><td>$25k</td><td>$79</td><td>Discounted first month</td></tr>
+        <tr><td>Funded Month 1</td><td>$50k</td><td>$99</td><td>Discounted first month</td></tr>
+        <tr><td>Funded Month 1</td><td>$100k</td><td>$149</td><td>Discounted first month</td></tr>
+        <tr><td>Funded Month 1</td><td>$200k</td><td>$199</td><td>Discounted first month</td></tr>
+        <tr><td>Funded Ongoing</td><td>All sizes</td><td>1% of account size / month</td><td>One winning trade covers the fee</td></tr>
+      </tbody>
+    </table>
+
+    <p style="font-size:0.72rem;color:var(--dim);margin-top:0.9rem;opacity:0.55;line-height:1.6">Pricing transitions automatically when your challenge is detected as passed. No manual action required.</p>
+  </div>
+</section>
+
+<!-- CALCULATOR -->
+<section class="section" id="calculator">
+  <p class="lbl">Risk Management</p>
+  <h2 class="h2">Position size<br><em>calculator.</em></h2>
+  <p class="body">Know exactly how much to risk before you enter. Built for prop firm challenge accounts.</p>
+
+  <div style="max-width:680px;margin:3rem auto 0">
+
+    <!-- Inputs -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:1px">
+      <div style="background:var(--navy2);padding:1.5rem 1.75rem">
+        <label style="font-family:'Syncopate',sans-serif;font-size:0.55rem;letter-spacing:0.18em;color:var(--gold);text-transform:uppercase;display:block;margin-bottom:0.65rem">Account Balance ($)</label>
+        <input id="calc-balance" type="number" value="10000" oninput="calcRisk()" style="background:transparent;border:none;border-bottom:1px solid var(--border);color:var(--white);font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;width:100%;outline:none;padding:0.25rem 0">
+      </div>
+      <div style="background:var(--navy2);padding:1.5rem 1.75rem">
+        <label style="font-family:'Syncopate',sans-serif;font-size:0.55rem;letter-spacing:0.18em;color:var(--gold);text-transform:uppercase;display:block;margin-bottom:0.65rem">Instrument</label>
+        <select id="calc-pair" onchange="calcRisk()" style="background:transparent;border:none;border-bottom:1px solid var(--border);color:var(--white);font-family:'DM Sans',sans-serif;font-size:0.95rem;width:100%;outline:none;padding:0.25rem 0;cursor:pointer">
+          <option value="XAUUSD" style="background:var(--navy2)">XAU/USD (Gold)</option>
+          <option value="EURUSD" style="background:var(--navy2)">EUR/USD</option>
+          <option value="GBPUSD" style="background:var(--navy2)">GBP/USD</option>
+          <option value="USDJPY" style="background:var(--navy2)">USD/JPY</option>
+          <option value="GBPJPY" style="background:var(--navy2)">GBP/JPY</option>
+          <option value="USDCAD" style="background:var(--navy2)">USD/CAD</option>
+          <option value="AUDUSD" style="background:var(--navy2)">AUD/USD</option>
+          <option value="NZDUSD" style="background:var(--navy2)">NZD/USD</option>
+          <option value="EURGBP" style="background:var(--navy2)">EUR/GBP</option>
+        </select>
+      </div>
+      <div style="background:var(--navy2);padding:1.5rem 1.75rem">
+        <label style="font-family:'Syncopate',sans-serif;font-size:0.55rem;letter-spacing:0.18em;color:var(--gold);text-transform:uppercase;display:block;margin-bottom:0.65rem">Entry Price</label>
+        <input id="calc-entry" type="number" value="4750" step="0.01" oninput="calcRisk()" style="background:transparent;border:none;border-bottom:1px solid var(--border);color:var(--white);font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;width:100%;outline:none;padding:0.25rem 0">
+      </div>
+      <div style="background:var(--navy2);padding:1.5rem 1.75rem">
+        <label style="font-family:'Syncopate',sans-serif;font-size:0.55rem;letter-spacing:0.18em;color:var(--gold);text-transform:uppercase;display:block;margin-bottom:0.65rem">Stop Loss Price</label>
+        <input id="calc-sl" type="number" value="4735" step="0.01" oninput="calcRisk()" style="background:transparent;border:none;border-bottom:1px solid var(--border);color:var(--white);font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;width:100%;outline:none;padding:0.25rem 0">
+      </div>
+    </div>
+
+    <!-- Risk slider -->
+    <div style="background:var(--navy2);border:1px solid var(--border);padding:1.5rem 1.75rem;margin-bottom:1px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem">
+        <label style="font-family:'Syncopate',sans-serif;font-size:0.55rem;letter-spacing:0.18em;color:var(--gold);text-transform:uppercase">Risk Percentage</label>
+        <span id="risk-pct-display" style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;color:var(--gold)">1.0%</span>
+      </div>
+      <input id="calc-risk-pct" type="range" min="0.1" max="5" step="0.1" value="1" oninput="updateRiskSlider()" style="width:100%;accent-color:var(--gold);cursor:pointer">
+      <div style="display:flex;justify-content:space-between;font-size:0.68rem;color:var(--dim);margin-top:0.4rem;opacity:0.6">
+        <span>0.1%</span><span>Levz uses 1%</span><span>5%</span>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:1px">
+      <div style="background:var(--navy3);padding:1.5rem 1.25rem;text-align:center">
+        <div id="res-risk-usd" style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:600;color:var(--gold);line-height:1;margin-bottom:0.35rem">$100</div>
+        <div style="font-family:'Syncopate',sans-serif;font-size:0.5rem;letter-spacing:0.15em;color:var(--dim);text-transform:uppercase">Risk Amount</div>
+      </div>
+      <div style="background:var(--navy3);padding:1.5rem 1.25rem;text-align:center">
+        <div id="res-lots" style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:600;color:var(--gold);line-height:1;margin-bottom:0.35rem">0.17</div>
+        <div style="font-family:'Syncopate',sans-serif;font-size:0.5rem;letter-spacing:0.15em;color:var(--dim);text-transform:uppercase">Lot Size</div>
+      </div>
+      <div style="background:var(--navy3);padding:1.5rem 1.25rem;text-align:center">
+        <div id="res-pips" style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:600;color:var(--gold);line-height:1;margin-bottom:0.35rem">15.0</div>
+        <div style="font-family:'Syncopate',sans-serif;font-size:0.5rem;letter-spacing:0.15em;color:var(--dim);text-transform:uppercase">Pips to Stop</div>
+      </div>
+      <div style="background:var(--navy3);padding:1.5rem 1.25rem;text-align:center">
+        <div id="res-pip-val" style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:600;color:var(--gold);line-height:1;margin-bottom:0.35rem">$1.70</div>
+        <div style="font-family:'Syncopate',sans-serif;font-size:0.5rem;letter-spacing:0.15em;color:var(--dim);text-transform:uppercase">Pip Value</div>
+      </div>
+    </div>
+
+    <!-- Warning -->
+    <div id="calc-warning" style="background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.2);padding:1rem 1.5rem;font-size:0.82rem;color:#4ade80;line-height:1.6">
+      ✓ 1.0% risk — conservative sizing. Perfect for building confidence on a new challenge account.
+    </div>
+
+    <p style="font-size:0.7rem;color:var(--dim);margin-top:0.9rem;opacity:0.55;line-height:1.6">Calculations are estimates. Always verify position sizing with your broker. Not financial advice.</p>
+  </div>
+</section>
+
+<!-- PROP FIRMS -->
+<section class="section" id="partners">
+  <p class="lbl">Recommended Partners</p>
+  <h2 class="h2">Trusted prop firms.<br><em>Verified to work with Levz.</em></h2>
+  <p class="body">Start with Soar Funding — the firm our system was built and tested on. Pass the challenge with Levz. Scale to multiple firms once funded.</p>
+
+  <div class="firms-grid" style="grid-template-columns:repeat(2,1fr)">
+    <a href="https://trade.soar-funding.com/checkout/?ref=LEVI5443-P6KU2W" target="_blank" class="firm-card">
+      <p class="firm-rank">🥇 Top Pick</p>
+      <p class="firm-name">Soar Funding</p>
+      <p class="firm-tag">Built and tested with Levz. Our number one recommendation for beginners.</p>
+      <p class="firm-link">Sign Up →</p>
+    </a>
+    <a href="https://trader.ftmo.com/?affiliates=XjSaBqpFrZUCiTkCnuEq" target="_blank" class="firm-card">
+      <p class="firm-rank">🥈 Most Recognised</p>
+      <p class="firm-name">FTMO</p>
+      <p class="firm-tag">The most recognised prop firm in the world. Fee refunded on first payout.</p>
+      <p class="firm-link">Sign Up →</p>
+    </a>
+  </div>
+
+  <p style="font-size:0.7rem;color:var(--dim);margin-top:1.25rem;opacity:0.55">Affiliate links — we may earn a commission at no cost to you. Always verify current prop firm rules before purchasing a challenge.</p>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2 class="cta-title">She is watching.<br><em>Are you ready?</em></h2>
+  <p class="cta-sub">Open @LevzSignalExecutionBot on Telegram. Connect your MT5. She does the rest.</p>
+  <a href="https://t.me/LevzSignalExecutionBot" target="_blank" class="btn-gold" style="font-size:0.9rem;padding:1rem 2.5rem"><span>Start on Telegram</span><span>→</span></a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="foot-logo">AGENT LEVZ</span>
+  <ul class="foot-links">
+    <li><a href="/terms.html">Terms of Service</a></li>
+    <li><a href="/privacy.html">Privacy Policy</a></li>
+    <li><a href="https://t.me/AgentLevz" target="_blank">Telegram</a></li>
+  </ul>
+  <p class="foot-copy">© 2026 XAU Signals. All rights reserved. Alberta, Canada.</p>
+</footer>
+
+<!-- COOKIE -->
+<div id="cookie-banner">
+  <p>We use essential cookies only. No tracking or advertising. <a href="/privacy.html">Privacy Policy</a> · <a href="/terms.html">Terms of Service</a></p>
+  <div class="ck-btns">
+    <button class="ck-btn ck-decline" onclick="declineCookies()">Decline</button>
+    <button class="ck-btn ck-accept" onclick="acceptCookies()">Accept</button>
+  </div>
+</div>
+
+<script>
+// ── Live Stats API ───────────────────────────────────────────────────────
+const STATS_API = 'https://soarpropbot-webservice.onrender.com';
+
+async function loadLiveStats() {
+  try {
+    const [statsRes, recentRes] = await Promise.all([
+      fetch(STATS_API + '/api/stats'),
+      fetch(STATS_API + '/api/recent'),
+    ]);
+
+    if (statsRes.ok) {
+      const s = await statsRes.json();
+
+      // ── Hero stats ──────────────────────────────────────────────────
+      const resolved = (s.wins || 0) + (s.losses || 0);
+      if (resolved > 0) {
+        document.getElementById('stat-wr').textContent      = s.win_rate + '%';
+        document.getElementById('stat-trades').textContent  = resolved;
+      }
+
+      // ── Record cards ────────────────────────────────────────────────
+      if (resolved > 0) {
+        document.getElementById('rec-wr').textContent      = s.win_rate + '%';
+        document.getElementById('rec-resolved').textContent = s.wins + 'W / ' + s.losses + 'L of ' + resolved + ' resolved';
+      }
+
+      // ── Cumulative PnL bar chart ─────────────────────────────────────
+      if (s.pnl_series && s.pnl_series.length > 0) {
+        renderChart(s.pnl_series);
+      }
+    }
+
+    if (recentRes.ok) {
+      const r = await recentRes.json();
+      if (r.signals && r.signals.length > 0) {
+        renderRecentTable(r.signals);
+      }
+    }
+  } catch(e) {
+    console.log('Live stats unavailable — showing static data');
+  }
+}
+
+function renderChart(series) {
+  const wrap = document.getElementById('pnl-chart-wrap');
+  if (!wrap) return;
+
+  const max     = Math.max(...series.map(s => Math.abs(s.cumulative)), 1);
+  const barW    = Math.max(28, Math.floor((wrap.offsetWidth - 40) / series.length) - 4);
+
+  let html = '<div style="display:flex;align-items:flex-end;gap:4px;height:140px;padding:0 0 0.5rem">';
+  series.forEach(s => {
+    const pct    = Math.abs(s.cumulative) / max * 100;
+    const height = Math.max(4, pct * 1.2);
+    const isWin  = s.result === 'WIN';
+    const color  = isWin ? 'rgba(74,222,128,0.7)' : 'rgba(248,113,113,0.7)';
+    const border = isWin ? 'rgba(74,222,128,0.9)' : 'rgba(248,113,113,0.9)';
+    html += '<div title="' + s.pair + ' ' + (s.pips > 0 ? '+' : '') + s.pips + 'p | Cumulative: ' + s.cumulative + 'p" style="' +
+      'flex:1;min-width:' + barW + 'px;max-width:48px;height:' + height + 'px;' +
+      'background:' + color + ';border-top:2px solid ' + border + ';' +
+      'transition:opacity 0.2s;cursor:default;position:relative;bottom:0" ' +
+      'onmouseover="this.style.opacity=\'0.8\'" onmouseout="this.style.opacity=\'1\'"></div>';
+  });
+  html += '</div>';
+
+  // X axis labels
+  html += '<div style="display:flex;justify-content:space-between;font-family:\'Syncopate\',sans-serif;font-size:0.5rem;letter-spacing:0.1em;color:var(--dim);opacity:0.6;margin-top:0.25rem">';
+  html += '<span>' + (series[0]?.date || '') + '</span>';
+  if (series.length > 1) html += '<span>' + (series[series.length-1]?.date || '') + '</span>';
+  html += '</div>';
+
+  // Cumulative total
+  const total = series[series.length-1]?.cumulative || 0;
+  html += '<div style="display:flex;justify-content:space-between;align-items:center;margin-top:1rem;padding-top:0.75rem;border-top:1px solid var(--border)">';
+  html += '<span style="font-family:\'Syncopate\',sans-serif;font-size:0.55rem;letter-spacing:0.15em;color:var(--dim);text-transform:uppercase">Cumulative PnL</span>';
+  html += '<span style="font-family:\'Cormorant Garamond\',serif;font-size:1.6rem;font-weight:600;color:' + (total >= 0 ? '#4ade80' : '#f87171') + '">' + (total >= 0 ? '+' : '') + total + 'p</span>';
+  html += '</div>';
+
+  wrap.innerHTML = html;
+}
+
+function renderRecentTable(signals) {
+  const tbody = document.getElementById('recent-trades-body');
+  if (!tbody) return;
+  tbody.innerHTML = signals.map(t => {
+    const dirPill  = t.direction === 'BUY'
+      ? '<span class="pill pill-buy">BUY</span>'
+      : '<span class="pill pill-sell">SELL</span>';
+    const resPill  = t.result === 'WIN'
+      ? '<span class="pill pill-win">WIN</span>'
+      : '<span class="pill pill-loss">LOSS</span>';
+    const pipsCol  = t.result === 'WIN'
+      ? '<td style="color:#4ade80">+' + t.pips + 'p</td>'
+      : '<td style="color:#f87171">' + t.pips + 'p</td>';
+    return '<tr><td>' + (t.pair||'') + '</td><td>' + dirPill + '</td><td>' + (t.grade||'') + '</td><td>' + (t.session||'') + '</td><td>' + resPill + '</td>' + pipsCol + '</tr>';
+  }).join('');
+}
+
+window.addEventListener('load', loadLiveStats);
+
+const PIP_VALUES = {
+  XAUUSD: { pipValue: 1.0  },
+  EURUSD: { pipValue: 10.0 },
+  GBPUSD: { pipValue: 10.0 },
+  USDCAD: { pipValue: 10.0 },
+  AUDUSD: { pipValue: 10.0 },
+  NZDUSD: { pipValue: 10.0 },
+  EURGBP: { pipValue: 10.0 },
+  USDJPY: { pipValue: 9.09 },
+  GBPJPY: { pipValue: 9.09 },
+};
+
+function updateRiskSlider() {
+  const v = parseFloat(document.getElementById('calc-risk-pct').value);
+  document.getElementById('risk-pct-display').textContent = v.toFixed(1) + '%';
+  calcRisk();
+}
+
+function calcRisk() {
+  const balance = parseFloat(document.getElementById('calc-balance').value) || 0;
+  const riskPct = parseFloat(document.getElementById('calc-risk-pct').value) || 1;
+  const entry   = parseFloat(document.getElementById('calc-entry').value) || 0;
+  const sl      = parseFloat(document.getElementById('calc-sl').value) || 0;
+  const pair    = document.getElementById('calc-pair').value;
+  if (!balance || !entry || !sl || entry === sl) return;
+  const riskUsd = balance * (riskPct / 100);
+  const pv      = PIP_VALUES[pair] || PIP_VALUES['EURUSD'];
+  const pipDiff = Math.abs(entry - sl);
+  const pips    = pair === 'XAUUSD' ? pipDiff * 10 :
+                  (pair === 'USDJPY' || pair === 'GBPJPY') ? pipDiff * 100 :
+                  pipDiff * 10000;
+  if (pips <= 0) return;
+  const lots    = riskUsd / (pips * pv.pipValue);
+  document.getElementById('res-risk-usd').textContent = '$' + riskUsd.toFixed(2);
+  document.getElementById('res-lots').textContent     = lots.toFixed(2);
+  document.getElementById('res-pips').textContent     = pips.toFixed(1);
+  document.getElementById('res-pip-val').textContent  = '$' + (pv.pipValue * lots).toFixed(2);
+  const warn      = document.getElementById('calc-warning');
+  const maxDaily  = balance * 0.04;
+  const tradesLeft = riskPct > 0 ? Math.floor(maxDaily / riskUsd) : 0;
+  if (riskPct > 4) {
+    warn.style.cssText = 'background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.2);padding:1rem 1.5rem;font-size:0.82rem;color:#f87171;line-height:1.6';
+    warn.textContent = '🚫 ' + riskPct.toFixed(1) + '% risk — a single loss wipes ' + ((riskPct/4)*100).toFixed(0) + '% of your daily drawdown. Most prop firms will flag this as reckless sizing.';
+  } else if (riskPct > 2) {
+    warn.style.cssText = 'background:rgba(251,191,36,0.06);border:1px solid rgba(251,191,36,0.2);padding:1rem 1.5rem;font-size:0.82rem;color:#fbbf24;line-height:1.6';
+    warn.textContent = '⚠️ ' + riskPct.toFixed(1) + '% risk — manageable but tight. You have room for ' + tradesLeft + ' losing trade' + (tradesLeft===1?'':'s') + ' before hitting your $' + maxDaily.toFixed(0) + ' daily limit.';
+  } else {
+    warn.style.cssText = 'background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.2);padding:1rem 1.5rem;font-size:0.82rem;color:#4ade80;line-height:1.6';
+    warn.textContent = '✓ ' + riskPct.toFixed(1) + '% risk — $' + riskUsd.toFixed(2) + ' at risk. ' + tradesLeft + ' losing trades before your $' + maxDaily.toFixed(0) + ' daily limit. ' + (riskPct <= 1 ? 'This is how Levz sizes every position.' : 'This is how funded traders size positions.');
+  }
+}
+calcRisk();
+
+function acceptCookies() { localStorage.setItem('levz_cookie','accepted'); document.getElementById('cookie-banner').style.display='none'; }
+function declineCookies() { localStorage.setItem('levz_cookie','declined'); document.getElementById('cookie-banner').style.display='none'; }
+window.addEventListener('load',function(){ if(!localStorage.getItem('levz_cookie')) document.getElementById('cookie-banner').style.display='flex'; });
+</script>
+</body>
+</html>
